@@ -15,7 +15,7 @@
                         <div class="col-md-6">
                             <div class="position-absolute w-40 top-0 start-0 h-100 d-md-block d-none">
                                 <div class="oblique-image position-absolute d-flex fixed-top ms-auto h-100 z-index-0 bg-cover me-n8"
-                                    style="background-image:url('../assets/img/image-sign-up.jpg')">
+                                    style="background-image:url('../assets/img/pabrik/kantor-sig2.jpg')">
                                     <div class="my-auto text-start max-width-350 ms-7">
                                         <h1 class="mt-3 text-white font-weight-bolder">Start your <br> new journey.</h1>
                                         <p class="text-white text-lg mt-4 mb-4">Use these awesome forms to login or
@@ -47,18 +47,13 @@
                                             </p>
                                         </div>
                                     </div>
-                                    <div class="text-start position-absolute fixed-bottom ms-7">
-                                        <h6 class="text-white text-sm mb-5">Copyright © 2022 Corporate UI Design System
-                                            by Creative Tim.</h6>
-                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-4 d-flex flex-column mx-auto">
-                            <div class="card card-plain mt-8">
+                            <div class="card card-plain mt-6">
                                 <div class="card-header pb-0 text-left bg-transparent">
                                     <h3 class="font-weight-black text-dark display-6">Sign up</h3>
-                                    <p class="mb-0">Nice to meet you! Please enter your details.</p>
                                 </div>
                                 <div class="card-body">
                                     <form role="form" method="POST" action="sign-up">
@@ -69,6 +64,15 @@
                                                 placeholder="Enter your name" value="{{old("name")}}" aria-label="Name"
                                                 aria-describedby="name-addon">
                                             @error('name')
+                                                <span class="text-danger text-sm">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                        <label>Username</label>
+                                        <div class="mb-3">
+                                            <input type="text" id="username" name="username" class="form-control"
+                                                placeholder="Enter your username" value="{{old("name")}}" aria-label="Username"
+                                                aria-describedby="username-addon">
+                                            @error('username')
                                                 <span class="text-danger text-sm">{{ $message }}</span>
                                             @enderror
                                         </div>
@@ -87,6 +91,15 @@
                                                 placeholder="Create a password" aria-label="Password"
                                                 aria-describedby="password-addon">
                                             @error('password')
+                                                <span class="text-danger text-sm">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                        <label>Konfirmasi Password</label>
+                                        <div class="mb-3">
+                                            <input type="konfirmasi" id="konfirmasi" name="konfirmasi" class="form-control"
+                                                placeholder="Confirm your password" aria-label="Konfirmasi"
+                                                aria-describedby="konfirmasi-addon">
+                                            @error('konfirmasi')
                                                 <span class="text-danger text-sm">{{ $message }}</span>
                                             @enderror
                                         </div>

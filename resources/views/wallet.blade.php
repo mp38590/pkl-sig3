@@ -3,7 +3,7 @@
     <main class="main-content max-height-vh-100 h-100">
         <div class="pt-5 pb-6 bg-cover" style="background-image: url('../assets/img/header-blue-purple.jpg')"></div>
         <div class="container my-3 py-3">
-            <div class="row mt-n6 mb-6">
+            <!-- <div class="row mt-n6 mb-6">
                 <div class="col-lg-3 col-sm-6">
                     <div class="card blur border border-white mb-4 shadow-xs">
                         <div class="card-body p-4">
@@ -103,253 +103,56 @@
                         </button>
                     </div>
                 </div>
-            </div>
-            <hr class="horizontal mb-4 dark">
+            </div> -->
+            <hr class="horizontal mb-3 dark">
             <div class="row">
-                <div class="col-md-4">
+                <!-- <div class="col-md-4">
                     <h6 class="text-sm font-weight-semibold mb-1">Billing history</h6>
                     <p class="text-sm">We’ll credit your account if you need to <br> downgrade during the billing cycle.
                     </p>
-                </div>
-                <div class="col-md-8 mb-6">
+                </div> -->
+                <div class="col-md-12 mb-6">
                     <div class="card shadow-xs border mb-4">
                         <div class="table-responsive p-0">
                             <table class="table align-items-center mb-0">
                                 <thead>
                                     <tr>
-                                        <th class="d-flex align-items-center py-3 px-4 text-sm">
-                                            <div class="form-check mb-0">
+                                        <!-- <span class="d-flex align-items-center py-3 px-4 text-sm"> -->
+                                            <!-- <div class="form-check mb-0">
                                                 <input class="form-check-input" type="checkbox" value=""
                                                     id="flexCheckDefault">
-                                            </div>
-                                            <span class="text-xs font-weight-semibold opacity-7 ms-1">All
-                                                invoices</span>
-                                        </th>
-                                        <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Status
-                                        </th>
-                                        <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Amount
-                                        </th>
-                                        <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Plan
-                                        </th>
-                                        <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2"></th>
+                                            </div> -->
+                                            <th class="text-xs font-weight-semibold opacity-7 ps-3">No.</th>
+                                            <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-1">Objective Id</th>
+                                            <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-1">Objective</th>
+                                            <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-3">Kebutuhan Dokumen</th>
+                                            <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-4">Deskripsi</th>
+                                            <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-4">Nama Dokumen</th>
+                                            <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-4">Skor Maksimal</th>
+                                            <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Skor Final</th>
+                                            <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Action</th>
+                                        <!-- </span> -->
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td class="d-flex align-items-center py-3 px-4 text-sm">
-                                            <div class="form-check mb-0">
-                                                <input class="form-check-input" type="checkbox" value=""
-                                                    id="flexCheckDefault" checked>
-                                            </div>
-                                            <span class="font-weight-semibold text-dark ms-1">Jan 2022</span>
-                                        </td>
-                                        <td>
-                                            <span
-                                                class="badge badge-sm border border-success text-success bg-success border-radius-sm">
-                                                <svg width="9" height="9" viewBox="0 0 10 9" fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg" stroke="currentColor"
-                                                    class="me-1">
-                                                    <path d="M1 4.42857L3.28571 6.71429L9 1" stroke-width="2"
-                                                        stroke-linecap="round" stroke-linejoin="round" />
-                                                </svg>
-                                                Paid
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <span class="text-sm">USD $30.00</span>
-                                        </td>
-                                        <td>
-                                            <span class="text-sm">Basic Plan</span>
-                                        </td>
-                                        <td class="text-sm font-weight-semibold text-dark">
-                                            <span class="text-sm">Download</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="d-flex align-items-center py-3 px-4 text-sm">
-                                            <div class="form-check mb-0">
-                                                <input class="form-check-input" type="checkbox" value=""
-                                                    id="flexCheckDefault">
-                                            </div>
-                                            <span class="font-weight-semibold text-dark ms-1">Feb 2022</span>
-                                        </td>
-                                        <td>
-                                            <span
-                                                class="badge badge-sm border border-success text-success bg-success border-radius-sm">
-                                                <svg width="9" height="9" viewBox="0 0 10 9" fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg" stroke="currentColor"
-                                                    class="me-1">
-                                                    <path d="M1 4.42857L3.28571 6.71429L9 1" stroke-width="2"
-                                                        stroke-linecap="round" stroke-linejoin="round" />
-                                                </svg>
-                                                Paid
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <span class="text-sm">USD $30.00</span>
-                                        </td>
-                                        <td>
-                                            <span class="text-sm">Basic Plan</span>
-                                        </td>
-                                        <td class="text-sm font-weight-semibold text-dark">
-                                            <span class="text-sm">Download</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="d-flex align-items-center py-3 px-4 text-sm">
-                                            <div class="form-check mb-0">
-                                                <input class="form-check-input" type="checkbox" value=""
-                                                    id="flexCheckDefault" checked>
-                                            </div>
-                                            <span class="font-weight-semibold text-dark ms-1">Mar 2022</span>
-                                        </td>
-                                        <td>
-                                            <span
-                                                class="badge badge-sm border border-success text-success bg-success border-radius-sm">
-                                                <svg width="9" height="9" viewBox="0 0 10 9" fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg" stroke="currentColor"
-                                                    class="me-1">
-                                                    <path d="M1 4.42857L3.28571 6.71429L9 1" stroke-width="2"
-                                                        stroke-linecap="round" stroke-linejoin="round" />
-                                                </svg>
-                                                Paid
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <span class="text-sm">USD $30.00</span>
-                                        </td>
-                                        <td>
-                                            <span class="text-sm">Basic Plan</span>
-                                        </td>
-                                        <td class="text-sm font-weight-semibold text-dark">
-                                            <span class="text-sm">Download</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="d-flex align-items-center py-3 px-4 text-sm">
-                                            <div class="form-check mb-0">
-                                                <input class="form-check-input" type="checkbox" value=""
-                                                    id="flexCheckDefault">
-                                            </div>
-                                            <span class="font-weight-semibold text-dark ms-1">Apr 2022</span>
-                                        </td>
-                                        <td>
-                                            <span
-                                                class="badge badge-sm border border-success text-success bg-success border-radius-sm">
-                                                <svg width="9" height="9" viewBox="0 0 10 9" fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg" stroke="currentColor"
-                                                    class="me-1">
-                                                    <path d="M1 4.42857L3.28571 6.71429L9 1" stroke-width="2"
-                                                        stroke-linecap="round" stroke-linejoin="round" />
-                                                </svg>
-                                                Paid
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <span class="text-sm">USD $30.00</span>
-                                        </td>
-                                        <td>
-                                            <span class="text-sm">Basic Plan</span>
-                                        </td>
-                                        <td class="text-sm font-weight-semibold text-dark">
-                                            <span class="text-sm">Download</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="d-flex align-items-center py-3 px-4 text-sm">
-                                            <div class="form-check mb-0">
-                                                <input class="form-check-input" type="checkbox" value=""
-                                                    id="flexCheckDefault">
-                                            </div>
-                                            <span class="font-weight-semibold text-dark ms-1">May 2022</span>
-                                        </td>
-                                        <td>
-                                            <span
-                                                class="badge badge-sm border border-success text-success bg-success border-radius-sm">
-                                                <svg width="9" height="9" viewBox="0 0 10 9" fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg" stroke="currentColor"
-                                                    class="me-1">
-                                                    <path d="M1 4.42857L3.28571 6.71429L9 1" stroke-width="2"
-                                                        stroke-linecap="round" stroke-linejoin="round" />
-                                                </svg>
-                                                Paid
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <span class="text-sm">USD $30.00</span>
-                                        </td>
-                                        <td>
-                                            <span class="text-sm">Basic Plan</span>
-                                        </td>
-                                        <td class="text-sm font-weight-semibold text-dark">
-                                            <span class="text-sm">Download</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="d-flex align-items-center py-3 px-4 text-sm">
-                                            <div class="form-check mb-0">
-                                                <input class="form-check-input" type="checkbox" value=""
-                                                    id="flexCheckDefault">
-                                            </div>
-                                            <span class="font-weight-semibold text-dark ms-1">Jun 2022</span>
-                                        </td>
-                                        <td>
-                                            <span
-                                                class="badge badge-sm border border-success text-success bg-success border-radius-sm">
-                                                <svg width="9" height="9" viewBox="0 0 10 9" fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg" stroke="currentColor"
-                                                    class="me-1">
-                                                    <path d="M1 4.42857L3.28571 6.71429L9 1" stroke-width="2"
-                                                        stroke-linecap="round" stroke-linejoin="round" />
-                                                </svg>
-                                                Paid
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <span class="text-sm">USD $30.00</span>
-                                        </td>
-                                        <td>
-                                            <span class="text-sm">Basic Plan</span>
-                                        </td>
-                                        <td class="text-sm font-weight-semibold text-dark">
-                                            <span class="text-sm">Download</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="d-flex align-items-center py-3 px-4 text-sm">
-                                            <div class="form-check mb-0">
-                                                <input class="form-check-input" type="checkbox" value=""
-                                                    id="flexCheckDefault">
-                                            </div>
-                                            <span class="font-weight-semibold text-dark ms-1">Jul 2022</span>
-                                        </td>
-                                        <td>
-                                            <span
-                                                class="badge badge-sm border border-success text-success bg-success border-radius-sm">
-                                                <svg width="9" height="9" viewBox="0 0 10 9" fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg" stroke="currentColor"
-                                                    class="me-1">
-                                                    <path d="M1 4.42857L3.28571 6.71429L9 1" stroke-width="2"
-                                                        stroke-linecap="round" stroke-linejoin="round" />
-                                                </svg>
-                                                Paid
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <span class="text-sm">USD $30.00</span>
-                                        </td>
-                                        <td>
-                                            <span class="text-sm">Basic Plan</span>
-                                        </td>
-                                        <td class="text-sm font-weight-semibold text-dark">
-                                            <span class="text-sm">Download</span>
-                                        </td>
+                                        <!-- <td class="d-flex align-items-center py-3 px-4 text-sm"> -->
+                                            <th class="font-weight-semibold text-dark ps-3">1.</th>
+                                            <th class="font-weight-semibold text-dark ps-1">251</th>
+                                            <th class="font-weight-semibold text-dark ps-1">KHidenife</th>
+                                            <th class="font-weight-semibold text-dark ps-3">KHidenifedewf</th>
+                                            <th class="font-weight-semibold text-dark ps-4">KHidenifedew</th>
+                                            <th class="font-weight-semibold text-dark ps-4">KHidenifedewf</th>
+                                            <th class="font-weight-semibold text-dark ps-4">10</th>
+                                            <th class="font-weight-semibold text-dark ps-4">10</th>
+                                            <th class="font-weight-semibold text-dark ps-2"></th>
+                                        <!-- </td> -->
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                    <div class="row">
+                    <!-- <div class="row">
                         <div class="col-lg-6">
                             <div class="card shadow-xs border mb-4">
                                 <div class="card-body py-0">
@@ -456,10 +259,10 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
-            <div class="row">
+            <!-- <div class="row">
                 <div class="col-12">
                     <div class="d-md-flex align-items-center mb-4">
                         <div class="mb-md-0 mb-4">
@@ -706,8 +509,8 @@
                         </li>
                     </ul>
                 </div>
-            </div>
-            <x-app.footer />
+            </div> -->
+            <!-- <x-app.footer /> -->
         </div>
     </main>
 

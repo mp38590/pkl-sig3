@@ -2488,7 +2488,7 @@ progress {
 }
 
 .table-group-divider {
-  border-top: calc(2 * $table-border-width) solid currentColor;
+  border-top: calc(2 * table-border-width) solid currentColor;
 }
 
 .caption-top {
@@ -5591,7 +5591,7 @@ fieldset:disabled .btn {
 }
 
 .page-item:not(:first-child) .page-link {
-  margin-left: calc($pagination-border-width * -1);
+  margin-left: calc(pagination-border-width * -1);
 }
 
 .page-item:first-child .page-link {
@@ -10524,11 +10524,11 @@ fieldset:disabled .btn {
 
 /* rtl:end:remove */
 .text-primary {
-  color: #774dd3 !important;
+  color: #ffffff !important;
 }
 
 .text-secondary {
-  color: #64748b !important;
+  color: #14BBBB !important;
 }
 
 .text-success {
