@@ -6,26 +6,41 @@
             </div>
         </nav>
         <ul class="navbar-nav d-none d-lg-flex">
+            @if (auth()->user()->level=="Karyawan")
             <li class="nav-item px-3 py-3 border-radius-sm  d-flex align-items-center">
-                <a href="{{ route('dashboard') }}" class="nav-link text-white p-0">
+                <a href="{{ route('dashboard_karyawan') }}" class="nav-link text-white p-0">
                     Dashboard
                 </a>
             </li>
             <li class="nav-item px-3 py-3 border-radius-sm  d-flex align-items-center">
-                <a href="{{ route('tables') }}" class="nav-link text-white p-0">
+                <a href="{{ route('entry_dokumen') }}" class="nav-link text-white p-0">
                     Entry Dokumen
                 </a>
             </li>
             <li class="nav-item px-3 py-3 border-radius-sm bg-slate-800 d-flex align-items-center">
-                <a href="{{ route('wallet') }}" class="nav-link text-white p-0">
+                <a href="{{ route('detail_dokumen') }}" class="nav-link text-white p-0">
                     Detail Dokumen
                 </a>
             </li>
-            <!-- <li class="nav-item px-3 py-3 border-radius-sm  d-flex align-items-center">
-                <a href="{{ route('RTL') }}" class="nav-link text-white p-0">
-                    RTL
+            @endif
+
+            @if (auth()->user()->level=="Admin")
+            <li class="nav-item px-3 py-3 border-radius-sm  d-flex align-items-center">
+                <a href="{{ route('dashboard_admin') }}" class="nav-link text-white p-0">
+                    Dashboard
                 </a>
-            </li> -->
+            </li>
+            <li class="nav-item px-3 py-3 border-radius-sm bg-slate-800 d-flex align-items-center">
+                <a href="{{ route('verifikasi_dokumen') }}" class="nav-link text-white p-0">
+                    Verifikasi Dokumen
+                </a>
+            </li>
+            <li class="nav-item px-3 py-3 border-radius-sm bg-slate-800 d-flex align-items-center">
+                <a href="{{ route('data_pengguna') }}" class="nav-link text-white p-0">
+                    Data Pengguna
+                </a>
+            </li>
+            @endif
         </ul>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
             <ul class="navbar-nav ms-md-auto  justify-content-end">

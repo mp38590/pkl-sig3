@@ -14,10 +14,18 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'Alec Thompson',
             'username' => 'Alec-123',
-            'email' => 'admin@corporateui.com',
-            'password' => Hash::make('secret'),
-            'confirm_password' => Hash::make('secret'),
+            'email' => 'alec123_@gmail.com',
+            'password' => Hash::make('alec123_'),
+            'confirm_password' => Hash::make('alec123_'),
             'level' => 'Karyawan',
+        ]);
+        User::factory()->create([
+            'name' => 'Subakti Wirawan Putra',
+            'username' => 'Putra_11Wi',
+            'email' => 'admin@gmail.com',
+            'password' => Hash::make('admin123_'),
+            'confirm_password' => Hash::make('admin123_'),
+            'level' => 'Admin',
         ]);
     }
 }

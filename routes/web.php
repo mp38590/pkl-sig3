@@ -20,20 +20,45 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 */
 
 Route::get('/', function () {
-    return redirect('/dashboard');
-})->middleware('auth');
+    return redirect('/sign-in');
+});
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard')->middleware('auth');
+Route::group(['middleware' => ['auth', 'level:Karyawan']], function(){
+    Route::get('/dashboard_karyawan', function () {
+        return view('karyawan.dashboard_karyawan');
+    })->name('dashboard_karyawan');
 
-Route::get('/tables', function () {
-    return view('tables');
-})->name('tables')->middleware('auth');
+    Route::get('/entry_dokumen', function () {
+        return view('karyawan.entry_dokumen');
+    })->name('entry_dokumen');
 
-Route::get('/wallet', function () {
-    return view('wallet');
-})->name('wallet')->middleware('auth');
+    Route::get('/detail_dokumen', function () {
+        return view('karyawan.detail_dokumen');
+    })->name('detail_dokumen');
+});
+
+Route::group(['middleware' => ['auth', 'level:Admin']], function(){    
+    Route::get('/dashboard_admin', function () {
+        return view('admin.dashboard_admin');
+    })->name('dashboard_admin');
+
+    Route::get('/verifikasi_dokumen', function () {
+        return view('admin.verifikasi_dokumen');
+    })->name('verifikasi_dokumen');
+
+    Route::get('/data_pengguna', function () {
+        return view('admin.data_pengguna');
+    })->name('data_pengguna');
+
+    Route::get('/pills_home', function () {
+        return view('admin.data_pengguna');
+    })->name('pills_home');
+
+    Route::get('/pills_profile', function () {
+        return view('admin.data_pengguna');
+    })->name('pills_profile');
+});
+
 
 Route::get('/RTL', function () {
     return view('RTL');
@@ -59,14 +84,11 @@ Route::post('/sign-up', [RegisterController::class, 'store'])
     ->middleware('guest');
 
 Route::get('/sign-in', [LoginController::class, 'create'])
-    ->middleware('guest')
     ->name('sign-in');
 
-Route::post('/sign-in', [LoginController::class, 'store'])
-    ->middleware('guest');
+Route::post('/sign-in', [LoginController::class, 'store']);
 
 Route::post('/logout', [LoginController::class, 'destroy'])
-    ->middleware('auth')
     ->name('logout');
 
 Route::get('/forgot-password', [ForgotPasswordController::class, 'create'])

@@ -3698,7 +3698,7 @@ fieldset:disabled .btn {
   --bs-btn-bg: #67c23a;
   --bs-btn-border-color: #67c23a;
   --bs-btn-hover-color: #000;
-  --bs-btn-hover-bg: #7ecb58;
+  --bs-btn-hover-bg: #67c23a;
   --bs-btn-hover-border-color: #76c84e;
   --bs-btn-focus-shadow-rgb: 88, 165, 49;
   --bs-btn-active-color: #000;
@@ -3729,19 +3729,19 @@ fieldset:disabled .btn {
 
 .btn-warning {
   --bs-btn-color: #000;
-  --bs-btn-bg: #f19937;
-  --bs-btn-border-color: #f19937;
+  --bs-btn-bg: #FF9416;
+  --bs-btn-border-color: #FF9416;
   --bs-btn-hover-color: #000;
-  --bs-btn-hover-bg: #f3a855;
-  --bs-btn-hover-border-color: #f2a34b;
+  --bs-btn-hover-bg: #FF9416;
+  --bs-btn-hover-border-color: #FF9416;
   --bs-btn-focus-shadow-rgb: 205, 130, 47;
   --bs-btn-active-color: #000;
-  --bs-btn-active-bg: #f4ad5f;
-  --bs-btn-active-border-color: #f2a34b;
+  --bs-btn-active-bg: #FF9416;
+  --bs-btn-active-border-color: #FF9416;
   --bs-btn-active-shadow: none;
   --bs-btn-disabled-color: #000;
-  --bs-btn-disabled-bg: #f19937;
-  --bs-btn-disabled-border-color: #f19937;
+  --bs-btn-disabled-bg: #FF9416;
+  --bs-btn-disabled-border-color: #FF9416;
 }
 
 .btn-danger {
@@ -3763,19 +3763,19 @@ fieldset:disabled .btn {
 
 .btn-light {
   --bs-btn-color: #000;
-  --bs-btn-bg: #cbd5e1;
-  --bs-btn-border-color: #cbd5e1;
+  --bs-btn-bg: #DDF5FF;
+  --bs-btn-border-color: #156CBD;
   --bs-btn-hover-color: #000;
-  --bs-btn-hover-bg: #d3dbe6;
-  --bs-btn-hover-border-color: #d0d9e4;
+  --bs-btn-hover-bg: #DDF5FF;
+  --bs-btn-hover-border-color: #DDF5FF;
   --bs-btn-focus-shadow-rgb: 173, 181, 191;
   --bs-btn-active-color: #000;
-  --bs-btn-active-bg: #d5dde7;
-  --bs-btn-active-border-color: #d0d9e4;
+  --bs-btn-active-bg: #DDF5FF;
+  --bs-btn-active-border-color: #DDF5FF;
   --bs-btn-active-shadow: none;
   --bs-btn-disabled-color: #000;
-  --bs-btn-disabled-bg: #cbd5e1;
-  --bs-btn-disabled-border-color: #cbd5e1;
+  --bs-btn-disabled-bg: #DDF5FF;
+  --bs-btn-disabled-border-color: #DDF5FF;
 }
 
 .btn-dark {
@@ -21987,11 +21987,11 @@ svg.text-primary .color-background {
 }
 
 svg.text-secondary .color-foreground {
-  fill: #64748b;
+  fill: #14BBBB;
 }
 
 svg.text-secondary .color-background {
-  fill: #64748b;
+  fill: #14BBBB;
 }
 
 svg.text-info .color-foreground {

@@ -36,11 +36,16 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials, $rememberMe)) {
             $request->session()->regenerate();
-
-            return redirect()->intended('/dashboard');
+        
+            // Check if the authenticated user is not null before accessing the 'level' property
+            if (Auth::user() && Auth::user()->level === 'Karyawan') {
+                return redirect()->intended('/dashboard_karyawan');
+            } elseif (Auth::user() && Auth::user()->level === 'Admin') {
+                return redirect()->intended('/dashboard_admin');
+            }
+        
+            // Handle other roles if needed
         }
-
-
 
         return back()->withErrors([
             'message' => 'The provided credentials do not match our records.',
