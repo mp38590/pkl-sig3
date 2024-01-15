@@ -66,7 +66,9 @@
                         <div class="form-group">
                             <label for="file" class="form-control-label">Upload Dokumen</label>
                             <div class="@error('file') border border-danger rounded-3 @enderror">
-                                <input class="form-control" type="text" placeholder="Pilih Dokumen yang Ingin diupload" id="file"  value="{{ old('dile') }}">
+                                <div class="mb-3">
+                                    <input class="form-control" type="file" id="file" multiple>
+                                </div>
                             </div>
                             @error('file') <div class="text-danger">{{ $message }}</div> @enderror
                         </div>

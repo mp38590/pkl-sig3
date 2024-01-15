@@ -7,7 +7,7 @@
                 <div class="col-md-12">
                     <div class="d-md-flex align-items-center mb-3 mx-2">
                         <div class="mb-md-0 mb-3">
-                            <h3 class="font-weight-bold mb-0">Hello, Permata</h3>
+                            <h3 class="font-weight-bold mb-0">Hello, Putra</h3>
                             <p class="mb-0">Apps you might like!</p>
                         </div>
                         <button type="button"
@@ -205,12 +205,12 @@
                             </div>
                             <div class="d-sm-flex align-items-top">
                                 <div class="circle-icon">
-                                    <img src="/assets/img/karyawan.png" alt="karyawan" class="rounded-circle" style="width: 100px; height: 100px">
+                                    <img src="/assets/img/admin.png" alt="admin" class="rounded-circle" style="width: 100px; height: 100px">
                                 </div>
                             <div class="mb-3">
                                 <div style="position: relative; left: 20px">
                                     <div>
-                                        <h1 style="font-size: 20px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" class="font-weight-bolder">Karyawan</h1>
+                                        <h1 style="font-size: 20px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" class="font-weight-bolder">Admin</h1>
                                         <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Nama:</p>
                                         <p class="text-muted">
                                         <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">NIK:</p>
@@ -225,7 +225,38 @@
                     </div>
                 </div>
             </div>
-            <div class="row my-4">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-12 mt-3">
+                        <div class="card shadow-xs border">
+                            <div class="card-header">Grafik Keaktifan User</div>
+                            <div class="card-body">
+                                <div id="Grafik"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row pe-0">
+                <div class="col-6 mt-3 pe-2">
+                    <div class="card shadow-xs border">
+                        <div class="card-header">Grafik Jumlah Dokumen Terupload</div>
+                        <div class="card-body">
+                            <div id="Grafik1"></div> <!-- Ganti ID grafik sesuai kebutuhan -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 mt-3 pe-0">
+                    <div class="card shadow-xs border">
+                        <div class="card-header">Grafik Jumlah Pengguna Terdaftar</div>
+                        <div class="card-body">
+                            <div id="Grafik2"></div> <!-- Ganti ID grafik sesuai kebutuhan -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="row my-4"> -->
                 <!-- <div class="col-lg-4 col-md-6 mb-md-0 mb-4">
                     <div class="card shadow-xs border h-100">
                         <div class="card-header pb-0">
@@ -251,7 +282,7 @@
                         </div>
                     </div>
                 </div> -->
-                <div class="col-lg-8 col-md-6">
+                <!-- <div class="col-lg-8 col-md-6">
                     <div class="card shadow-xs border">
                         <div class="card-header border-bottom pb-0">
                             <div class="d-sm-flex align-items-center mb-3">
@@ -622,9 +653,36 @@
                     </div>
                 </div>
             </div>
-            
-            <x-app.footer />
-        </div>
+        </div> -->
     </main>
 
 </x-app-layout>
+
+<script type="https://code.highcharts.com/highcharts.js"></script>
+<script type="text/javascript">
+    var hari = 1;
+    var jumlah = 2;
+    Highcharts.chart('Grafik', {
+        title : {
+            text: 'Hari Dokumen Terupload'
+        },
+        xAxis : {
+            categories : hari
+        },
+        yAxis : {
+            title : {
+                text : Jumlah Dokumen Terupload
+            }
+        },
+        plotOptions : {
+            series : {
+                allowPointSelect : true
+            }
+        },
+        series : [
+        {
+            name : 'Dokumen Terupload',
+            data : hari
+        }]
+    })
+</script>

@@ -32,6 +32,38 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-xl-3 col-sm-6 mb-xl-0">
+                    <div class="card border shadow-xs mb-4">
+                        <div class="card-body text-start p-3 w-100">
+                            <div
+                                class="icon icon-shape icon-sm bg-dark text-white text-center border-radius-sm d-flex align-items-center justify-content-center mb-3">
+                                <svg height="16" width="16" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M4.5 3.75a3 3 0 00-3 3v.75h21v-.75a3 3 0 00-3-3h-15z" />
+                                    <path fill-rule="evenodd"
+                                        d="M22.5 9.75h-21v7.5a3 3 0 003 3h15a3 3 0 003-3v-7.5zm-18 3.75a.75.75 0 01.75-.75h6a.75.75 0 010 1.5h-6a.75.75 0 01-.75-.75zm.75 2.25a.75.75 0 000 1.5h3a.75.75 0 000-1.5h-3z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="w-100">
+                                        <p class="text-sm text-secondary mb-1">Revenue</p>
+                                        <h4 class="mb-2 font-weight-bold">$99,118.5</h4>
+                                        <div class="d-flex align-items-center">
+                                            <span class="text-sm text-success font-weight-bolder">
+                                                <i class="fa fa-chevron-up text-xs me-1"></i>10.5%
+                                            </span>
+                                            <span class="text-sm ms-1">from $89,740.00</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <hr class="my-0">
             <div class="row">
                 <div class="position-relative overflow-hidden">
@@ -193,6 +225,38 @@
                     <div class="swiper-button-next"></div>
                 </div>
             </div>
+            <div class="col-xl-3 col-sm-6 mb-xl-0">
+                    <div class="card border shadow-xs mb-4">
+                        <div class="card-body text-start p-3 w-100">
+                            <div
+                                class="icon icon-shape icon-sm bg-dark text-white text-center border-radius-sm d-flex align-items-center justify-content-center mb-3">
+                                <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24" fill="currentColor">
+                                    <path fill-rule="evenodd"
+                                        d="M7.5 5.25a3 3 0 013-3h3a3 3 0 013 3v.205c.933.085 1.857.197 2.774.334 1.454.218 2.476 1.483 2.476 2.917v3.033c0 1.211-.734 2.352-1.936 2.752A24.726 24.726 0 0112 15.75c-2.73 0-5.357-.442-7.814-1.259-1.202-.4-1.936-1.541-1.936-2.752V8.706c0-1.434 1.022-2.7 2.476-2.917A48.814 48.814 0 017.5 5.455V5.25zm7.5 0v.09a49.488 49.488 0 00-6 0v-.09a1.5 1.5 0 011.5-1.5h3a1.5 1.5 0 011.5 1.5zm-3 8.25a.75.75 0 100-1.5.75.75 0 000 1.5z"
+                                        clip-rule="evenodd" />
+                                    <path
+                                        d="M3 18.4v-2.796a4.3 4.3 0 00.713.31A26.226 26.226 0 0012 17.25c2.892 0 5.68-.468 8.287-1.335.252-.084.49-.189.713-.311V18.4c0 1.452-1.047 2.728-2.523 2.923-2.12.282-4.282.427-6.477.427a49.19 49.19 0 01-6.477-.427C4.047 21.128 3 19.852 3 18.4z" />
+                                </svg>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="w-100">
+                                        <p class="text-sm text-secondary mb-1">Transactions</p>
+                                        <h4 class="mb-2 font-weight-bold">376</h4>
+                                        <div class="d-flex align-items-center">
+                                            <span class="text-sm text-success font-weight-bolder">
+                                                <i class="fa fa-chevron-up text-xs me-1"></i>55%
+                                            </span>
+                                            <span class="text-sm ms-1">from 243</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card shadow-xs border">
@@ -225,7 +289,37 @@
                     </div>
                 </div>
             </div>
-            <div class="row my-4">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-12 mt-3">
+                        <div class="card shadow-xs border">
+                            <div class="card-header">Grafik Keaktifan User</div>
+                            <div class="card-body">
+                                <div id="Grafik"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row pe-0">
+                <div class="col-6 mt-3 pe-2">
+                    <div class="card shadow-xs border">
+                        <div class="card-header">Grafik Jumlah Dokumen Terupload</div>
+                        <div class="card-body">
+                            <div id="Grafik1"></div> <!-- Ganti ID grafik sesuai kebutuhan -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 mt-3 pe-0">
+                    <div class="card shadow-xs border">
+                        <div class="card-header">Grafik Jumlah Dokumen Terverifikasi</div>
+                        <div class="card-body">
+                            <div id="Grafik2"></div> <!-- Ganti ID grafik sesuai kebutuhan -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="row my-4"> -->
                 <!-- <div class="col-lg-4 col-md-6 mb-md-0 mb-4">
                     <div class="card shadow-xs border h-100">
                         <div class="card-header pb-0">
@@ -251,7 +345,7 @@
                         </div>
                     </div>
                 </div> -->
-                <div class="col-lg-8 col-md-6">
+                <!-- <div class="col-lg-8 col-md-6">
                     <div class="card shadow-xs border">
                         <div class="card-header border-bottom pb-0">
                             <div class="d-sm-flex align-items-center mb-3">
@@ -620,10 +714,8 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            
-            <x-app.footer />
+                </div> -->
+            <!-- </div> -->
         </div>
     </main>
 

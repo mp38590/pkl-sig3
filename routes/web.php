@@ -35,6 +35,10 @@ Route::group(['middleware' => ['auth', 'level:Karyawan']], function(){
     Route::get('/detail_dokumen', function () {
         return view('karyawan.detail_dokumen');
     })->name('detail_dokumen');
+
+    Route::get('/edit_dokumen', function () {
+        return view('karyawan.edit_dokumen');
+    })->name('edit_dokumen');
 });
 
 Route::group(['middleware' => ['auth', 'level:Admin']], function(){    

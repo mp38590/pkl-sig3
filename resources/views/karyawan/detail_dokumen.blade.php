@@ -130,15 +130,15 @@
                                                 <input class="form-check-input" type="checkbox" value=""
                                                     id="flexCheckDefault">
                                             </div> -->
-                                            <th class="text-info text-s font-weight-semibold ps-3">No.</th>
-                                            <th class="text-info text-s font-weight-semibold ps-1">Objective Id</th>
-                                            <th class="text-info text-s font-weight-semibold ps-1">Objective</th>
-                                            <th class="text-info text-s font-weight-semibold ps-3">Kebutuhan Dokumen</th>
-                                            <th class="text-info text-s font-weight-semibold ps-4">Deskripsi</th>
-                                            <th class="text-info text-s font-weight-semibold ps-4">Nama Dokumen</th>
-                                            <th class="text-info text-s font-weight-semibold ps-4">Skor Maksimal</th>
-                                            <th class="text-info text-s font-weight-semibold ps-2">Skor Final</th>
-                                            <th class="text-info text-s font-weight-semibold ps-2">Action</th>
+                                            <th class="text-info text-s font-weight-semibold ps-3" style="text-align: center;">No.</th>
+                                            <th class="text-info text-s font-weight-semibold ps-1" style="text-align: center;">Objective Id</th>
+                                            <th class="text-info text-s font-weight-semibold ps-1" style="text-align: center;">Objective</th>
+                                            <th class="text-info text-s font-weight-semibold ps-3" style="text-align: center;">Kebutuhan Dokumen</th>
+                                            <th class="text-info text-s font-weight-semibold ps-4" style="text-align: center;">Deskripsi</th>
+                                            <th class="text-info text-s font-weight-semibold ps-4" style="text-align: center;">Nama Dokumen</th>
+                                            <th class="text-info text-s font-weight-semibold ps-4" style="text-align: center;">Skor Maksimal</th>
+                                            <th class="text-info text-s font-weight-semibold ps-2" style="text-align: center;">Skor Final</th>
+                                            <th class="text-info text-s font-weight-semibold ps-2" style="text-align: center;">Action</th>
                                         <!-- </span> -->
                                     </tr>
                                 </thead>
@@ -153,7 +153,23 @@
                                             <th class="font-weight-normal text-sm text-dark ps-4">KHidenifedewf</th>
                                             <th class="font-weight-normal text-sm text-dark ps-4">10</th>
                                             <th class="font-weight-normal text-sm text-dark ps-4">10</th>
-                                            <th class="font-weight-normal text-sm text-dark ps-2"></th>
+                                            <th class="text-secondary text-xs font-weight-semibold ps-2">
+                                            <button type="button" class="btn btn-warning btn-sm position-relative mt-1 mb-1" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                                    style="width: 30px; height: 30px;">
+                                                    <img src="../assets/img/small-logos/tool.png" alt="Logo" class="position-absolute start-50 top-50 translate-middle"
+                                                        style="width: 15px; height: 15px;">
+                                            </button>
+                                            <button type="button" class="btn btn-danger btn-sm position-relative mt-1 mb-1" data-bs-toggle="modal" data-bs-target="#exampleModal2"
+                                                    style="width: 30px; height: 30px;">
+                                                    <img src="../assets/img/small-logos/eraser.png" alt="Logo" class="position-absolute start-50 top-50 translate-middle"
+                                                        style="width: 15px; height: 15px;">
+                                            </button>
+                                            <button type="button" class="btn btn-primary btn-sm position-relative mt-1 mb-1" data-bs-toggle="modal" data-bs-target="#exampleModal3"
+                                                    style="width: 30px; height: 30px;">
+                                                    <img src="../assets/img/small-logos/detail.png" alt="Logo" class="position-absolute start-50 top-50 translate-middle"
+                                                        style="width: 15px; height: 15px;">
+                                            </button>
+                                            </th>
                                         <!-- </td> -->
                                     </tr>
                                 </tbody>
@@ -167,5 +183,401 @@
             </div>
         </div>
     </main>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" style="width: 800px; height: 700px; absolute; top: 50%; left: 50%; transform: translate(-49%);">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Dokumen</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            <div class="card-body pt-4 p-3">
+                    <div class="row">
+                        <div class="form-group">
+                            <label for="objective_id" class="form-label">Objective Id</label>
+                            <input name="objective_id" class="form-control" id="objective_id" value="" placeholder="Masukkan objective id dokumen">
+                            @error('objective_id') <div class="alert text-danger">{{ $message }}</div> @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="objective" class="form-label">Objective</label>
+                            <div class="@error('objective')border border-danger rounded-3 @enderror">
+                                <input class="form-control" type="text" placeholder="Masukkan objective dokumen" id="objective" value="">
+                            </div>
+                            @error('kode_dosen_wali') <div class="alert text-danger">{{ $message }}</div> @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="kebutuhan_dokumen" class="form-label">Kebutuhan Dokumen</label>
+                            <div class="@error('kebutuhan_dokumen')border border-danger rounded-3 @enderror">
+                                <input class="form-control" type="text" placeholder="Masukkan Kebutuhan Dokumen" id="kebutuhan_dokumen" value="{{ old('kebutuhan_dokumen') }}">
+                            </div>
+                            @error('kebutuhan_dokumen') <div class="alert text-danger">{{ $message }}</div> @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="deskripsi" class="form-control-label">Deskripsi</label>
+                            <div class="@error('deskripsi')border border-danger rounded-3 @enderror">
+                                <input class="form-control" type="text" placeholder="Masukkan Deskripsi Dokumen" id="deskripsi" value="{{ old('deskripsi') }}">
+                            </div>
+                            @error('deskripsi') <div class="text-danger">{{ $message }}</div> @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="file" class="form-control-label">Upload Dokumen</label>
+                            <div class="@error('file') border border-danger rounded-3 @enderror">
+                                <div class="mb-3">
+                                    <input class="form-control" type="file" id="file" multiple>
+                                </div>
+                            </div>
+                            @error('file') <div class="text-danger">{{ $message }}</div> @enderror
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="exampleModal">Tutup</button>
+                <button type="button" class="btn btn-primary">Simpan</button>
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" style="width: 800px; height: 700px; absolute; top: 50%; left: 50%; transform: translate(-49%);">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete Dokumen</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            <div class="card-body pt-4 p-3">
+                <div class="row">
+                    <div class="form-group">
+                        <label for="objective_id" class="form-label">Objective Id</label>
+                        <input name="objective_id" class="form-control" id="objective_id" value="" placeholder="Masukkan objective id dokumen" disabled>
+                        @error('objective_id') <div class="alert text-danger">{{ $message }}</div> @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="objective" class="form-label">Objective</label>
+                        <div class="@error('objective')border border-danger rounded-3 @enderror">
+                            <input class="form-control" type="text" placeholder="Masukkan objective dokumen" id="objective" value="" disabled>
+                        </div>
+                        @error('kode_dosen_wali') <div class="alert text-danger">{{ $message }}</div> @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="kebutuhan_dokumen" class="form-label">Kebutuhan Dokumen</label>
+                        <div class="@error('kebutuhan_dokumen')border border-danger rounded-3 @enderror">
+                            <input class="form-control" type="text" placeholder="Masukkan Kebutuhan Dokumen" id="kebutuhan_dokumen" value="{{ old('kebutuhan_dokumen') }}" disabled>
+                        </div>
+                        @error('kebutuhan_dokumen') <div class="alert text-danger">{{ $message }}</div> @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="deskripsi" class="form-control-label">Deskripsi</label>
+                        <div class="@error('deskripsi')border border-danger rounded-3 @enderror">
+                            <input class="form-control" type="text" placeholder="Masukkan Deskripsi Dokumen" id="deskripsi" value="{{ old('deskripsi') }}" disabled>
+                        </div>
+                        @error('deskripsi') <div class="text-danger">{{ $message }}</div> @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="file" class="form-control-label">Upload Dokumen</label>
+                        <div class="@error('file') border border-danger rounded-3 @enderror">
+                            <div class="mb-3">
+                                <input class="form-control" type="file" id="file" multiple disabled>
+                            </div>
+                        </div>
+                        @error('file') <div class="text-danger">{{ $message }}</div> @enderror
+                    </div>
+                </div>
+                <div class="text" type="text">
+                    <label for="verifikasi" class="text ms-6 me-6" style="font-size: 17px; text-align: center; color: red">Apakah Anda Yakin Ingin Menghapus File di atas? Jika Yakin Silahkan Klik Hapus
+                            dan Jika Tidak Ingin Menghapus Silahkan Klik Cancel</label>
+                </div>
+            </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                <button type="button" class="btn btn-danger">Delete</button>
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" style="width: 800px; height: 700px; absolute; top: 50%; left: 50%; transform: translate(-49%);">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Detail Verifikasi Dokumen</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="redirectToHomePage()"></button>
+            </div>
+            <div class="modal-body">
+            <div class="container mt-3">
+        <!-- Nav pills -->
+        <ul class="nav nav-pills" role="tablist">
+            <li class="nav-item">
+            <a class="nav-link active" data-bs-toggle="pill" href="#home">Approve</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="pill" href="#profile">Not Approve</a>
+            </li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div id="home" class="container tab-pane active"><br>
+            <div class="col-md-12 mb-6">
+                    <div class="card shadow-xs border mb-4">
+                        <div class="table-responsive p-0">
+                            <table class="table align-items-center mb-0">
+                                <thead>
+                                    <tr>
+                                        <!-- <span class="d-flex align-items-center py-3 px-4 text-sm"> -->
+                                            <!-- <div class="form-check mb-0">
+                                                <input class="form-check-input" type="checkbox" value=""
+                                                    id="flexCheckDefault">
+                                            </div> -->
+                                            <th class="text-info text-s font-weight-semibold ps-3" style="text-align: center;">No.</th>
+                                            <th class="text-info text-s font-weight-semibold ps-1" style="text-align: center;">Objective Id</th>
+                                            <th class="text-info text-s font-weight-semibold ps-1" style="text-align: center;">Objective</th>
+                                            <th class="text-info text-s font-weight-semibold ps-3" style="text-align: center;">Kebutuhan Dokumen</th>
+                                            <th class="text-info text-s font-weight-semibold ps-4" style="text-align: center;">Deskripsi</th>
+                                            <th class="text-info text-s font-weight-semibold ps-4" style="text-align: center;">Nama Dokumen</th>
+                                            <th class="text-info text-s font-weight-semibold ps-4" style="text-align: center;">Skor Maksimal</th>
+                                            <th class="text-info text-s font-weight-semibold ps-2" style="text-align: center;">Skor Final</th>
+                                            <th class="text-info text-s font-weight-semibold ps-2" style="text-align: center;">Action</th>
+                                        <!-- </span> -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <!-- <td class="d-flex align-items-center py-3 px-4 text-sm"> -->
+                                            <th class="font-weight-normal text-sm text-dark ps-3">1.</th>
+                                            <th class="font-weight-normal text-sm text-dark ps-1">251</th>
+                                            <th class="font-weight-normal text-sm text-dark ps-1">KHidenife</th>
+                                            <th class="font-weight-normal text-sm text-dark ps-3">KHidenifedewf</th>
+                                            <th class="font-weight-normal text-sm text-dark ps-4">KHidenifedew</th>
+                                            <th class="font-weight-normal text-sm text-dark ps-4">KHidenifedewf</th>
+                                            <th class="font-weight-normal text-sm text-dark ps-4">10</th>
+                                            <th class="font-weight-normal text-sm text-dark ps-4">10</th>
+                                            <th class="text-secondary text-xs font-weight-semibold ps-2">
+                                            <button type="button" class="btn btn-warning btn-sm position-relative mt-1 mb-1" data-bs-toggle="modal" data-bs-target="#exampleModal4"
+                                                    style="width: 30px; height: 30px;">
+                                                    <img src="../assets/img/small-logos/tool.png" alt="Logo" class="position-absolute start-50 top-50 translate-middle"
+                                                        style="width: 15px; height: 15px;">
+                                            </button>
+                                            <button type="button" class="btn btn-danger btn-sm position-relative mt-1 mb-1" data-bs-toggle="modal" data-bs-target="#exampleModal5"
+                                                    style="width: 30px; height: 30px;">
+                                                    <img src="../assets/img/small-logos/eraser.png" alt="Logo" class="position-absolute start-50 top-50 translate-middle"
+                                                        style="width: 15px; height: 15px;">
+                                            </button>
+                                            </th>
+                                        <!-- </td> -->
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                                <button type="submit" class="btn btn-light btn-md mt-3 mb-3 me-3" style="border: 2px solid #35A8CC;" onclick="redirectToHomePage()">Done</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+            <div id="profile" class="container tab-pane fade"><br>
+            <div class="col-md-12 mb-6">
+                    <div class="card shadow-xs border mb-4">
+                        <div class="table-responsive p-0">
+                            <table class="table align-items-center mb-0">
+                                <thead>
+                                    <tr>
+                                        <!-- <span class="d-flex align-items-center py-3 px-4 text-sm"> -->
+                                            <!-- <div class="form-check mb-0">
+                                                <input class="form-check-input" type="checkbox" value=""
+                                                    id="flexCheckDefault">
+                                            </div> -->
+                                            <th class="text-info text-s font-weight-semibold ps-3" style="text-align: center;">No.</th>
+                                            <th class="text-info text-s font-weight-semibold ps-1" style="text-align: center;">Objective Id</th>
+                                            <th class="text-info text-s font-weight-semibold ps-1" style="text-align: center;">Objective</th>
+                                            <th class="text-info text-s font-weight-semibold ps-3" style="text-align: center;">Kebutuhan Dokumen</th>
+                                            <th class="text-info text-s font-weight-semibold ps-4" style="text-align: center;">Deskripsi</th>
+                                            <th class="text-info text-s font-weight-semibold ps-4" style="text-align: center;">Nama Dokumen</th>
+                                            <th class="text-info text-s font-weight-semibold ps-4" style="text-align: center;">Skor Maksimal</th>
+                                            <th class="text-info text-s font-weight-semibold ps-2" style="text-align: center;">Skor Final</th>
+                                            <th class="text-info text-s font-weight-semibold ps-2" style="text-align: center;">Action</th>
+                                        <!-- </span> -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <!-- <td class="d-flex align-items-center py-3 px-4 text-sm"> -->
+                                            <th class="font-weight-normal text-sm text-dark ps-3">1.</th>
+                                            <th class="font-weight-normal text-sm text-dark ps-1">251</th>
+                                            <th class="font-weight-normal text-sm text-dark ps-1">KHidenife</th>
+                                            <th class="font-weight-normal text-sm text-dark ps-3">KHidenifedewf</th>
+                                            <th class="font-weight-normal text-sm text-dark ps-4">KHidenifedew</th>
+                                            <th class="font-weight-normal text-sm text-dark ps-4">KHidenifedewf</th>
+                                            <th class="font-weight-normal text-sm text-dark ps-4">10</th>
+                                            <th class="font-weight-normal text-sm text-dark ps-4">10</th>
+                                            <th class="text-secondary text-xs font-weight-semibold ps-2">
+                                            <button type="button" class="btn btn-warning btn-sm position-relative mt-1 mb-1" data-bs-toggle="modal" data-bs-target="#exampleModal4"
+                                                    style="width: 30px; height: 30px;">
+                                                    <img src="../assets/img/small-logos/tool.png" alt="Logo" class="position-absolute start-50 top-50 translate-middle"
+                                                        style="width: 15px; height: 15px;">
+                                            </button>
+                                            <button type="button" class="btn btn-danger btn-sm position-relative mt-1 mb-1" data-bs-toggle="modal" data-bs-target="#exampleModal5"
+                                                    style="width: 30px; height: 30px;">
+                                                    <img src="../assets/img/small-logos/eraser.png" alt="Logo" class="position-absolute start-50 top-50 translate-middle"
+                                                        style="width: 15px; height: 15px;">
+                                            </button>
+                                            </th>
+                                        <!-- </td> -->
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                                <button type="submit" class="btn btn-light btn-md mt-3 mb-3 me-3" style="border: 2px solid #35A8CC;" onclick="redirectToHomePage()">Done</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
+            </div>
+            </div>
+        </div>
+    </div>
 </body>
+<div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" style="width: 800px; height: 700px; absolute; top: 50%; left: 50%; transform: translate(-49%);">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Dokumen</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            <div class="card-body pt-4 p-3">
+                    <div class="row">
+                        <div class="form-group">
+                            <label for="objective_id" class="form-label">Objective Id</label>
+                            <input name="objective_id" class="form-control" id="objective_id" value="" placeholder="Masukkan objective id dokumen" disabled>
+                            @error('objective_id') <div class="alert text-danger">{{ $message }}</div> @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="objective" class="form-label">Objective</label>
+                            <div class="@error('objective')border border-danger rounded-3 @enderror">
+                                <input class="form-control" type="text" placeholder="Masukkan objective dokumen" id="objective" value="" disabled>
+                            </div>
+                            @error('kode_dosen_wali') <div class="alert text-danger">{{ $message }}</div> @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="kebutuhan_dokumen" class="form-label">Kebutuhan Dokumen</label>
+                            <div class="@error('kebutuhan_dokumen')border border-danger rounded-3 @enderror">
+                                <input class="form-control" type="text" placeholder="Masukkan Kebutuhan Dokumen" id="kebutuhan_dokumen" value="{{ old('kebutuhan_dokumen') }}" disabled>
+                            </div>
+                            @error('kebutuhan_dokumen') <div class="alert text-danger">{{ $message }}</div> @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="deskripsi" class="form-control-label">Deskripsi</label>
+                            <div class="@error('deskripsi')border border-danger rounded-3 @enderror">
+                                <input class="form-control" type="text" placeholder="Masukkan Deskripsi Dokumen" id="deskripsi" value="{{ old('deskripsi') }}" disabled>
+                            </div>
+                            @error('deskripsi') <div class="text-danger">{{ $message }}</div> @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="file" class="form-control-label">Upload Dokumen</label>
+                            <div class="@error('file') border border-danger rounded-3 @enderror">
+                                <div class="mb-3">
+                                    <input class="form-control" type="file" id="file" multiple>
+                                </div>
+                            </div>
+                            @error('file') <div class="text-danger">{{ $message }}</div> @enderror
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="exampleModal4">Tutup</button>
+                <button type="button" class="btn btn-primary">Simpan</button>
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="exampleModal5" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" style="width: 800px; height: 700px; absolute; top: 50%; left: 50%; transform: translate(-49%);">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete Dokumen</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            <div class="card-body pt-4 p-3">
+                <div class="row">
+                    <div class="form-group">
+                        <label for="objective_id" class="form-label">Objective Id</label>
+                        <input name="objective_id" class="form-control" id="objective_id" value="" placeholder="Masukkan objective id dokumen" disabled>
+                        @error('objective_id') <div class="alert text-danger">{{ $message }}</div> @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="objective" class="form-label">Objective</label>
+                        <div class="@error('objective')border border-danger rounded-3 @enderror">
+                            <input class="form-control" type="text" placeholder="Masukkan objective dokumen" id="objective" value="" disabled>
+                        </div>
+                        @error('kode_dosen_wali') <div class="alert text-danger">{{ $message }}</div> @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="kebutuhan_dokumen" class="form-label">Kebutuhan Dokumen</label>
+                        <div class="@error('kebutuhan_dokumen')border border-danger rounded-3 @enderror">
+                            <input class="form-control" type="text" placeholder="Masukkan Kebutuhan Dokumen" id="kebutuhan_dokumen" value="{{ old('kebutuhan_dokumen') }}" disabled>
+                        </div>
+                        @error('kebutuhan_dokumen') <div class="alert text-danger">{{ $message }}</div> @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="deskripsi" class="form-control-label">Deskripsi</label>
+                        <div class="@error('deskripsi')border border-danger rounded-3 @enderror">
+                            <input class="form-control" type="text" placeholder="Masukkan Deskripsi Dokumen" id="deskripsi" value="{{ old('deskripsi') }}" disabled>
+                        </div>
+                        @error('deskripsi') <div class="text-danger">{{ $message }}</div> @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="file" class="form-control-label">Upload Dokumen</label>
+                        <div class="@error('file') border border-danger rounded-3 @enderror">
+                            <div class="mb-3">
+                                <input class="form-control" type="file" id="file" multiple disabled>
+                            </div>
+                        </div>
+                        @error('file') <div class="text-danger">{{ $message }}</div> @enderror
+                    </div>
+                </div>
+                <div class="text" type="text">
+                    <label for="verifikasi" class="text ms-6 me-6" style="font-size: 17px; text-align: center; color: red">Apakah Anda Yakin Ingin Menghapus File di atas? Jika Yakin Silahkan Klik Hapus
+                            dan Jika Tidak Ingin Menghapus Silahkan Klik Cancel</label>
+                </div>
+            </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="exampleModal5">Tutup</button>
+                <button type="button" class="btn btn-danger">Delete</button>
+            </div>
+            </div>
+        </div>
+    </div>
 </x-app-layout>
+
+<script>
+    // Menangani klik pada tombol Tutup
+    document.getElementById('exampleModal4').addEventListener('click', function() {
+        // Menutup modal secara manual
+        var modalSebelumnya = document.getElementById('exampleModal3'); // Ganti dengan ID modal sebelumnya
+        var modal = new bootstrap.Modal(modalSebelumnya);
+        modal.show();
+    });
+
+    // Menangani klik pada tombol Tutup
+    document.getElementById('exampleModal5').addEventListener('click', function() {
+        // Menutup modal secara manual
+        var modalSebelumnya = document.getElementById('exampleModal3'); // Ganti dengan ID modal sebelumnya
+        var modal = new bootstrap.Modal(modalSebelumnya);
+        modal.show();
+    });
+
+    function redirectToHomePage() {
+        // Gantilah 'url-halaman-utama' dengan URL sebenarnya halaman utama Anda
+        window.location.href = '/detail_dokumen';
+    }
+</script>
