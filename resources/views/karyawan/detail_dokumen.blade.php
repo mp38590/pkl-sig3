@@ -10,7 +10,7 @@
             <hr class="horizontal mb-3 dark">
             <div class="row">
                 <div class="col-md-12 mb-6">
-                    <div class="card shadow-xs border mb-4">
+                    <div class="card shadow-s border mb-4">
                         <div class="d-flex justify-content-end">
                             <button type="button" class="btn btn-light btn-sm position-relative btn-md mt-3 mb-3 me-3" data-bs-toggle="modal" data-bs-target="#exampleModal"
                                 style="border: 2px solid #35A8CC;">+ Tambah
@@ -43,9 +43,23 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="versi" class="form-control-label">Versi</label>
-                                                <div class="@error('versi')border border-danger rounded-3 @enderror">
-                                                    <input name="versi" class="form-control" type="text" placeholder="Masukkan versi dokumen" id="versi" value="{{ old('versi') }}">
-                                                </div>
+                                                <select name="versi" class="form-select" aria-label="Default select example">
+                                                        <option selected>--Pilih Versi Dokumen--</option>
+                                                        <option value="1" @if (old('versi') == '1') selected @endif>1</option>
+                                                        <option value="2" @if (old('versi') == '2') selected @endif>2</option>
+                                                        <option value="3" @if (old('versi') == '3') selected @endif>3</option>
+                                                        <option value="4" @if (old('versi') == '4') selected @endif>4</option>
+                                                        <option value="5" @if (old('versi') == '5') selected @endif>5</option>
+                                                        <option value="6" @if (old('versi') == '6') selected @endif>6</option>
+                                                        <option value="7" @if (old('versi') == '7') selected @endif>7</option>
+                                                        <option value="8" @if (old('versi') == '8') selected @endif>8</option>
+                                                        <option value="9" @if (old('versi') == '9') selected @endif>9</option>
+                                                        <option value="10" @if (old('versi') == '10') selected @endif>10</option>
+                                                        <option value="11" @if (old('versi') == '11') selected @endif>11</option>
+                                                        <option value="12" @if (old('versi') == '12') selected @endif>12</option>
+                                                        <option value="13" @if (old('versi') == '13') selected @endif>13</option>
+                                                        <option value="14" @if (old('versi') == '14') selected @endif>14</option>
+                                                    </select>
                                                 @error('versi') <div class="alertError2 text-danger">{{ $message }}</div> @enderror
                                             </div>
                                             <div class="form-group">
@@ -106,7 +120,7 @@
                                             <th class="text-info text-s font-weight-semibold ps-2" style="text-align: center;">Tahun</th>
                                             <th class="text-info text-s font-weight-semibold ps-1" style="text-align: center;">Versi</th>
                                             <th class="text-info text-s font-weight-semibold ps-1" style="text-align: center;">Kode Penilaian</th>
-                                            <th class="text-info text-s font-weight-semibold ps-3" style="text-align: center;">Item Penilaian</th>
+                                            <th class="text-info text-s font-weight-semibold ps-1" style="text-align: center;">Item Penilaian</th>
                                             <th class="text-info text-s font-weight-semibold ps-4" style="text-align: center;">Skor Maksimal</th>
                                             <th class="text-info text-s font-weight-semibold ps-2" style="text-align: center;">Skor Final</th>
                                             <th class="text-info text-s font-weight-semibold ps-2" style="text-align: center;">Deskripsi Penilaian</th>
@@ -116,16 +130,20 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse($detail_dokumen as $index => $data)
+                                    @forelse($detail_dokumen as $detail)
                                     <tr>
-                                        <th class="font-weight-normal text-sm text-dark ps-3">{{ $index + 1 }}</th>
-                                        <th class="font-weight-normal text-sm text-dark ps-0 me-4">{{ $data->tahun }}</th>
-                                        <th class="font-weight-normal text-sm text-dark ps-1">{{ $data->versi }}</th>
-                                        <th class="font-weight-normal text-sm text-dark ps-1">{{ $data->kode_penilaian }}</th>
-                                        <th class="font-weight-normal text-sm text-dark ps-3">{{ $data->item_penilaian }}</th>
-                                        <th class="font-weight-normal text-sm text-dark ps-4">{{ $data->nilai_maksimal }}</th>
-                                        <th class="font-weight-normal text-sm text-dark ps-4">{{ $data->nilai }}</th>
-                                        <th class="font-weight-normal text-sm text-dark ps-2 pe-2 expandable">{{ $data->deskripsi_item_penilaian }}</th>
+                                        <th class="font-weight-normal text-sm text-dark ps-3">{{ $loop->iteration }}</th>
+                                        <th class="font-weight-normal text-sm text-dark ps-0 me-4">{{ $detail->tahun }}</th>
+                                        <th class="font-weight-normal text-sm text-dark ps-1">{{ $detail->versi }}</th>
+                                        <th class="font-weight-normal text-sm text-dark ps-1">{{ $detail->kode_penilaian }}</th>
+                                        <th class="font-weight-normal text-sm text-dark ps-2">
+                                            {!! nl2br(wordwrap($detail->item_penilaian, 20, "\n", true)) !!}
+                                        </th>
+                                        <th class="font-weight-normal text-sm text-dark ps-4">{{ $detail->nilai_maksimal }}</th>
+                                        <th class="font-weight-normal text-sm text-dark ps-4">{{ $detail->nilai }}</th>
+                                        <th class="font-weight-normal text-sm text-dark ps-2 pe-2" style="text-align: justify;">
+                                            {!! nl2br(wordwrap($detail->deskripsi_item_penilaian, 30, "\n", true)) !!}
+                                        </th>
                                         <th class="text-secondary text-xs font-weight-semibold ps-2 text-center">
                                         <button type="button" class="btn btn-dark btn-sm position-relative mt-1 mb-1" data-bs-toggle="modal" data-bs-target="#exampleModal2"
                                                 style="width: 30px; height: 30px;">
@@ -133,18 +151,18 @@
                                                     style="width: 15px; height: 15px;">
                                         </button>
                                         </th>
-                                        <th class="text-secondary text-xs font-weight-semibold ps-2">
+                                        <th class="text-secondary text-xs font-weight-semibold ps-2 text-center">
                                         <button type="button" class="btn btn-primary btn-sm position-relative mt-1 mb-1" data-bs-toggle="modal" data-bs-target="#exampleModal3"
                                                 style="width: 30px; height: 30px;">
                                                 <img src="../assets/img/small-logos/dokumen.png" alt="Logo" class="position-absolute start-50 top-50 translate-middle"
                                                     style="width: 17px; height: 17px;">
-                                        </button>
-                                        <button type="button" class="btn btn-warning btn-sm position-relative mt-1 mb-1" data-bs-toggle="modal" data-bs-target="#exampleModal4"
+                                        </button> <br>
+                                        <button type="button" class="btn btn-warning btn-sm position-relative mt-1 mb-1 text-center" data-bs-toggle="modal" data-bs-target="#exampleModal4"
                                                 style="width: 30px; height: 30px;">
                                                 <img src="../assets/img/small-logos/tool.png" alt="Logo" class="position-absolute start-50 top-50 translate-middle"
                                                     style="width: 15px; height: 15px;">
-                                        </button>
-                                        <button type="button" class="btn btn-danger btn-sm position-relative mt-1 mb-1" data-bs-toggle="modal" data-bs-target="#exampleModal6"
+                                        </button> <br>
+                                        <button type="button" class="btn btn-danger btn-sm position-relative mt-1 mb-1 text-center" data-bs-toggle="modal" data-bs-target="#exampleModal6"
                                                 style="width: 30px; height: 30px;">
                                                 <img src="../assets/img/small-logos/eraser.png" alt="Logo" class="position-absolute start-50 top-50 translate-middle"
                                                     style="width: 15px; height: 15px;">
@@ -196,65 +214,65 @@
 
                         <!-- VIEW -->
                         <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content" style="width: 800px; absolute; top: 50%; left: 50%; transform: translate(-49%);">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">View Dokumen</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="header font-weight-bold" style="font-size: 20px; color: black;">
-                                    @foreach($detail_dokumen as $data)
-                                    Tahun <span style="margin-left: 10px;"> : {{ $data->tahun }} <br> </span>
-                                    Versi <span style="margin-left: 22px;"> : {{ $data->versi }} </span>
-                                    @endforeach
+                            <div class="modal-dialog">
+                                <div class="modal-content" style="width: 800px; absolute; top: 50%; left: 50%; transform: translate(-49%);">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">View Dokumen</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
-                                <div class="table-responsive p-0">
-                                    <table class="table align-items-center mb-0 mt-5">
-                                        <thead>
-                                            <tr>
-                                                <!-- <span class="d-flex align-items-center py-3 px-4 text-sm"> -->
-                                                    <!-- <div class="form-check mb-0">
-                                                        <input class="form-check-input" type="checkbox" value=""
-                                                            id="flexCheckDefault">
-                                                    </div> -->
-                                                    <th class="text-info text-s font-weight-semibold ps-3" style="text-align: center;">No.</th>
-                                                    <th class="text-info text-s font-weight-semibold ps-2" style="text-align: center;">Nama Dokumen</th>
-                                                    <th class="text-info text-s font-weight-semibold ps-1" style="text-align: center;">Inserted By</th>
-                                                    <th class="text-info text-s font-weight-semibold ps-1" style="text-align: center;">Updated By</th>
-                                                    <th class="text-info text-s font-weight-semibold ps-2" style="text-align: center;">Action</th>
-                                                <!-- </span> -->
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @forelse($detail_dokumen as $index => $data)
+                                <div class="modal-body">
+                                    <div class="header font-weight-bold" style="font-size: 20px; color: black;">
+                                        @foreach($detail_dokumen as $detail)
+                                        Tahun <span style="margin-left: 10px;"> : {{ $detail->tahun }} <br> </span>
+                                        Versi <span style="margin-left: 22px;"> : {{ $detail->versi }} </span>
+                                        @endforeach
+                                    </div>
+                                    <div class="table-responsive p-0">
+                                        <table class="table align-items-center mb-0 mt-5">
+                                            <thead>
                                                 <tr>
-                                                    <th class="font-weight-normal text-sm text-dark ps-3">{{ $index + 1 }}</th>
-                                                    <th class="font-weight-normal text-sm text-dark ps-0 me-4">{{ $data->nama_dokumen }}</th>
-                                                    <th class="font-weight-normal text-sm text-dark ps-1">{{ $data->inserted_by }}</th>
-                                                    <th class="font-weight-normal text-sm text-dark ps-1">{{ $data->updated_by }}</th>
-                                                    <th class="text-secondary text-xs font-weight-semibold ps-2">
-                                                    <button type="button" class="btn btn-primary btn-sm position-relative mt-1 mb-1" style="width: 30px; height: 30px;">
-                                                        <a href="{{ route('lihat_file', ['id' => $data->id]) }}" style="text-decoration: none; color: inherit;" target="_blank">
-                                                            <img src="../assets/img/small-logos/dokumen.png" alt="Logo" class="position-absolute start-50 top-50 translate-middle" style="width: 17px; height: 17px;">
-                                                        </a>
-                                                    </button>
-                                                    </th>
+                                                    <!-- <span class="d-flex align-items-center py-3 px-4 text-sm"> -->
+                                                        <!-- <div class="form-check mb-0">
+                                                            <input class="form-check-input" type="checkbox" value=""
+                                                                id="flexCheckDefault">
+                                                        </div> -->
+                                                        <th class="text-info text-s font-weight-semibold ps-3" style="text-align: center;">No.</th>
+                                                        <th class="text-info text-s font-weight-semibold ps-2" style="text-align: center;">Nama Dokumen</th>
+                                                        <th class="text-info text-s font-weight-semibold ps-1" style="text-align: center;">Inserted By</th>
+                                                        <th class="text-info text-s font-weight-semibold ps-1" style="text-align: center;">Updated By</th>
+                                                        <th class="text-info text-s font-weight-semibold ps-2" style="text-align: center;">Action</th>
+                                                    <!-- </span> -->
                                                 </tr>
-                                            @empty
-                                                <tr>
-                                                    <td colspan="5" class="text-center">{{ 'Tidak Ada Data yang ditampilkan' }}</td>
-                                                </tr>
-                                            @endforelse
-                                        </tbody>
-                                    </table>
+                                            </thead>
+                                            <tbody>
+                                                @forelse($detail_dokumen as $detail)
+                                                    <tr>
+                                                        <th class="font-weight-normal text-sm text-dark ps-3">{{ $loop->iteration }}</th>
+                                                        <th class="font-weight-normal text-sm text-dark ps-0 me-4">{{ $detail->nama_dokumen }}</th>
+                                                        <th class="font-weight-normal text-sm text-dark ps-1">{{ $detail->inserted_by }}</th>
+                                                        <th class="font-weight-normal text-sm text-dark ps-1">{{ $detail->updated_by }}</th>
+                                                        <th class="text-secondary text-xs font-weight-semibold ps-2">
+                                                        <button type="button" class="btn btn-primary btn-sm position-relative mt-1 mb-1" style="width: 30px; height: 30px;">
+                                                            <a href="{{ route('lihat_file', ['id' => $detail->id]) }}" style="text-decoration: none; color: inherit;" target="_blank">
+                                                                <img src="../assets/img/small-logos/dokumen.png" alt="Logo" class="position-absolute start-50 top-50 translate-middle" style="width: 17px; height: 17px;">
+                                                            </a>
+                                                        </button>
+                                                        </th>
+                                                    </tr>
+                                                @empty
+                                                    <tr>
+                                                        <td colspan="5" class="text-center">{{ 'Tidak Ada Data yang ditampilkan' }}</td>
+                                                    </tr>
+                                                @endforelse
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                </div>
                                 </div>
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            </div>
-                            </div>
-                        </div>
                         </div>
 
                         <!-- EDIT -->
@@ -267,11 +285,34 @@
                             </div>
                             <div class="modal-body">
                                 @foreach($detail_dokumen as $detail)
-                                <form role="form" method="POST" action="{{ route('update_skor', ['id' => $detail->id]) }}" enctype="multipart/form-data" >
-                                @endforeach    
+                                <form role="form" method="POST" action="{{ route('update_skor', ['id' => $detail->id]) }}" enctype="multipart/form-data" >   
                                 @csrf
                                     <div class="card-body pt-3 p-3">
                                         <div class="row">
+                                            <div class="form-group">
+                                                <label for="tahun" class="form-control-label">Tahun</label>
+                                                <div class="@error('tahun')border border-danger rounded-3 @enderror">
+                                                    <input name="tahun" class="form-control" type="text" id="tahun" value="{{ $detail->tahun }}" disabled>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="versi" class="form-control-label">Versi</label>
+                                                <div class="@error('versi')border border-danger rounded-3 @enderror">
+                                                    <input name="versi" class="form-control" type="text" id="versi" value="{{ $detail->versi }}" disabled>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="kode_penilaian" class="form-control-label">Kode Penilaian</label>
+                                                <div class="@error('kode_penilaian')border border-danger rounded-3 @enderror">
+                                                    <input name="kode_penilaian" class="form-control" type="text" id="kode_penilaian" value="{{ $detail->kode_penilaian }}" disabled>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="item_penilaian" class="form-control-label">Item Penilaian</label>
+                                                <div class="@error('item_penilaian')border border-danger rounded-3 @enderror">
+                                                    <input name="item_penilaian" class="form-control" type="text" id="item_penilaian" value="{{ $detail->item_penilaian }}" disabled>
+                                                </div>
+                                            </div>
                                             <div class="form-group">
                                                 <label for="nilai_maksimal" class="form-control-label">Skor Maksimal</label>
                                                 <div class="@error('nilai_maksimal')border border-danger rounded-3 @enderror">
@@ -294,6 +335,7 @@
                                 <button type="submit" class="btn btn-primary">Ubah</button>
                             </div>
                             </form>
+                            @endforeach
                             </div>
                         </div>
                         </div>

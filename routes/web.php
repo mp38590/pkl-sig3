@@ -44,10 +44,10 @@ Route::group(['middleware' => ['auth', 'level:Karyawan']], function(){
     Route::get('/detail-dokumen/show-dokumen/lihat-file/{id}', [KaryawanController::class, 'lihatFile'])
         ->name('lihat_file');
 
-    Route::get('/detail-dokumen/edit-skor/{id}', [KaryawanController::class, 'edit'])
-        ->name('edit_skor');
+    // Route::get('/detail-dokumen/edit-skor/{item_penilaian}', [KaryawanController::class, 'edit'])
+    //     ->name('edit_skor');
     
-    Route::post('/detail-dokumen/edit-skor/update-skor/{id}', [KaryawanController::class, 'update'])
+    Route::post('/detail-dokumen/update-skor/{id}', [KaryawanController::class, 'update'])
         ->name('update_skor');
     
     Route::get('/detail-dokumen/delete-dokumen/{id}', [KaryawanController::class, 'delete'])

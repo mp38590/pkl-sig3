@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('deskripsi_item_penilaian', 2000)->nullable();
             $table->string('kode_penilaian', 10)->nullable();
             $table->integer('nilai')->nullable();
-            $table->integer('objective_id')->nullable();
             $table->string('inserted_by')->nullable();
             $table->string('updated_by')->nullable();
             $table->timestamps();

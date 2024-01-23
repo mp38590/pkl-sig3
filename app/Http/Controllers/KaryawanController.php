@@ -20,16 +20,19 @@ class KaryawanController extends Controller
     public function detail()
     {
         $detail_dokumen = DB::table('variabel_penilaian')
+                        ->select('variabel_penilaian.*', DB::raw('MAX(realisasi.tahun) as tahun'), DB::raw('MAX(realisasi.nilai) as nilai'), DB::raw('MAX(dokumen.nama_dokumen) as nama_dokumen'))
                         ->join('realisasi', 'variabel_penilaian.kode_penilaian', '=', 'realisasi.kode_penilaian')
                         ->join('dokumen', 'variabel_penilaian.kode_penilaian', '=', 'dokumen.kode_penilaian')
-                        ->select('variabel_penilaian.*', 'realisasi.tahun', 'realisasi.nilai', 'dokumen.nama_dokumen')
+                        ->groupBy('variabel_penilaian.id')
+                        ->orderBy('created_at', 'asc')
                         ->get();
+
 
         // Check if data is empty
         if ($detail_dokumen->isEmpty()) {
             return view('karyawan.detail_dokumen', compact('detail_dokumen'))->with('error', 'Tidak Ada Data yang ditampilkan');
         }
-        
+
         return view('karyawan.detail_dokumen', compact('detail_dokumen'));
     }
 
@@ -130,14 +133,8 @@ class KaryawanController extends Controller
 
         // Mendapatkan dokumen sesuai dengan kode_penilaian yang terkait
         $dokumen = Dokumen::where('kode_penilaian', $kode_penilaian)->first();
-    
-        $detail_dokumen = DB::table('variabel_penilaian')
-                        ->join('realisasi', 'variabel_penilaian.kode_penilaian', '=', 'realisasi.kode_penilaian')
-                        ->join('dokumen', 'variabel_penilaian.kode_penilaian', '=', 'dokumen.kode_penilaian')
-                        ->select('variabel_penilaian.*', 'realisasi.tahun', 'realisasi.nilai', 'dokumen.nama_dokumen')
-                        ->get();
 
-        return view('karyawan.detail_dokumen', compact('dokumen', 'detail_dokumen'));
+        return view('karyawan.detail_dokumen', compact('dokumen'));
     }
 
     public function lihatFile($id)
@@ -153,50 +150,38 @@ class KaryawanController extends Controller
         return response()->file(storage_path($filePath));
     }
 
-    public function edit($id)
-    {
-        $detail_dokumen = DB::find($id);
-
-        return view('karyawan.detail_dokumen', compact('detail_dokumen'));
-    }
-
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param int $id
+     */
     public function update(Request $request, $id)
-    {
-        // Mendapatkan pengguna yang terautentikasi
-        $loggedInUser = Auth::user();
+{
+    // Mendapatkan data detail_dokumen berdasarkan id
+    $detail_dokumen = DB::with('variabel_penilaian', 'realisasi', 'realisasi')->find($id);
 
-        $variabelPenilaian = VariabelPenilaian::find($id);
-        $realisasi = Realisasi::find($id);
+    // Validasi input
+    $request->validate([
+        'nilai_maksimal' => 'required|min:1|max:5',
+        'nilai' => 'required|min:1|max:5',
+    ], [
+        'nilai_maksimal.required' => 'Nilai maksimal harus dimasukkan',
+        'nilai.required' => 'Nilai final harus dimasukkan',
+    ]);
 
-        if (!$variabelPenilaian || !$realisasi) {
-            // Tangani kasus jika data tidak ditemukan
-            // Misalnya, lemparkan exception atau berikan respon error
-            return response()->json(['error' => 'Data not found'], 404);
-        }
+    // Set nilai dari variabel request ke variabel model
+    $detail_dokumen->nilai_maksimal = $request->input('nilai_maksimal');
+    $detail_dokumen->nilai = $request->input('nilai');
 
-        $request->validate([
-            'nilai_maksimal' => 'required|min:1|max:5',
-            'nilai' => 'required|min:1|max:5',
-        ], [
-            'nilai_maksimal.required' => 'Nilai maksimal harus dimasukkan',
-            'nilai.required' => 'Nilai final harus dimasukkan',
-        ]);
+    // Simpan data detail_dokumen
+    $detail_dokumen->save();
 
-        // Ubah nilai kolom sesuai dengan data yang diterima dari $request
-        $variabelPenilaian->update(['nilai_maksimal' => $request->input('nilai_maksimal')]);
-        $realisasi->update(['nilai' => $request->input('nilai')]);
+    // Berikan respons sukses atau redirect sesuai kebutuhan Anda
+    return redirect()->route('detail_dokumen')->with('success', 'Skor maksimal dan final berhasil diubah');
+}
 
-        // Set informasi pengguna yang menyimpan data
-        $variabelPenilaian->update(['updated_by' => $loggedInUser->name]);
-        $realisasi->update(['updated_by' => $loggedInUser->name]);
 
-        // Simpan perubahan
-        $variabelPenilaian->save();
-        $realisasi->save();
 
-        // Berikan respons sukses atau redirect sesuai kebutuhan Anda
-        return redirect()->route('detail_dokumen', ['id' => $id])->with('success', 'Skor maksimal dan final berhasil dimasukkan dan ditambahkan dalam database');
-    }
 
     public function delete($id)
     {
