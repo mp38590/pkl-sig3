@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('dokumen', function (Blueprint $table) {
+        Schema::create('realisasi', function (Blueprint $table) {
             $table->id();
+            $table->string('tahun', 5)->nullable();
+            $table->string('item_penilaian', 500)->nullable();
+            $table->string('deskripsi_item_penilaian', 2000)->nullable();
             $table->string('kode_penilaian', 10)->nullable();
-            $table->string('objective', 500)->nullable();
-            $table->string('kebutuhan_dokumen', 500)->nullable();
-            $table->string('deskripsi', 500)->nullable();
-            $table->string('nama_dokumen', 150)->nullable();
-            $table->string('format_file', 150)->nullable();
+            $table->integer('nilai')->nullable();
+            $table->integer('objective_id')->nullable();
             $table->string('inserted_by')->nullable();
             $table->string('updated_by')->nullable();
             $table->timestamps();
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('dokumen');
+        Schema::dropIfExists('realisasi');
     }
 };

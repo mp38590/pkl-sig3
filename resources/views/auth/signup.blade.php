@@ -85,10 +85,19 @@
                                                 <span class="text-danger text-sm">{{ $message }}</span>
                                             @enderror
                                         </div>
+                                        <label>Level</label>
+                                        <div class="mb-3">
+                                            <input type="level" id="level" name="level" class="form-control"
+                                                placeholder="Enter your level" value="{{old("level")}}" aria-label="Level"
+                                                aria-describedby="level-addon">
+                                            @error('level')
+                                                <span class="text-danger text-sm">{{ $message }}</span>
+                                            @enderror
+                                        </div>
                                         <label>Password</label>
                                         <div class="mb-3">
                                             <input type="password" id="password" name="password" class="form-control"
-                                                placeholder="Create a password" aria-label="Password"
+                                                placeholder="Enter your password" value="{{old("password")}}" aria-label="Password"
                                                 aria-describedby="password-addon">
                                             @error('password')
                                                 <span class="text-danger text-sm">{{ $message }}</span>
@@ -96,10 +105,10 @@
                                         </div>
                                         <label>Konfirmasi Password</label>
                                         <div class="mb-3">
-                                            <input type="konfirmasi" id="konfirmasi" name="konfirmasi" class="form-control"
-                                                placeholder="Confirm your password" aria-label="Konfirmasi"
-                                                aria-describedby="konfirmasi-addon">
-                                            @error('konfirmasi')
+                                            <input type="confirm_password" id="confirm_password" name="confirm_password" class="form-control"
+                                                placeholder="Enter your confirm password" value="{{old("confirm_password")}}" aria-label="Confirm Password"
+                                                aria-describedby="confirm_password-addon">
+                                            @error('confirm_password')
                                                 <span class="text-danger text-sm">{{ $message }}</span>
                                             @enderror
                                         </div>

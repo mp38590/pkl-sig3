@@ -12,11 +12,6 @@
                     Dashboard
                 </a>
             </li>
-            <li class="nav-item px-3 py-3 border-radius-sm  d-flex align-items-center">
-                <a href="{{ route('entry_dokumen') }}" class="nav-link text-white p-0">
-                    Entry Dokumen
-                </a>
-            </li>
             <li class="nav-item px-3 py-3 border-radius-sm bg-slate-800 d-flex align-items-center">
                 <a href="{{ route('detail_dokumen') }}" class="nav-link text-white p-0">
                     Detail Dokumen

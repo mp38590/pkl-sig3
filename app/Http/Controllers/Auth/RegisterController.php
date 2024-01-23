@@ -35,26 +35,43 @@ class RegisterController extends Controller
         $request->validate([
 
             'name' => 'required|min:3|max:255',
+            'username' => 'required|min:3|max:255|unique:users',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:7|max:255',
+            'confirm_password' => 'required|min:7|max:255|same:password',
+            'level' => 'required|min:5|max:255',
             'terms' => 'accepted',
         ], [
-            'name.required' => 'Name is required',
-            'email.required' => 'Email is required',
-            'password.required' => 'Password is required',
-            'terms.accepted' => 'You must accept the terms and conditions'
+            'name.required' => 'Nama harus dimasukkan',
+            'username.required' => 'Username harus dimasukkan',
+            'email.required' => 'Email harus dimasukkan',
+            'password.required' => 'Password harus dimasukkan',
+            'confirm_password.required' => 'Password harus dimasukkan',
+            'level.required' => 'Level harus dimasukkan',
+            'terms.accepted' => 'You must accept the terms and conditions',
+            'confirm_password.same' => 'Masukkan konfirmasi password sesuai dengan password',
+            'username.unique' => 'Username sudah digunakan',
+            'email.unique' => 'Email sudah digunakan',
+            'email.email' => 'Format email tidak valid',
         ]);
 
         $user = User::create([
             'name' => $request->name,
+            'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'confirm_password' => Hash::make($request->password),
+            'level' => $request->level,
+            'inserted_by' => $request->username,
+            'updated_by' => null,
         ]);
-
-
+        
         Auth::login($user);
+        
+        if ($user->wasRecentlyCreated) {
+            $user->update(['updated_by' => $request->username]);
+        }
 
-
-        return redirect(RouteServiceProvider::HOME);
+        return redirect()->route('sign-in')->with('success', 'Akun berhasil dibuat dan disimpan');
     }
 }

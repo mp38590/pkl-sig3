@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\KaryawanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,17 +29,43 @@ Route::group(['middleware' => ['auth', 'level:Karyawan']], function(){
         return view('karyawan.dashboard_karyawan');
     })->name('dashboard_karyawan');
 
-    Route::get('/entry_dokumen', function () {
-        return view('karyawan.entry_dokumen');
-    })->name('entry_dokumen');
+    Route::get('/detail-dokumen', [KaryawanController::class, 'detail'])
+    ->name('detail_dokumen');
 
-    Route::get('/detail_dokumen', function () {
-        return view('karyawan.detail_dokumen');
-    })->name('detail_dokumen');
+    Route::post('/detail-dokumen/tambah-dokumen', [KaryawanController::class, 'store'])
+    ->name('tambah_dokumen');
 
-    Route::get('/edit_dokumen', function () {
-        return view('karyawan.edit_dokumen');
-    })->name('edit_dokumen');
+    Route::post('/detail-dokumen/upload-dokumen/{id}', [KaryawanController::class, 'upload'])
+        ->name('upload_dokumen');
+
+    Route::get('/detail-dokumen/show-dokumen/{id}', [KaryawanController::class, 'showDokumen'])
+        ->name('show_dokumen');
+    
+    Route::get('/detail-dokumen/show-dokumen/lihat-file/{id}', [KaryawanController::class, 'lihatFile'])
+        ->name('lihat_file');
+
+    Route::get('/detail-dokumen/edit-skor/{id}', [KaryawanController::class, 'edit'])
+        ->name('edit_skor');
+    
+    Route::post('/detail-dokumen/edit-skor/update-skor/{id}', [KaryawanController::class, 'update'])
+        ->name('update_skor');
+    
+    Route::get('/detail-dokumen/delete-dokumen/{id}', [KaryawanController::class, 'delete'])
+        ->name('delete_dokumen');
+
+    Route::post('/detail-dokumen/konfirm-delete-dokumen/{id}', [KaryawanController::class, 'konfirmdelete'])
+        ->name('konfirm_delete_dokumen');
+
+    // Route::get('/entry_dokumen', [KaryawanController::class, 'createEntry'])
+    // ->name('entry_dokumen');
+
+    // Route::post('/entry_dokumen', [KaryawanController::class, 'storeEntry'])
+    // ->name('entry_dokumen');
+
+    // Route::get('/entry_dokumen', function () {
+    //     return view('karyawan.entry_dokumen');
+    // })->name('entry_dokumen');
+    
 });
 
 Route::group(['middleware' => ['auth', 'level:Admin']], function(){    
@@ -74,18 +101,16 @@ Route::get('/profile', function () {
 
 Route::get('/signin', function () {
     return view('account-pages.signin');
-})->name('signin');
+})->name('signin')->middleware('guest');
 
 Route::get('/signup', function () {
     return view('account-pages.signup');
 })->name('signup')->middleware('guest');
 
 Route::get('/sign-up', [RegisterController::class, 'create'])
-    ->middleware('guest')
     ->name('sign-up');
 
-Route::post('/sign-up', [RegisterController::class, 'store'])
-    ->middleware('guest');
+Route::post('/sign-up', [RegisterController::class, 'store']);
 
 Route::get('/sign-in', [LoginController::class, 'create'])
     ->name('sign-in');

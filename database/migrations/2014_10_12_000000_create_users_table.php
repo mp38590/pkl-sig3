@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('password');
             $table->string('confirm_password')->nullable();
             $table->string('level')->nullable();
+            $table->string('inserted_by')->nullable();
+            $table->string('updated_by')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

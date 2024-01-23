@@ -10,7 +10,7 @@
         <div class="col-md-10">
             <div class="position-relative w-100">
                 <div class="oblique-image position-absolute fixed-top start-50 translate-middle-x z-index-0 bg-cover"
-                    style="width: 150vw; height: 100vh; background-image:url('../assets/img/pabrik/kantor.jpg')">
+                    style="width: 1800px; height: 800px; background-image:url('../assets/img/pabrik/pabrik-gresik.jpeg'); background-position: center;">
                     </div>
                         <!-- <div class="position-absolute top-0 start-50 translate-middle-x z-index-1 p-4 text-center text-white">
                             <h2 class="mt-3 text-dark font-weight-bold">Enter our global community of developers.</h2>
@@ -26,16 +26,15 @@
                         <div class="col-xl-4 col-md-6 d-flex flex-column mx-auto">
                             <div class="card card-plain mt-7">
                                 <div class="card-header pb-0 text-left bg-transparent text-center">
-                                <img src="../assets/img//logos/Ellipse.png" alt="Logo" class="rounded-circle position-absolute start-20 translate-middle-x"
+                                <img src="../assets/img/logos/Ellipse.png" alt="Logo" class="rounded-circle position-absolute start-20 translate-middle-x"
                                     style="width: 100px; height: 100px; border: 3px solid #000000;">
                                     <h3 class="font-weight-black text-dark display-6 mt-8">Welcome back!!!</h3>
-                                    <p class="mb-0" style="color: #ffffff">Create a New Account<br></p>
-                                    <p class="mb-0" style="color: #ffffff">OR Sign In</p>
+                                    <p class="mb-0" style="color: #ffffff">Create a New Account OR Sign In</p>
                                 </div>
                                 <div class="text-center">
-                                    @if (session('status'))
-                                        <div class="mb-4 font-medium text-sm text-green-600">
-                                            {{ session('status') }}
+                                    @if (session('success'))
+                                        <div class="mt-3 font-medium text-sm text-green-600 alert2 alert-success" role="alert2">
+                                            {{ session('success') }}
                                         </div>
                                     @endif
                                     @error('message')
@@ -47,19 +46,25 @@
                                 <div class="card-body">
                                     <form role="form" class="text-start" method="POST" action="sign-in">
                                         @csrf
-                                        <label>Username</label>
+                                        <label>Username atau Email</label>
                                         <div class="mb-3">
-                                            <input type="email" id="email" name="email" class="form-control"
-                                                placeholder="Enter your email address"
-                                                value="{{ old('email') ? old('email') : 'alec123_@gmail.com' }}"
-                                                aria-label="Email" aria-describedby="email-addon">
+                                            <input type="username_email" id="username_email" name="username_email" class="form-control"
+                                                placeholder="Masukkan alamat email Anda"
+                                                value="{{ old('username_email') }}"
+                                                aria-label="username_email" aria-describedby="username_email-addon">
+                                                @error('username_email')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
                                         </div>
                                         <label>Password</label>
                                         <div class="mb-3">
                                             <input type="password" id="password" name="password"
-                                                value="{{ old('password') ? old('password') : 'alec123_' }}"
-                                                class="form-control" placeholder="Enter password" aria-label="Password"
+                                                value=""
+                                                class="form-control" placeholder="Masukkan password Anda" aria-label="Password"
                                                 aria-describedby="password-addon">
+                                                @error('password')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
                                         </div>
                                         <div class="d-flex align-items-center">
                                             <div class="form-check form-check-info text-left mb-0">
