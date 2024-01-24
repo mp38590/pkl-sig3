@@ -23,7 +23,7 @@ class KaryawanController extends Controller
                         ->select('variabel_penilaian.*', DB::raw('MAX(realisasi.tahun) as tahun'), DB::raw('MAX(realisasi.nilai) as nilai'), DB::raw('MAX(dokumen.nama_dokumen) as nama_dokumen'))
                         ->join('realisasi', 'variabel_penilaian.kode_penilaian', '=', 'realisasi.kode_penilaian')
                         ->join('dokumen', 'variabel_penilaian.kode_penilaian', '=', 'dokumen.kode_penilaian')
-                        ->groupBy('variabel_penilaian.id')
+                        ->groupBy('variabel_penilaian.item_penilaian', 'variabel_penilaian.id')
                         ->orderBy('created_at', 'asc')
                         ->get();
 
@@ -36,13 +36,18 @@ class KaryawanController extends Controller
         return view('karyawan.detail_dokumen', compact('detail_dokumen'));
     }
 
+    public function tambah()
+    {
+        return view('karyawan.tambah_dokumen');
+    }
+    
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function simpan(Request $request)
     {
         $request->validate([
             'tahun' => 'required',
@@ -83,58 +88,61 @@ class KaryawanController extends Controller
         // Save data to 'realisasi' table
         $dokumen = new Dokumen();
         $dokumen->kode_penilaian = $request->kode_penilaian;
+        $dokumen->item_penilaian = $request->item_penilaian;
+        $dokumen->deskripsi_item_penilaian = $request->deskripsi_item_penilaian;
         $dokumen->inserted_by = $loggedInUser->username;
         $dokumen->updated_by = $loggedInUser->username;
         $dokumen->save();
 
         return redirect()->route('detail_dokumen')->with('success', 'Data berhasil dimasukkan dan ditambahkan dalam database');
     }
-    
-    public function upload(Request $request, $id)
+
+    public function file($id)
     {
-        $loggedInUser = Auth::user();
         $dokumen = Dokumen::find($id);
-
-        $request->validate([
-            'file' => 'required|mimes:pdf',
-        ], [
-            'file.required' => 'Nama Dokumen harus dimasukkan',
-            'file.mimes' => 'Dokumen harus dalam format pdf',
-        ]);
-
-        if ($request->hasFile('file')) {
-            $file = $request->file('file');
-
-            $kodePenilaian = $request->input('kode_penilaian', $dokumen->kode_penilaian);
-
-            $dokumen = new Dokumen;
-            $dokumen->kode_penilaian = $kodePenilaian;
-            $dokumen->inserted_by = $loggedInUser->username;
-            $dokumen->updated_by = $loggedInUser->username;
-
-            // Set the properties of the Dokumen model
-            $dokumen->nama_dokumen = $file->getClientOriginalName();
-            $dokumen->format_file = $file->getClientOriginalExtension();
-
-            // Store the file in the 'public' disk
-            Storage::putFileAs('app/public', $file, $file->getClientOriginalName());
-        }
-
-        $dokumen->save();
-
-        // Pass $dokumen to the view
-        return redirect()->route('detail_dokumen', ['id' => $id])->with('success', 'File dokumen berhasil dimasukkan dan ditambahkan dalam database')->with('dokumen', $dokumen);
+        return view('karyawan.upload_dokumen', compact('dokumen'));
     }
+    
+    public function upload(Request $request)
+{
+    $loggedInUser = Auth::user();
+
+    $existingData = Dokumen::first();
+    $id = $existingData->id;
+    $dokumen = Dokumen::where('id', $id)->first();
+    
+    // $existingData = VariabelPenilaian::first();  // Change YourModel to the actual model you are using
+    // $item_penilaian = $existingData->item_penilaian;
+
+    // $dokumen = Dokumen::where('item_penilaian', $item_penilaian)->first();
+
+    $request->validate([
+        'file' => 'required|mimes:pdf',
+    ], [
+        'file.required' => 'Nama Dokumen harus dimasukkan',
+        'file.mimes' => 'Dokumen harus dalam format pdf',
+    ]);
+
+    if ($request->hasFile('file')) {
+        // Simpan file PDF IRS ke direktori storage/app/public/scan_irs
+        $pdfFileName = $request->file('file')->getClientOriginalName();
+        $request->file('file')->storeAs('app/public/', $pdfFileName);
+        $dokumen->nama_dokumen = $pdfFileName;
+    }
+
+    $dokumen->save();
+
+    // Pass $dokumen to the view
+    return redirect()->route('detail_dokumen')->with('success', 'File dokumen berhasil dimasukkan dan ditambahkan dalam database')->with('dokumen', $dokumen);
+}
 
     public function showDokumen($id)
     {
-        $loggedInUser = Auth::user();
-        $kode_penilaian = $loggedInUser->kode_penilaian;
+        $dokumen = Dokumen::find($id);
+        $variabelPenilaian = VariabelPenilaian::find($id);
+        $realisasi = Realisasi::find($id);
 
-        // Mendapatkan dokumen sesuai dengan kode_penilaian yang terkait
-        $dokumen = Dokumen::where('kode_penilaian', $kode_penilaian)->first();
-
-        return view('karyawan.detail_dokumen', compact('dokumen'));
+        return view('karyawan.view_dokumen', compact('dokumen', 'variabelPenilaian', 'realisasi'));
     }
 
     public function lihatFile($id)
@@ -145,9 +153,21 @@ class KaryawanController extends Controller
             abort(404); // Handle jika dokumen tidak ditemukan
         }
 
-        $filePath = 'app/public/' . $dokumen->nama_dokumen;
+        $pdfFileName = 'app/public/' . $dokumen->nama_dokumen;
 
-        return response()->file(storage_path($filePath));
+        return response()->file(storage_path($pdfFileName));
+    }
+
+    public function edit($id)
+    {
+        $variabelPenilaian = VariabelPenilaian::find($id);
+        $realisasi = Realisasi::find($id);
+
+        if ($variabelPenilaian || $realisasi->isEmpty()) {
+            return view('karyawan.edit_skor', compact('variabelPenilaian', 'realisasi'))->with('error', 'Tidak Ada Data yang ditampilkan');
+        }
+
+        return view('karyawan.edit_skor', compact('variabelPenilaian', 'realisasi'));
     }
 
     /**
@@ -155,59 +175,101 @@ class KaryawanController extends Controller
      *
      * @param int $id
      */
-    public function update(Request $request, $id)
-{
-    // Mendapatkan data detail_dokumen berdasarkan id
-    $detail_dokumen = DB::with('variabel_penilaian', 'realisasi', 'realisasi')->find($id);
-
-    // Validasi input
-    $request->validate([
-        'nilai_maksimal' => 'required|min:1|max:5',
-        'nilai' => 'required|min:1|max:5',
-    ], [
-        'nilai_maksimal.required' => 'Nilai maksimal harus dimasukkan',
-        'nilai.required' => 'Nilai final harus dimasukkan',
-    ]);
-
-    // Set nilai dari variabel request ke variabel model
-    $detail_dokumen->nilai_maksimal = $request->input('nilai_maksimal');
-    $detail_dokumen->nilai = $request->input('nilai');
-
-    // Simpan data detail_dokumen
-    $detail_dokumen->save();
-
-    // Berikan respons sukses atau redirect sesuai kebutuhan Anda
-    return redirect()->route('detail_dokumen')->with('success', 'Skor maksimal dan final berhasil diubah');
-}
-
-
-
-
-    public function delete($id)
-    {
-        $detail_dokumen = DB::find($id);
-
-        return view('karyawan.detail_dokumen', compact('detail_dokumen'));
-    }
-
-    public function konfirmDelete($id)
+    public function update(Request $request)
     {
         $loggedInUser = Auth::user();
 
-        $dokumen = Dokumen::find($id);
+        $existingData = VariabelPenilaian::first();  // Change YourModel to the actual model you are using
+        $item_penilaian = $existingData->item_penilaian;
+        $variabelPenilaian = VariabelPenilaian::where('item_penilaian', $item_penilaian);
+
+        $request->validate([
+            'nilai_maksimal' => 'required|min:1|max:5',
+            'nilai' => 'required|min:1|max:5',
+        ], [
+            'nilai_maksimal.required' => 'Nilai maksimal harus dimasukkan',
+            'nilai.required' => 'Nilai final harus dimasukkan',
+        ]);
+
+        // Ubah nilai kolom sesuai dengan data yang diterima dari $request
+        $variabelPenilaian->update(['nilai_maksimal' => $request->input('nilai_maksimal')]);
+        $variabelPenilaian->update(['updated_by' => $loggedInUser->username]);
+
+        $existingDataReal = Realisasi::first();  // Change YourModel to the actual model you are using
+        $item_penilaian = $existingDataReal->item_penilaian;
+        $realisasi = Realisasi::where('item_penilaian', $item_penilaian);
+        $realisasi->update(['nilai' => $request->input('nilai')]);
+
+        // Set informasi pengguna yang menyimpan data
+        $realisasi->update(['updated_by' => $loggedInUser->username]);
+
+        // Berikan respons sukses atau redirect sesuai kebutuhan Anda
+        return redirect()->route('detail_dokumen')->with('success', 'Skor maksimal dan final berhasil dimasukkan dan ditambahkan dalam database');
+    }
+
+    public function delete($id)
+    {
         $variabelPenilaian = VariabelPenilaian::find($id);
         $realisasi = Realisasi::find($id);
+        $dokumen = Dokumen::find($id);
 
-        // Hapus file terkait jika perlu (gantilah 'nama_dokumen' sesuai dengan kolom yang menyimpan nama file)
-        $filePath = 'app/public/' . $dokumen->nama_dokumen;
-        if (file_exists(storage_path($filePath))) {
-            unlink(storage_path($filePath));
+        if ($variabelPenilaian || $realisasi || $dokumen->isEmpty()) {
+            return view('karyawan.hapus_dokumen', compact('variabelPenilaian', 'realisasi', 'dokumen'))->with('error', 'Tidak Ada Data yang ditampilkan');
+        }
+        return view('karyawan.hapus_dokumen', compact('variabelPenilaian', 'realisasi', 'dokumen'));
+    }
+
+    public function konfirmDelete()
+    {
+        $loggedInUser = Auth::user();
+
+        // $variabelPenilaian = VariabelPenilaian::find($id);
+        // $realisasi = Realisasi::find($id);
+        // $dokumen = Dokumen::find($id);
+
+        $loggedInUser = Auth::user();
+
+        $existingData = VariabelPenilaian::first();  // Change YourModel to the actual model you are using
+
+        $item_penilaian = $existingData->item_penilaian;  // Corrected line
+
+        $variabelPenilaian = VariabelPenilaian::where('item_penilaian', $item_penilaian)->get();  // Use get() to retrieve the result
+
+        $realisasi = Realisasi::where('item_penilaian', $item_penilaian)->get();
+
+        $dokumen = Dokumen::where('item_penilaian', $item_penilaian)->get();
+
+        $loggedInUser = Auth::user();
+
+        // Delete each instance in the collection
+        foreach ($variabelPenilaian as $item) {
+            $item->delete();
         }
 
-        // Hapus record dari database
-        $dokumen->delete();
-        $variabelPenilaian->delete();
-        $realisasi->delete();
+        foreach ($realisasi as $item) {
+            $item->delete();
+        }
+
+        foreach ($dokumen as $item) {
+            $item->delete();
+        }
+
+
+
+        // // Hapus file terkait jika perlu (gantilah 'nama_dokumen' sesuai dengan kolom yang menyimpan nama file)
+        // if ($dokumen) {
+        //     // // Get the file path
+        //     // $filePath = 'app/public/' . $dokumen->nama_dokumen;
+        
+        //     // // Check if the file exists
+        //     // if (file_exists(storage_path($filePath))) {
+        //     //     // Delete the file
+        //     //     unlink(storage_path($filePath));
+        //     // }
+        
+        //     // Delete the model from the database
+        //     $dokumen->delete();
+        // }
 
         return redirect()->route('detail_dokumen')->with('success', 'Data deleted successfully.');
     }

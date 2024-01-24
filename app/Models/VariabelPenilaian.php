@@ -17,5 +17,10 @@ class VariabelPenilaian extends Model
         'inserted_by',
         'updated_by'
     ];
+
+    public function realisasi()
+    {
+        return $this->hasMany(Realisasi::class);
+    }
     // use HasFactory;
 }

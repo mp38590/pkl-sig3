@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('kode_penilaian', 10)->nullable();
             $table->string('objective', 500)->nullable();
-            $table->string('kebutuhan_dokumen', 500)->nullable();
-            $table->string('deskripsi', 500)->nullable();
+            $table->string('item_penilaian', 500)->nullable();
+            $table->string('deskripsi_item_penilaian', 500)->nullable();
             $table->string('nama_dokumen', 150)->nullable();
             $table->string('format_file', 150)->nullable();
             $table->string('inserted_by')->nullable();

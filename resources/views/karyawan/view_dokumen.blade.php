@@ -1,0 +1,61 @@
+<x-app-layout>
+<script src="https://unpkg.com/gijgo@1.9.14/js/gijgo.min.js" type="text/javascript"></script>
+<link href="https://unpkg.com/gijgo@1.9.14/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <main class="main-content max-height-vh-100 h-100">
+        <div class="pt-5 pb-6 bg-cover" style="background-image: url('../assets/img/header-blue-purple.jpg')"></div>
+        <div class="container my-3 py-3">
+            <hr class="horizontal mb-3 dark">
+            <div class="row">
+                <div class="col-md-12 mb-6">
+                    <div class="card shadow-s border mb-4">
+                    <div class="header font-weight-bold" style="font-size: 20px; color: black;">
+                        Tahun <span style="margin-left: 10px;"> : {{ $realisasi->tahun }} <br> </span>
+                        Versi <span style="margin-left: 22px;"> : {{ $variabelPenilaian->versi }} </span>
+                    </div>
+                    <div class="table-responsive p-0">
+                        <table class="table align-items-center mb-0 mt-5">
+                            <thead>
+                                <tr>
+                                    <!-- <span class="d-flex align-items-center py-3 px-4 text-sm"> -->
+                                        <!-- <div class="form-check mb-0">
+                                            <input class="form-check-input" type="checkbox" value=""
+                                                id="flexCheckDefault">
+                                        </div> -->
+                                        <th class="text-info text-s font-weight-semibold ps-3" style="text-align: center;">No.</th>
+                                        <th class="text-info text-s font-weight-semibold ps-2" style="text-align: center;">Nama Dokumen</th>
+                                        <th class="text-info text-s font-weight-semibold ps-1" style="text-align: center;">Inserted By</th>
+                                        <th class="text-info text-s font-weight-semibold ps-1" style="text-align: center;">Updated By</th>
+                                        <th class="text-info text-s font-weight-semibold ps-2" style="text-align: center;">Action</th>
+                                    <!-- </span> -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php
+                                $index = 0
+                                @endphp
+                                <tr>
+                                    <th class="font-weight-normal text-sm text-dark ps-3">{{ $index + 1 }}</th>
+                                    <th class="font-weight-normal text-sm text-dark ps-0 me-4">{{ $dokumen->nama_dokumen }}</th>
+                                    <th class="font-weight-normal text-sm text-dark ps-1">{{ $dokumen->inserted_by }}</th>
+                                    <th class="font-weight-normal text-sm text-dark ps-1">{{ $dokumen->updated_by }}</th>
+                                    <th class="text-secondary text-xs font-weight-semibold ps-2">
+                                    <button type="button" class="btn btn-primary btn-sm position-relative mt-1 mb-1" style="width: 30px; height: 30px;">
+                                        <a href="{{ route('lihat_file', ['id' => $dokumen->id]) }}" style="text-decoration: none; color: inherit;" target="_blank">
+                                            <img src="../assets/img/small-logos/dokumen.png" alt="Logo" class="position-absolute start-50 top-50 translate-middle" style="width: 17px; height: 17px;">
+                                        </a>
+                                    </button>
+                                    </th>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+</x-app-layout>

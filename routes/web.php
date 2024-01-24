@@ -32,29 +32,35 @@ Route::group(['middleware' => ['auth', 'level:Karyawan']], function(){
     Route::get('/detail-dokumen', [KaryawanController::class, 'detail'])
     ->name('detail_dokumen');
 
-    Route::post('/detail-dokumen/tambah-dokumen', [KaryawanController::class, 'store'])
-    ->name('tambah_dokumen');
+    Route::get('/tambah-dokumen', [KaryawanController::class, 'tambah'])
+        ->name('tambah_dokumen');
 
-    Route::post('/detail-dokumen/upload-dokumen/{id}', [KaryawanController::class, 'upload'])
+    Route::post('/tambah-dokumen/simpan-dokumen', [KaryawanController::class, 'simpan'])
+        ->name('simpan_dokumen');
+
+    Route::get('/tambah-file/{id}', [KaryawanController::class, 'file'])
+        ->name('tambah_file');
+
+    Route::post('/tambah-file/upload-dokumen', [KaryawanController::class, 'upload'])
         ->name('upload_dokumen');
 
-    Route::get('/detail-dokumen/show-dokumen/{id}', [KaryawanController::class, 'showDokumen'])
+    Route::get('/show-dokumen/{id}', [KaryawanController::class, 'showDokumen'])
         ->name('show_dokumen');
     
-    Route::get('/detail-dokumen/show-dokumen/lihat-file/{id}', [KaryawanController::class, 'lihatFile'])
+    Route::get('/show-dokumen/lihat-file/{id}', [KaryawanController::class, 'lihatFile'])
         ->name('lihat_file');
-
-    // Route::get('/detail-dokumen/edit-skor/{item_penilaian}', [KaryawanController::class, 'edit'])
-    //     ->name('edit_skor');
     
-    Route::post('/detail-dokumen/update-skor/{id}', [KaryawanController::class, 'update'])
+    Route::get('/edit-skor/{id}', [KaryawanController::class, 'edit'])
+        ->name('edit_skor');
+
+    Route::post('/edit-skor/update-skor', [KaryawanController::class, 'update'])
         ->name('update_skor');
     
-    Route::get('/detail-dokumen/delete-dokumen/{id}', [KaryawanController::class, 'delete'])
-        ->name('delete_dokumen');
+    Route::get('/hapus-dokumen/{id}', [KaryawanController::class, 'delete'])
+        ->name('hapus_dokumen');
 
-    Route::post('/detail-dokumen/konfirm-delete-dokumen/{id}', [KaryawanController::class, 'konfirmdelete'])
-        ->name('konfirm_delete_dokumen');
+    Route::post('/hapus-dokumen/konfirm-hapus-dokumen', [KaryawanController::class, 'konfirmDelete'])
+        ->name('konfirm_hapus_dokumen');
 
     // Route::get('/entry_dokumen', [KaryawanController::class, 'createEntry'])
     // ->name('entry_dokumen');
