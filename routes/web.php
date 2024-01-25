@@ -41,7 +41,7 @@ Route::group(['middleware' => ['auth', 'level:Karyawan']], function(){
     Route::get('/tambah-file/{id}', [KaryawanController::class, 'file'])
         ->name('tambah_file');
 
-    Route::post('/tambah-file/upload-dokumen', [KaryawanController::class, 'upload'])
+    Route::post('/tambah-file/upload-dokumen/{id}', [KaryawanController::class, 'upload'])
         ->name('upload_dokumen');
 
     Route::get('/show-dokumen/{id}', [KaryawanController::class, 'showDokumen'])
@@ -53,13 +53,13 @@ Route::group(['middleware' => ['auth', 'level:Karyawan']], function(){
     Route::get('/edit-skor/{id}', [KaryawanController::class, 'edit'])
         ->name('edit_skor');
 
-    Route::post('/edit-skor/update-skor', [KaryawanController::class, 'update'])
+    Route::post('/edit-skor/update-skor/{id}', [KaryawanController::class, 'update'])
         ->name('update_skor');
     
     Route::get('/hapus-dokumen/{id}', [KaryawanController::class, 'delete'])
         ->name('hapus_dokumen');
 
-    Route::post('/hapus-dokumen/konfirm-hapus-dokumen', [KaryawanController::class, 'konfirmDelete'])
+    Route::post('/hapus-dokumen/konfirm-hapus-dokumen/{id}', [KaryawanController::class, 'konfirmDelete'])
         ->name('konfirm_hapus_dokumen');
 
     // Route::get('/entry_dokumen', [KaryawanController::class, 'createEntry'])

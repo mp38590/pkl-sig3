@@ -17,24 +17,30 @@ class KaryawanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function detail()
-    {
-        $detail_dokumen = DB::table('variabel_penilaian')
-                        ->select('variabel_penilaian.*', DB::raw('MAX(realisasi.tahun) as tahun'), DB::raw('MAX(realisasi.nilai) as nilai'), DB::raw('MAX(dokumen.nama_dokumen) as nama_dokumen'))
-                        ->join('realisasi', 'variabel_penilaian.kode_penilaian', '=', 'realisasi.kode_penilaian')
-                        ->join('dokumen', 'variabel_penilaian.kode_penilaian', '=', 'dokumen.kode_penilaian')
-                        ->groupBy('variabel_penilaian.item_penilaian', 'variabel_penilaian.id')
-                        ->orderBy('created_at', 'asc')
-                        ->get();
+    public function detail(Request $request)
+{
+    $tahun = $request->get('tahun');
+    
+    $query = DB::table('variabel_penilaian')
+        ->join('realisasi', 'variabel_penilaian.item_penilaian', '=', 'realisasi.item_penilaian')
+        ->groupBy('variabel_penilaian.id', 'realisasi.id')
+        ->distinct();
 
-
-        // Check if data is empty
-        if ($detail_dokumen->isEmpty()) {
-            return view('karyawan.detail_dokumen', compact('detail_dokumen'))->with('error', 'Tidak Ada Data yang ditampilkan');
-        }
-
-        return view('karyawan.detail_dokumen', compact('detail_dokumen'));
+    // Check if the "tahun" parameter is provided
+    if ($tahun) {
+        $query->where('realisasi.tahun', '=', $tahun);
     }
+
+    $detail_dokumen = $query->orderBy('realisasi.tahun', 'asc')->get();
+
+    // Check if data is empty
+    if ($detail_dokumen->isEmpty()) {
+        return view('karyawan.detail_dokumen', compact('detail_dokumen'))->with('error', 'Tidak Ada Data yang ditampilkan');
+    }
+
+    return view('karyawan.detail_dokumen', compact('detail_dokumen'));
+}
+
 
     public function tambah()
     {
@@ -100,15 +106,15 @@ class KaryawanController extends Controller
     public function file($id)
     {
         $dokumen = Dokumen::find($id);
-        return view('karyawan.upload_dokumen', compact('dokumen'));
+        $variabelPenilaian = VariabelPenilaian::find($id);
+        $realisasi = Realisasi::find($id);
+        return view('karyawan.upload_dokumen', compact('dokumen', 'variabelPenilaian', 'realisasi'));
     }
     
-    public function upload(Request $request)
+    public function upload(Request $request, $id)
 {
     $loggedInUser = Auth::user();
 
-    $existingData = Dokumen::first();
-    $id = $existingData->id;
     $dokumen = Dokumen::where('id', $id)->first();
     
     // $existingData = VariabelPenilaian::first();  // Change YourModel to the actual model you are using
@@ -175,13 +181,12 @@ class KaryawanController extends Controller
      *
      * @param int $id
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
         $loggedInUser = Auth::user();
 
-        $existingData = VariabelPenilaian::first();  // Change YourModel to the actual model you are using
-        $item_penilaian = $existingData->item_penilaian;
-        $variabelPenilaian = VariabelPenilaian::where('item_penilaian', $item_penilaian);
+        $variabelPenilaian = VariabelPenilaian::where('id', $id);
+        $realisasi = Realisasi::where('id', $id);
 
         $request->validate([
             'nilai_maksimal' => 'required|min:1|max:5',
@@ -193,14 +198,10 @@ class KaryawanController extends Controller
 
         // Ubah nilai kolom sesuai dengan data yang diterima dari $request
         $variabelPenilaian->update(['nilai_maksimal' => $request->input('nilai_maksimal')]);
-        $variabelPenilaian->update(['updated_by' => $loggedInUser->username]);
-
-        $existingDataReal = Realisasi::first();  // Change YourModel to the actual model you are using
-        $item_penilaian = $existingDataReal->item_penilaian;
-        $realisasi = Realisasi::where('item_penilaian', $item_penilaian);
         $realisasi->update(['nilai' => $request->input('nilai')]);
 
         // Set informasi pengguna yang menyimpan data
+        $variabelPenilaian->update(['updated_by' => $loggedInUser->username]);
         $realisasi->update(['updated_by' => $loggedInUser->username]);
 
         // Berikan respons sukses atau redirect sesuai kebutuhan Anda
@@ -219,43 +220,30 @@ class KaryawanController extends Controller
         return view('karyawan.hapus_dokumen', compact('variabelPenilaian', 'realisasi', 'dokumen'));
     }
 
-    public function konfirmDelete()
+    public function konfirmDelete($id)
     {
         $loggedInUser = Auth::user();
 
-        // $variabelPenilaian = VariabelPenilaian::find($id);
-        // $realisasi = Realisasi::find($id);
-        // $dokumen = Dokumen::find($id);
+        $variabelPenilaian = VariabelPenilaian::where('id', $id)->first();  // Use get() to retrieve the result
+        $realisasi = Realisasi::where('id', $id)->first();
+        $dokumen = Dokumen::where('id', $id)->first();
 
-        $loggedInUser = Auth::user();
-
-        $existingData = VariabelPenilaian::first();  // Change YourModel to the actual model you are using
-
-        $item_penilaian = $existingData->item_penilaian;  // Corrected line
-
-        $variabelPenilaian = VariabelPenilaian::where('item_penilaian', $item_penilaian)->get();  // Use get() to retrieve the result
-
-        $realisasi = Realisasi::where('item_penilaian', $item_penilaian)->get();
-
-        $dokumen = Dokumen::where('item_penilaian', $item_penilaian)->get();
-
-        $loggedInUser = Auth::user();
+        $variabelPenilaian->delete();
+        $realisasi->delete();
+        $dokumen->delete();
 
         // Delete each instance in the collection
-        foreach ($variabelPenilaian as $item) {
-            $item->delete();
-        }
+        // foreach ($variabelPenilaian as $item) {
+        //     $item->delete();
+        // }
 
-        foreach ($realisasi as $item) {
-            $item->delete();
-        }
+        // foreach ($realisasi as $item) {
+        //     $item->delete();
+        // }
 
-        foreach ($dokumen as $item) {
-            $item->delete();
-        }
-
-
-
+        // foreach ($dokumen as $item) {
+        //     $item->delete();
+        // }
         // // Hapus file terkait jika perlu (gantilah 'nama_dokumen' sesuai dengan kolom yang menyimpan nama file)
         // if ($dokumen) {
         //     // // Get the file path
