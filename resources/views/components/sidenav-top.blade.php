@@ -162,7 +162,7 @@
     <div class="container pb-3 pt-3">
         <ul class="navbar-nav d-none d-lg-flex">
             <li class="nav-item border-radius-sm px-3 py-3 me-2  d-flex align-items-center">
-                <a href="{{ route('profile') }}" class="nav-link text-white p-0">
+                <a href="{{ route('show_profile', ['id' => auth()->user()->id]) }}" class="nav-link text-white p-0">
                     Profile
                 </a>
             </li>

@@ -3788,8 +3788,8 @@ fieldset:disabled .btn {
   --bs-btn-active-border-color: #DDF5FF;
   --bs-btn-active-shadow: none;
   --bs-btn-disabled-color: #000;
-  --bs-btn-disabled-bg: #DDF5FF;
-  --bs-btn-disabled-border-color: #DDF5FF;
+  --bs-btn-disabled-bg: #CBE5E6;
+  --bs-btn-disabled-border-color: #156CBD;
 }
 
 .btn-dark {
@@ -9019,6 +9019,10 @@ fieldset:disabled .btn {
   height: 25% !important;
 }
 
+.h-30 {
+  height: 30% !important;
+}
+
 .h-50 {
   height: 50% !important;
 }
@@ -9653,6 +9657,10 @@ fieldset:disabled .btn {
 
 .ms-5 {
   margin-left: 3rem !important;
+}
+
+.ms-5-1 {
+  margin-left: 3.1rem !important;
 }
 
 .ms-6 {

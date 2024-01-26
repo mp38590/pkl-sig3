@@ -30,7 +30,7 @@ Route::group(['middleware' => ['auth', 'level:Karyawan']], function(){
     })->name('dashboard_karyawan');
 
     Route::get('/detail-dokumen', [KaryawanController::class, 'detail'])
-    ->name('detail_dokumen');
+        ->name('detail_dokumen');
 
     Route::get('/tambah-dokumen', [KaryawanController::class, 'tambah'])
         ->name('tambah_dokumen');
@@ -61,6 +61,18 @@ Route::group(['middleware' => ['auth', 'level:Karyawan']], function(){
 
     Route::post('/hapus-dokumen/konfirm-hapus-dokumen/{id}', [KaryawanController::class, 'konfirmDelete'])
         ->name('konfirm_hapus_dokumen');
+
+    Route::get('/show-profile/{id}', [KaryawanController::class, 'showProfile'])
+        ->name('show_profile');
+
+    Route::get('/edit-profile/{id}', [KaryawanController::class, 'editProfile'])
+        ->name('edit_profile');
+    
+    Route::post('/edit-profile/update-profile/{id}', [KaryawanController::class, 'updateProfile'])
+        ->name('update_profile');
+    
+    Route::get('/pilih-dokumen', [KaryawanController::class, 'pilihDokumen'])
+        ->name('pilih_dokumen');
 
     // Route::get('/entry_dokumen', [KaryawanController::class, 'createEntry'])
     // ->name('entry_dokumen');
@@ -101,9 +113,9 @@ Route::get('/RTL', function () {
     return view('RTL');
 })->name('RTL')->middleware('auth');
 
-Route::get('/profile', function () {
-    return view('account-pages.profile');
-})->name('profile')->middleware('auth');
+// Route::get('/profile', function () {
+//     return view('account-pages.profile');
+// })->name('profile')->middleware('auth');
 
 Route::get('/signin', function () {
     return view('account-pages.signin');

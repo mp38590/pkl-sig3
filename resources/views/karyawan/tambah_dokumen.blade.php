@@ -30,25 +30,35 @@
                                 <div class="form-group">
                                     <label for="versi" class="form-control-label">Versi</label>
                                     <select name="versi" class="form-select" aria-label="Default select example">
-                                        <option selected>--Pilih Versi Dokumen--</option>
-                                        <option value="1" @if (old('versi') == '1') selected @endif>1</option>
-                                        <option value="2" @if (old('versi') == '2') selected @endif>2</option>
-                                        <option value="3" @if (old('versi') == '3') selected @endif>3</option>
-                                        <option value="4" @if (old('versi') == '4') selected @endif>4</option>
-                                        <option value="5" @if (old('versi') == '5') selected @endif>5</option>
-                                        <option value="6" @if (old('versi') == '6') selected @endif>6</option>
-                                        <option value="7" @if (old('versi') == '7') selected @endif>7</option>
-                                        <option value="8" @if (old('versi') == '8') selected @endif>8</option>
-                                        <option value="9" @if (old('versi') == '9') selected @endif>9</option>
-                                        <option value="10" @if (old('versi') == '10') selected @endif>10</option>
-                                        <option value="11" @if (old('versi') == '11') selected @endif>11</option>
-                                        <option value="12" @if (old('versi') == '12') selected @endif>12</option>
-                                        <option value="13" @if (old('versi') == '13') selected @endif>13</option>
-                                        <option value="14" @if (old('versi') == '14') selected @endif>14</option>
+                                    <option value="">-- Pilih Versi Dokumen -- </option>
+                                        <?php
+                                        // Assuming you have a PostgreSQL connection established
+                                        $host = '127.0.0.1';
+                                        $dbname = 'pkl';
+                                        $user = 'postgres';
+                                        $password = 'Mutiara123_';
+
+                                        $db = pg_connect("host=$host dbname=$dbname user=$user password=$password");
+
+                                        if (!$db) {
+                                            die("Error in connection: " . pg_last_error());
+                                        }
+                                        
+                                        $query = "SELECT DISTINCT versi FROM variabel_penilaian ORDER BY versi";
+                                        $result = pg_query($db, $query);
+
+                                        if (!$result) {
+                                            die("Error in SQL query: " . pg_last_error());
+                                        }
+
+                                        while ($data = pg_fetch_assoc($result)) {
+                                        ?>
+                                            <option value="<?php echo $data['versi'] ?>"><?php echo $data['versi'] ?></option>
+                                        <?php } ?>
                                     </select>
                                     @error('versi') <div class="alertError2 text-danger">{{ $message }}</div> @enderror
                                 </div>
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label for="kode_penilaian" class="form-control-label">Kode Penilaian</label>
                                     <div class="@error('kode_penilaian')border border-danger rounded-3 @enderror">
                                         <input name="kode_penilaian" class="form-control" type="text" placeholder="Masukkan kode penilaian dari dokumen" id="kode_penilaian" value="{{ old('kode_penilaian') }}">
@@ -68,7 +78,7 @@
                                         <input name="deskripsi_item_penilaian"class="form-control" type="text" placeholder="Masukkan deskripsi item penilaian dari dokumen" id="deskripsi_item_penilaian" value="{{ old('deskripsi_item_penilaian') }}">
                                     </div>
                                     @error('deskripsi_item_penilaian') <div class="alertError2 text-danger">{{ $message }}</div> @enderror
-                                </div>
+                                </div> -->
                                 <div class="card card-footer pe-3">
                                     <button href=/detail-dokumen type="submit" class="btn btn-primary">Simpan</button>
                                 </div>

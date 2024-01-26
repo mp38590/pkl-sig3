@@ -11,10 +11,35 @@
             <div class="row">
                 <div class="col-md-12 mb-6">
                     <div class="card shadow-s border mb-4">
+                    @php
+                        // Ambil data dari tabel VariabelPenilaian
+                        $dataVariabel = \App\Models\VariabelPenilaian::all();
+
+                        $dataExists = true;  // Assume all data exists initially
+
+                        foreach ($dataVariabel as $variabel) {
+                            // Check apakah data sudah ada di tabel Realisasi dan Dokumen
+                            $realisasiExists = \App\Models\Realisasi::where('item_penilaian', $variabel->item_penilaian)->exists();
+                            $dokumenExists = \App\Models\Dokumen::where('item_penilaian', $variabel->item_penilaian)->exists();
+
+                            // Jika salah satu data tidak ada, set $dataExists menjadi false
+                            if (!$realisasiExists || !$dokumenExists) {
+                                $dataExists = false;
+                                break;  // No need to continue checking once we find a missing record
+                            }
+                        }
+                    @endphp
+                    @if($dataExists)
+                        <div class="d-flex justify-content-end">
+                            <button href="{{ route('tambah_dokumen') }}" class="btn btn-light btn-sm position-relative btn-md mt-3 mb-3 me-3" style="border: 2px solid #35A8CC;" disabled>+ Tambah
+                            </button>
+                        </div>
+                    @else
                         <div class="d-flex justify-content-end">
                             <a href="{{ route('tambah_dokumen') }}" class="btn btn-light btn-sm position-relative btn-md mt-3 mb-3 me-3" style="border: 2px solid #35A8CC;">+ Tambah
                             </a>
                         </div>
+                    @endif
                         <div class="text-center">
                             @if (session('success'))
                                 <div class="font-medium text-sm text-green-600 alert2 alert-success" role="alert2">

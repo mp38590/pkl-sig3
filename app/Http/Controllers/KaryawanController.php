@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Dokumen;
 use App\Models\VariabelPenilaian;
 use App\Models\Realisasi;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -23,7 +24,7 @@ class KaryawanController extends Controller
     
     $query = DB::table('variabel_penilaian')
         ->join('realisasi', 'variabel_penilaian.item_penilaian', '=', 'realisasi.item_penilaian')
-        ->groupBy('variabel_penilaian.id', 'realisasi.id')
+        ->groupBy('realisasi.id', 'variabel_penilaian.id')
         ->distinct();
 
     // Check if the "tahun" parameter is provided
@@ -58,47 +59,47 @@ class KaryawanController extends Controller
         $request->validate([
             'tahun' => 'required',
             'versi' => 'required|min:1|max:5',
-            'kode_penilaian' => 'required|min:5|max:255',
-            'item_penilaian' => 'required|min:5|max:255',
-            'deskripsi_item_penilaian' => 'required|min:5|max:2000',
         ], [
             'tahun.required' => 'Tahun upload dokumen harus dimasukkan',
             'versi.required' => 'Versi dokumen harus dimasukkan',
-            'kode_penilaian.required' => 'Kode penilaian untuk dokumen harus dimasukkan',
-            'item_penilaian.required' => 'Item penilaian untuk dokumen harus dimasukkan',
-            'deskripsi_item_penilaian.required' => 'Deskripsi dari item penilaian dokumen harus dimasukkan',
         ]);
 
         $loggedInUser = Auth::user();
-        
-        // Save data to 'variabel_penilaian' table
-        $variabelPenilaian = new VariabelPenilaian();
-        $variabelPenilaian->versi = $request->versi;
-        $variabelPenilaian->kode_penilaian = $request->kode_penilaian;
-        $variabelPenilaian->item_penilaian = $request->item_penilaian;
-        $variabelPenilaian->deskripsi_item_penilaian = $request->deskripsi_item_penilaian;
-        $variabelPenilaian->inserted_by = $loggedInUser->username;
-        $variabelPenilaian->updated_by = $loggedInUser->username;
-        $variabelPenilaian->save();
 
-        // Save data to 'realisasi' table
-        $realisasi = new Realisasi();
-        $realisasi->tahun = $request->tahun;
-        $realisasi->kode_penilaian = $request->kode_penilaian;
-        $realisasi->item_penilaian = $request->item_penilaian;
-        $realisasi->deskripsi_item_penilaian = $request->deskripsi_item_penilaian;
-        $realisasi->inserted_by = $loggedInUser->username;
-        $realisasi->updated_by = $loggedInUser->username;
-        $realisasi->save();
+        // Ambil semua data dari VariabelPenilaian
+    $dataVariabel = VariabelPenilaian::all();
 
-        // Save data to 'realisasi' table
-        $dokumen = new Dokumen();
-        $dokumen->kode_penilaian = $request->kode_penilaian;
-        $dokumen->item_penilaian = $request->item_penilaian;
-        $dokumen->deskripsi_item_penilaian = $request->deskripsi_item_penilaian;
-        $dokumen->inserted_by = $loggedInUser->username;
-        $dokumen->updated_by = $loggedInUser->username;
-        $dokumen->save();
+    // Iterasi melalui setiap baris VariabelPenilaian
+    foreach ($dataVariabel as $variabel) {
+        // Cek apakah data sudah ada di tabel Realisasi dan Dokumen
+        $realisasiExists = Realisasi::where('item_penilaian', $variabel->item_penilaian)->exists();
+        $dokumenExists = Dokumen::where('item_penilaian', $variabel->item_penilaian)->exists();
+
+        // Jika data belum ada, tambahkan ke tabel Realisasi dan Dokumen
+        if (!$realisasiExists) {
+            $realisasi = new Realisasi();
+            $realisasi->tahun = $request->tahun;
+            $realisasi->item_penilaian = $variabel->item_penilaian;
+            $realisasi->kode_penilaian = $variabel->kode_penilaian;
+            $realisasi->deskripsi_item_penilaian = $variabel->deskripsi_item_penilaian;
+            $realisasi->inserted_by = $loggedInUser->username;
+            $realisasi->updated_by = $loggedInUser->username;
+            $realisasi->save();
+        }
+
+        if (!$dokumenExists) {
+            $dokumen = new Dokumen();
+            $dokumen->item_penilaian = $variabel->item_penilaian;
+            $dokumen->kode_penilaian = $variabel->kode_penilaian;
+            $dokumen->deskripsi_item_penilaian = $variabel->deskripsi_item_penilaian;
+            $dokumen->inserted_by = $loggedInUser->username;
+            $dokumen->updated_by = $loggedInUser->username;
+            $dokumen->save();
+        }
+        $variabel->update(['inserted_by' => $loggedInUser->username]);
+        $variabel->update(['updated_by' => $loggedInUser->username]);
+        $variabel->save();
+    }
 
         return redirect()->route('detail_dokumen')->with('success', 'Data berhasil dimasukkan dan ditambahkan dalam database');
     }
@@ -232,33 +233,69 @@ class KaryawanController extends Controller
         $realisasi->delete();
         $dokumen->delete();
 
-        // Delete each instance in the collection
-        // foreach ($variabelPenilaian as $item) {
-        //     $item->delete();
-        // }
-
-        // foreach ($realisasi as $item) {
-        //     $item->delete();
-        // }
-
-        // foreach ($dokumen as $item) {
-        //     $item->delete();
-        // }
-        // // Hapus file terkait jika perlu (gantilah 'nama_dokumen' sesuai dengan kolom yang menyimpan nama file)
-        // if ($dokumen) {
-        //     // // Get the file path
-        //     // $filePath = 'app/public/' . $dokumen->nama_dokumen;
-        
-        //     // // Check if the file exists
-        //     // if (file_exists(storage_path($filePath))) {
-        //     //     // Delete the file
-        //     //     unlink(storage_path($filePath));
-        //     // }
-        
-        //     // Delete the model from the database
-        //     $dokumen->delete();
-        // }
-
         return redirect()->route('detail_dokumen')->with('success', 'Data deleted successfully.');
+    }
+
+    public function showProfile($id){
+        $user = User::find($id);
+
+        return view('karyawan.profile', compact('user'));
+    }
+
+    public function editProfile($id){
+        $user = User::find($id);
+
+        return view('karyawan.edit_profile', compact('user'));
+    }
+
+    public function updateProfile(Request $request, $id)
+    {
+        $user = User::where('id', $id)->first();
+
+        $request->validate([
+            'username' => 'required|min:1|max:255',
+            'nik' => 'required|min:1|max:20',
+            'email' => 'required|min:1|max:255|email',
+            'no_hp' => 'required|min:11|max:13',
+            'alamat_rumah' => 'required|min:1|max:255',
+            'jabatan' => 'required|min:1|max:255',
+            'no_rekening' => 'required|min:1|max:20',
+        ], [
+            'username.required' => 'Username pengguna harus dimasukkan',
+            'nik.required' => 'NIK pengguna harus dimasukkan',
+            'email.required' => 'Email pengguna harus dimasukkan',
+            'no_hp.required' => 'Nomor telepon pengguna harus dimasukkan',
+            'alamat_rumah.required' => 'Alamat rumah pengguna harus dimasukkan',
+            'jabatan.required' => 'Jabatan pengguna harus dimasukkan',
+            'no_rekening.required' => 'Nomer rekening pengguna harus dimasukkan',
+            'email.email' => 'Email pengguna harus dalam bentuk email',
+        ]);
+
+        // Ubah nilai kolom sesuai dengan data yang diterima dari $request
+        $user->username = $request->input('username');
+        $user->nik = $request->input('nik');
+        $user->email = $request->input('email');
+        $user->no_hp = $request->input('no_hp');
+        $user->alamat_rumah = $request->input('alamat_rumah');
+        $user->jabatan = $request->input('jabatan');
+        $user->no_rekening = $request->input('no_rekening');
+        $user->updated_by = $request->input('username');
+
+        $user->save();
+
+        // Berikan respons sukses atau redirect sesuai kebutuhan Anda
+        return redirect()->route('show_profile', ['id' => $user->id])->with('success', 'Data pribadi pengguna berhasil dimasukkan dan ditambahkan dalam database');
+    }
+
+    public function pilihDokumen()
+    {
+        $dokumen = Dokumen::orderBy('nama_dokumen')->get();
+
+        if ($dokumen) {
+            return view('karyawan.hapus_dokumen', compact('dokumen'));
+        } else {
+            // Handle the case where the query did not return data
+            dd("No data retrieved from the database");
+        }
     }
 }

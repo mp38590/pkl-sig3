@@ -33,32 +33,9 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="nama_dokumen" class="form-control-label">Nama Dokumen</label>
-                                    <select name="nama_dokumen" class="form-control" onchange="getNamaDokumen()">
+                                    <select name="nama_dokumen" id="nama_dokumen" class="form-control">
                                         <option value="">-- Pilih Nama File Dokumen -- </option>
-                                        <?php
-                                        // Assuming you have a PostgreSQL connection established
-                                        $host = '127.0.0.1';
-                                        $dbname = 'pkl';
-                                        $user = 'postgres';
-                                        $password = 'Mutiara123_';
-
-                                        $db = pg_connect("host=$host dbname=$dbname user=$user password=$password");
-
-                                        if (!$db) {
-                                            die("Error in connection: " . pg_last_error());
-                                        }
-                                        
-                                        $query = "SELECT * FROM dokumen ORDER BY nama_dokumen";
-                                        $result = pg_query($db, $query);
-
-                                        if (!$result) {
-                                            die("Error in SQL query: " . pg_last_error());
-                                        }
-
-                                        while ($data = pg_fetch_assoc($result)) {
-                                        ?>
-                                            <option value="<?php echo $data['id'] ?>"><?php echo $data['nama_dokumen'] ?></option>
-                                        <?php } ?>
+                                            <option value="">{{ $dokumen->nama_dokumen }}</option>
                                     </select>
                                 </div>
                                 <div class="card card-footer pe-3">
@@ -74,19 +51,3 @@
     </main>
 
 </x-app-layout>
-
-<script>
-function getNamaDokumen() {
-  const selectedId = document.querySelector('select[name="nama_dokumen"]').value;
-
-  if (selectedId) {
-    // Fetch the nama_dokumen using AJAX
-    fetch(`/get_nama_dokumen/${selectedId}`)
-      .then(response => response.json())
-      .then(data => {
-        const namaDokumenElement = document.getElementById('nama_dokumen_output'); // Assuming you have an element with this ID
-        namaDokumenElement.textContent = data.nama_dokumen;
-      });
-  }
-}
-</script>
