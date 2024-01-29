@@ -70,6 +70,12 @@ Route::group(['middleware' => ['auth', 'level:Karyawan']], function(){
     
     Route::post('/edit-profile/update-profile/{id}', [KaryawanController::class, 'updateProfile'])
         ->name('update_profile');
+
+    Route::get('/edit-data_profile/{id}', [KaryawanController::class, 'editDataProfile'])
+        ->name('edit_data_profile');
+
+    Route::post('/edit-data_profile/update-data_profile/{id}', [KaryawanController::class, 'updateDataProfile'])
+        ->name('update_data_profile');
     
     Route::get('/pilih-dokumen', [KaryawanController::class, 'pilihDokumen'])
         ->name('pilih_dokumen');

@@ -15,7 +15,8 @@ class VariabelPenilaian extends Model
         'item_penilaian',
         'nilai_maksimal',
         'inserted_by',
-        'updated_by'
+        'updated_by',
+        'flag_delete'
     ];
 
     public function realisasi()

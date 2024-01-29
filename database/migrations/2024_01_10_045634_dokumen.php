@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('format_file', 150)->nullable();
             $table->string('inserted_by')->nullable();
             $table->string('updated_by')->nullable();
+            $table->integer('flag_delete')->nullable();
             $table->timestamps();
         });
     }

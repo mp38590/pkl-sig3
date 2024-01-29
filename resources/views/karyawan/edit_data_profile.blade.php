@@ -12,7 +12,7 @@
             <div class="row">
                 <div class="col-md-10 mx-auto mb-3 card-center">
                     <div class="card shadow-s border mb-4">
-                        <form role="form" method="POST" action="{{ route('update_profile', ['id' => $user->id]) }}" enctype="multipart/form-data">
+                        <form role="form" method="POST" action="{{ route('update_data_profile', ['id' => $user->id]) }}" enctype="multipart/form-data">
                         @csrf
                         @method('POST')
                         <div class="card card-body pt-4 p-3">

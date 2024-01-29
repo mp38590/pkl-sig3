@@ -16,7 +16,8 @@ class Realisasi extends Model
         'nilai',
         'objective_id',
         'inserted_by',
-        'updated_by'
+        'updated_by',
+        'flag_delete'
     ];
     // use HasFactory;
 }

@@ -17,7 +17,8 @@ class Dokumen extends Model
         'nama_dokumen',
         'format_file',
         'inserted_by',
-        'updated_by'
+        'updated_by',
+        'flag_delete'
     ];
     // use HasFactory;
 }

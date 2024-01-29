@@ -25,6 +25,7 @@ class KaryawanController extends Controller
     $query = DB::table('variabel_penilaian')
         ->join('realisasi', 'variabel_penilaian.item_penilaian', '=', 'realisasi.item_penilaian')
         ->groupBy('realisasi.id', 'variabel_penilaian.id')
+        ->where('variabel_penilaian.flag_delete', '=', 0)
         ->distinct();
 
     // Check if the "tahun" parameter is provided
@@ -113,35 +114,35 @@ class KaryawanController extends Controller
     }
     
     public function upload(Request $request, $id)
-{
-    $loggedInUser = Auth::user();
+    {
+        $loggedInUser = Auth::user();
 
-    $dokumen = Dokumen::where('id', $id)->first();
-    
-    // $existingData = VariabelPenilaian::first();  // Change YourModel to the actual model you are using
-    // $item_penilaian = $existingData->item_penilaian;
+        $dokumen = Dokumen::where('id', $id)->first();
+        
+        // $existingData = VariabelPenilaian::first();  // Change YourModel to the actual model you are using
+        // $item_penilaian = $existingData->item_penilaian;
 
-    // $dokumen = Dokumen::where('item_penilaian', $item_penilaian)->first();
+        // $dokumen = Dokumen::where('item_penilaian', $item_penilaian)->first();
 
-    $request->validate([
-        'file' => 'required|mimes:pdf',
-    ], [
-        'file.required' => 'Nama Dokumen harus dimasukkan',
-        'file.mimes' => 'Dokumen harus dalam format pdf',
-    ]);
+        $request->validate([
+            'file' => 'required|mimes:pdf',
+        ], [
+            'file.required' => 'Nama Dokumen harus dimasukkan',
+            'file.mimes' => 'Dokumen harus dalam format pdf',
+        ]);
 
-    if ($request->hasFile('file')) {
-        // Simpan file PDF IRS ke direktori storage/app/public/scan_irs
-        $pdfFileName = $request->file('file')->getClientOriginalName();
-        $request->file('file')->storeAs('app/public/', $pdfFileName);
-        $dokumen->nama_dokumen = $pdfFileName;
+        if ($request->hasFile('file')) {
+            $pdf = $request->file('file');
+            $pdfName = time() . '.' . $pdf->getClientOriginalExtension();
+            $pdf->move(public_path('uploads/file'), $pdfName);
+            $dokumen->nama_dokumen = $pdfName;
+        }
+
+        $dokumen->save();
+
+        // Pass $dokumen to the view
+        return redirect()->route('detail_dokumen')->with('success', 'File dokumen berhasil dimasukkan dan ditambahkan dalam database')->with('dokumen', $dokumen);
     }
-
-    $dokumen->save();
-
-    // Pass $dokumen to the view
-    return redirect()->route('detail_dokumen')->with('success', 'File dokumen berhasil dimasukkan dan ditambahkan dalam database')->with('dokumen', $dokumen);
-}
 
     public function showDokumen($id)
     {
@@ -160,9 +161,9 @@ class KaryawanController extends Controller
             abort(404); // Handle jika dokumen tidak ditemukan
         }
 
-        $pdfFileName = 'app/public/' . $dokumen->nama_dokumen;
+        $filePath = public_path('uploads/file/' . $dokumen->nama_dokumen);
 
-        return response()->file(storage_path($pdfFileName));
+        return response()->file($filePath);
     }
 
     public function edit($id)
@@ -229,9 +230,14 @@ class KaryawanController extends Controller
         $realisasi = Realisasi::where('id', $id)->first();
         $dokumen = Dokumen::where('id', $id)->first();
 
-        $variabelPenilaian->delete();
-        $realisasi->delete();
-        $dokumen->delete();
+        $variabelPenilaian->flag_deleted = 1;
+        $variabelPenilaian->save();
+        
+        $realisasi->flag_deleted = 1;
+        $realisasi->save();
+
+        $dokumen->flag_deleted = 1;
+        $dokumen->save();
 
         return redirect()->route('detail_dokumen')->with('success', 'Data deleted successfully.');
     }
@@ -245,10 +251,48 @@ class KaryawanController extends Controller
     public function editProfile($id){
         $user = User::find($id);
 
-        return view('karyawan.edit_profile', compact('user'));
+        return view('karyawan.profile', compact('user'));
     }
 
     public function updateProfile(Request $request, $id)
+    {
+        $user = User::where('id', $id)->first();
+
+        $request->validate([
+            'name' => 'required|min:1|max:255',
+            'file' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+        ], [
+            'name.required' => 'Nama pengguna harus dimasukkan',
+            'file.required' => 'Foto profil pengguna harus dimasukkan',
+            'file.mimes' => 'Foto profil pengguna harus dalam format JPG/PNG',
+        ]);
+
+        // Ubah nilai kolom sesuai dengan data yang diterima dari $request
+        $user->name = $request->input('name');
+
+        if ($request->hasFile('file')) {
+            $image = $request->file('file');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('uploads/profiles'), $imageName);
+            $user->foto = $imageName;
+        }
+
+        $user->inserted_by = $request->input('name');
+        $user->updated_by = $request->input('name');
+
+        $user->save();
+
+        // Berikan respons sukses atau redirect sesuai kebutuhan Anda
+        return redirect()->route('show_profile', ['id' => $user->id])->with('success', 'Data pribadi pengguna berhasil dimasukkan dan ditambahkan dalam database');
+    }
+
+    public function editDataProfile($id){
+        $user = User::find($id);
+
+        return view('karyawan.edit_data_profile', compact('user'));
+    }
+
+    public function updateDataProfile(Request $request, $id)
     {
         $user = User::where('id', $id)->first();
 
@@ -272,7 +316,7 @@ class KaryawanController extends Controller
         ]);
 
         // Ubah nilai kolom sesuai dengan data yang diterima dari $request
-        $user->username = $request->input('username');
+        $user->username = $request->username;
         $user->nik = $request->input('nik');
         $user->email = $request->input('email');
         $user->no_hp = $request->input('no_hp');
