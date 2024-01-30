@@ -68,39 +68,64 @@ class KaryawanController extends Controller
         $loggedInUser = Auth::user();
 
         // Ambil semua data dari VariabelPenilaian
-    $dataVariabel = VariabelPenilaian::all();
+        $dataVariabel = VariabelPenilaian::all();
 
-    // Iterasi melalui setiap baris VariabelPenilaian
-    foreach ($dataVariabel as $variabel) {
-        // Cek apakah data sudah ada di tabel Realisasi dan Dokumen
-        $realisasiExists = Realisasi::where('item_penilaian', $variabel->item_penilaian)->exists();
-        $dokumenExists = Dokumen::where('item_penilaian', $variabel->item_penilaian)->exists();
+        // Cek apakah tahun sudah ada dalam tabel Realisasi
+        $tahunExists = Realisasi::where('tahun', $request->tahun)->exists();
 
-        // Jika data belum ada, tambahkan ke tabel Realisasi dan Dokumen
-        if (!$realisasiExists) {
-            $realisasi = new Realisasi();
-            $realisasi->tahun = $request->tahun;
-            $realisasi->item_penilaian = $variabel->item_penilaian;
-            $realisasi->kode_penilaian = $variabel->kode_penilaian;
-            $realisasi->deskripsi_item_penilaian = $variabel->deskripsi_item_penilaian;
-            $realisasi->inserted_by = $loggedInUser->username;
-            $realisasi->updated_by = $loggedInUser->username;
-            $realisasi->save();
+        if ($tahunExists) {
+            return redirect()->route('detail_dokumen')->with('error', 'Tahun sudah ada dalam database');
         }
 
-        if (!$dokumenExists) {
-            $dokumen = new Dokumen();
-            $dokumen->item_penilaian = $variabel->item_penilaian;
-            $dokumen->kode_penilaian = $variabel->kode_penilaian;
-            $dokumen->deskripsi_item_penilaian = $variabel->deskripsi_item_penilaian;
-            $dokumen->inserted_by = $loggedInUser->username;
-            $dokumen->updated_by = $loggedInUser->username;
-            $dokumen->save();
+        $versiUploaded = true;
+        foreach ($dataVariabel as $variabel) {
+            $realisasiExists = Realisasi::where('item_penilaian', $variabel->item_penilaian)->exists();
+            $dokumenExists = Dokumen::where('item_penilaian', $variabel->item_penilaian)->exists();
+
+            if (!$realisasiExists || !$dokumenExists) {
+                $versiUploaded = false;
+                break;
+            }
         }
-        $variabel->update(['inserted_by' => $loggedInUser->username]);
-        $variabel->update(['updated_by' => $loggedInUser->username]);
-        $variabel->save();
-    }
+
+        // Jika versi sudah terupload untuk semua item penilaian, tampilkan pesan error
+        if ($versiUploaded) {
+            return redirect()->route('detail_dokumen')->with('error', 'Versi untuk semua item penilaian sudah terupload');
+        }
+
+        // Iterasi melalui setiap baris VariabelPenilaian
+        foreach ($dataVariabel as $variabel) {
+            // Cek apakah data sudah ada di tabel Realisasi dan Dokumen
+            $realisasiExists = Realisasi::where('item_penilaian', $variabel->item_penilaian)->exists();
+            $dokumenExists = Dokumen::where('item_penilaian', $variabel->item_penilaian)->exists();
+
+            // Jika data belum ada, tambahkan ke tabel Realisasi dan Dokumen
+            if (!$realisasiExists) {
+                $realisasi = new Realisasi();
+                $realisasi->tahun = $request->tahun;
+                $realisasi->item_penilaian = $variabel->item_penilaian;
+                $realisasi->kode_penilaian = $variabel->kode_penilaian;
+                $realisasi->deskripsi_item_penilaian = $variabel->deskripsi_item_penilaian;
+                $realisasi->flag_delete = $variabel->flag_delete;
+                $realisasi->inserted_by = $loggedInUser->username;
+                $realisasi->updated_by = $loggedInUser->username;
+                $realisasi->save();
+            }
+
+            if (!$dokumenExists) {
+                $dokumen = new Dokumen();
+                $dokumen->item_penilaian = $variabel->item_penilaian;
+                $dokumen->kode_penilaian = $variabel->kode_penilaian;
+                $dokumen->deskripsi_item_penilaian = $variabel->deskripsi_item_penilaian;
+                $dokumen->flag_delete = $variabel->flag_delete;
+                $dokumen->inserted_by = $loggedInUser->username;
+                $dokumen->updated_by = $loggedInUser->username;
+                $dokumen->save();
+            }
+            $variabel->update(['inserted_by' => $loggedInUser->username]);
+            $variabel->update(['updated_by' => $loggedInUser->username]);
+            $variabel->save();
+        }
 
         return redirect()->route('detail_dokumen')->with('success', 'Data berhasil dimasukkan dan ditambahkan dalam database');
     }
@@ -133,7 +158,7 @@ class KaryawanController extends Controller
 
         if ($request->hasFile('file')) {
             $pdf = $request->file('file');
-            $pdfName = time() . '.' . $pdf->getClientOriginalExtension();
+            $pdfName =  $pdf->getClientOriginalName();
             $pdf->move(public_path('uploads/file'), $pdfName);
             $dokumen->nama_dokumen = $pdfName;
         }
@@ -187,23 +212,18 @@ class KaryawanController extends Controller
     {
         $loggedInUser = Auth::user();
 
-        $variabelPenilaian = VariabelPenilaian::where('id', $id);
         $realisasi = Realisasi::where('id', $id);
 
         $request->validate([
-            'nilai_maksimal' => 'required|min:1|max:5',
             'nilai' => 'required|min:1|max:5',
         ], [
-            'nilai_maksimal.required' => 'Nilai maksimal harus dimasukkan',
             'nilai.required' => 'Nilai final harus dimasukkan',
         ]);
 
         // Ubah nilai kolom sesuai dengan data yang diterima dari $request
-        $variabelPenilaian->update(['nilai_maksimal' => $request->input('nilai_maksimal')]);
         $realisasi->update(['nilai' => $request->input('nilai')]);
 
         // Set informasi pengguna yang menyimpan data
-        $variabelPenilaian->update(['updated_by' => $loggedInUser->username]);
         $realisasi->update(['updated_by' => $loggedInUser->username]);
 
         // Berikan respons sukses atau redirect sesuai kebutuhan Anda
@@ -230,13 +250,13 @@ class KaryawanController extends Controller
         $realisasi = Realisasi::where('id', $id)->first();
         $dokumen = Dokumen::where('id', $id)->first();
 
-        $variabelPenilaian->flag_deleted = 1;
+        $variabelPenilaian->flag_delete = 1;
         $variabelPenilaian->save();
         
-        $realisasi->flag_deleted = 1;
+        $realisasi->flag_delete = 1;
         $realisasi->save();
 
-        $dokumen->flag_deleted = 1;
+        $dokumen->flag_delete = 1;
         $dokumen->save();
 
         return redirect()->route('detail_dokumen')->with('success', 'Data deleted successfully.');
@@ -277,8 +297,8 @@ class KaryawanController extends Controller
             $user->foto = $imageName;
         }
 
-        $user->inserted_by = $request->input('name');
-        $user->updated_by = $request->input('name');
+        $user->inserted_by = $request->input('username');
+        $user->updated_by = $request->input('username');
 
         $user->save();
 

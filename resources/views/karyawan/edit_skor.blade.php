@@ -12,7 +12,7 @@
             <div class="row">
                 <div class="col-md-8 mx-auto mb-3 card-center">
                     <div class="card shadow-s border mb-4">
-                    <form role="form" method="POST" action="{{ route('update_skor', ['id' => $variabelPenilaian->id]) }}" enctype="multipart/form-data">
+                    <form role="form" method="POST" action="{{ route('update_skor', ['id' => $realisasi->id]) }}" enctype="multipart/form-data">
                     @csrf
                     <div class="card card-body pt-4 p-3">
                         <div class="form-group">
@@ -34,14 +34,14 @@
                         <div class="form-group">
                             <label for="nilai_maksimal" class="form-control-label">Skor Maksimal</label>
                             <div class="@error('nilai_maksimal')border border-danger rounded-3 @enderror">
-                                <input name="nilai_maksimal" class="form-control" type="text" placeholder="Masukkan skor maksimal dari dokumen" id="nilai_maksimal" value="{{ old('nilai_maksimal') }}">
+                                <input name="nilai_maksimal" class="form-control" type="text" id="nilai_maksimal" value="{{ $variabelPenilaian->nilai_maksimal }}" disabled>
                             </div>
                             @error('nilai_maksimal') <div class="alertError2 text-danger">{{ $message }}</div> @enderror
                         </div>
                         <div class="form-group">
                             <label for="nilai" class="form-control-label">Skor Final</label>
                             <div class="@error('nilai')border border-danger rounded-3 @enderror">
-                                <input name="nilai" class="form-control" type="text" placeholder="Masukkan skor final dari dokumen" id="nilai" value="{{ old('nilai') }}">
+                                <input name="nilai" class="form-control" type="text" placeholder="Masukkan skor final dari dokumen" id="nilai" value="{{ old('nilai', $realisasi->nilai) }}">
                             </div>
                             @error('nilai') <div class="alertError2 text-danger">{{ $message }}</div> @enderror
                         </div>

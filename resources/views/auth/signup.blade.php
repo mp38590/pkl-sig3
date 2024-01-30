@@ -105,10 +105,10 @@
                                         </div>
                                         <label>Konfirmasi Password</label>
                                         <div class="mb-3">
-                                            <input type="confirm_password" id="confirm_password" name="confirm_password" class="form-control"
-                                                placeholder="Enter your confirm password" value="{{old("confirm_password")}}" aria-label="Confirm Password"
-                                                aria-describedby="confirm_password-addon">
-                                            @error('confirm_password')
+                                            <input type="konfirm_password" id="konfirm_password" name="konfirm_password" class="form-control"
+                                                placeholder="Enter your konfirm password" value="{{old("konfirm_password")}}" aria-label="Konfirm Password"
+                                                aria-describedby="konfirm_password-addon">
+                                            @error('konfirm_password')
                                                 <span class="text-danger text-sm">{{ $message }}</span>
                                             @enderror
                                         </div>

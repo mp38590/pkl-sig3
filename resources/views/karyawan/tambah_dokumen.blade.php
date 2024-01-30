@@ -25,7 +25,7 @@
                                                 </button> 
                                             </div>
                                         </div>
-                                    @error('tahun') <div class="alertError2 text-danger">{{ $message }}</div> @enderror
+                                        @error('tahun') <div class="alertError2 text-danger">{{ $message }}</div> @enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="versi" class="form-control-label">Versi</label>

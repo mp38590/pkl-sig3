@@ -38,7 +38,7 @@ class RegisterController extends Controller
             'username' => 'required|min:3|max:255|unique:users',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:7|max:255',
-            'confirm_password' => 'required|min:7|max:255|same:password',
+            'konfirm_password' => 'required|min:7|max:255|same:password',
             'level' => 'required|min:5|max:255',
             'terms' => 'accepted',
         ], [
@@ -49,7 +49,7 @@ class RegisterController extends Controller
             'confirm_password.required' => 'Password harus dimasukkan',
             'level.required' => 'Level harus dimasukkan',
             'terms.accepted' => 'You must accept the terms and conditions',
-            'confirm_password.same' => 'Masukkan konfirmasi password sesuai dengan password',
+            'konfirm_password.same' => 'Masukkan konfirmasi password sesuai dengan password',
             'username.unique' => 'Username sudah digunakan',
             'email.unique' => 'Email sudah digunakan',
             'email.email' => 'Format email tidak valid',
@@ -60,10 +60,11 @@ class RegisterController extends Controller
             'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'confirm_password' => Hash::make($request->password),
+            'konfirm_password' => Hash::make($request->password),
             'level' => $request->level,
             'inserted_by' => $request->username,
             'updated_by' => null,
+            'flag_delete' => 0
         ]);
         
         Auth::login($user);
