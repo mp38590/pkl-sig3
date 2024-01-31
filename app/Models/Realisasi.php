@@ -7,14 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Realisasi extends Model
 {
-    protected $primarykey = "objective_id";
+    protected $primarykey = "id";
     protected $table = "realisasi";
     protected $fillable =[
         'tahun',
         'item_penilaian',
+        'deskripsi_item_penilaian',
         'kode_penilaian',
         'nilai',
-        'objective_id',
         'inserted_by',
         'updated_by',
         'flag_delete'

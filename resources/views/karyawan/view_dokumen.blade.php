@@ -37,19 +37,21 @@
                                         @php
                                         $index = 0
                                         @endphp
+                                        @foreach($dokumen as $dok)
                                         <tr>
-                                            <th class="font-weight-normal text-sm text-dark ps-3">{{ $index + 1 }}</th>
-                                            <th class="font-weight-normal text-sm text-dark ps-2 me-4">{{ $dokumen->nama_dokumen }}</th>
-                                            <th class="font-weight-normal text-sm text-dark ps-1">{{ $dokumen->inserted_by }}</th>
-                                            <th class="font-weight-normal text-sm text-dark ps-1">{{ $dokumen->updated_by }}</th>
+                                            <th class="font-weight-normal text-sm text-dark ps-3">{{ $loop->iteration }}</th>
+                                            <th class="font-weight-normal text-sm text-dark ps-2 me-4">{{ $dok->nama_dokumen }}</th>
+                                            <th class="font-weight-normal text-sm text-dark ps-1">{{ $dok->inserted_by }}</th>
+                                            <th class="font-weight-normal text-sm text-dark ps-1">{{ $dok->updated_by }}</th>
                                             <th class="text-secondary text-xs font-weight-semibold ps-2 text-center">
                                             <button type="button" class="btn btn-primary btn-sm position-relative mt-1 mb-1" style="width: 30px; height: 30px;">
-                                                <a href="{{ route('lihat_file', ['id' => $dokumen->id]) }}" style="text-decoration: none; color: inherit;" target="_blank">
+                                                <a href="{{ route('lihat_file', ['id' => $dok->id, 'nama_dokumen' => $dok->nama_dokumen]) }}" style="text-decoration: none; color: inherit;" target="_blank">
                                                     <img src="../assets/img/small-logos/dokumen.png" alt="Logo" class="position-absolute start-50 top-50 translate-middle" style="width: 17px; height: 17px;">
                                                 </a>
                                             </button>
                                             </th>
                                         </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

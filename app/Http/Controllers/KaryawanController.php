@@ -13,6 +13,20 @@ use Illuminate\Support\Facades\Storage;
 
 class KaryawanController extends Controller
 {
+    public function showDashboard()
+    {
+        $username = Auth::user()->username;
+        $user = User::where('username', $username)->first();
+        $level = $user->level;
+
+        if($level =='Admin'){
+            return view('admin.dashboard_admin', compact('user'));
+        }
+        else{
+            return view('karyawan.dashboard_karyawan', compact('user'));
+        }
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -150,20 +164,42 @@ class KaryawanController extends Controller
         // $dokumen = Dokumen::where('item_penilaian', $item_penilaian)->first();
 
         $request->validate([
-            'file' => 'required|mimes:pdf',
+            'file.*' => 'required|mimes:pdf',
         ], [
-            'file.required' => 'Nama Dokumen harus dimasukkan',
-            'file.mimes' => 'Dokumen harus dalam format pdf',
+            'file.*.required' => 'Nama Dokumen harus dimasukkan',
+            'file.*.mimes' => 'Dokumen harus dalam format pdf',
         ]);
 
-        if ($request->hasFile('file')) {
-            $pdf = $request->file('file');
-            $pdfName =  $pdf->getClientOriginalName();
-            $pdf->move(public_path('uploads/file'), $pdfName);
-            $dokumen->nama_dokumen = $pdfName;
-        }
+        $dataRealisasi = Realisasi::all();
 
-        $dokumen->save();
+        if ($request->hasFile('file')) {
+            foreach ($request->file('file') as $pdf) {
+                $pdfName = $pdf->getClientOriginalName();
+                $pdf->move(public_path('uploads/file'), $pdfName);
+        
+                // Check if the Dokumen with the given ID already has a document
+                $existingDokumen = Dokumen::find($request->id);
+        
+                if (!$existingDokumen->nama_dokumen) {
+                    // If the Dokumen does not have a document, update the existing record
+                    $existingDokumen->nama_dokumen = $pdfName;
+                    $existingDokumen->save();
+                } else {
+                    // If the Dokumen already has a document, create a new record
+                    $newDokumen = new Dokumen;
+                    $newDokumen->id = $request->id;
+                    $newDokumen->kode_penilaian = $existingDokumen->kode_penilaian;
+                    $newDokumen->item_penilaian = $existingDokumen->item_penilaian;
+                    $newDokumen->deskripsi_item_penilaian = $existingDokumen->deskripsi_item_penilaian;
+                    $newDokumen->inserted_by = $existingDokumen->inserted_by;
+                    $newDokumen->updated_by = $existingDokumen->updated_by;
+                    $newDokumen->flag_delete = $existingDokumen->flag_delete;
+                    $newDokumen->nama_dokumen = $pdfName;
+        
+                    $newDokumen->save();
+                }
+            }
+        }        
 
         // Pass $dokumen to the view
         return redirect()->route('detail_dokumen')->with('success', 'File dokumen berhasil dimasukkan dan ditambahkan dalam database')->with('dokumen', $dokumen);
@@ -171,16 +207,16 @@ class KaryawanController extends Controller
 
     public function showDokumen($id)
     {
-        $dokumen = Dokumen::find($id);
+        $dokumen = Dokumen::where('id', $id)->get();
         $variabelPenilaian = VariabelPenilaian::find($id);
         $realisasi = Realisasi::find($id);
 
         return view('karyawan.view_dokumen', compact('dokumen', 'variabelPenilaian', 'realisasi'));
     }
 
-    public function lihatFile($id)
+    public function lihatFile($id, $nama_dokumen)
     {
-        $dokumen = Dokumen::find($id);
+        $dokumen = Dokumen::where('id', $id)->where('nama_dokumen', $nama_dokumen)->first();
 
         if (!$dokumen) {
             abort(404); // Handle jika dokumen tidak ditemukan

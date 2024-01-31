@@ -7,12 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class VariabelPenilaian extends Model
 {
-    protected $primarykey = "";
+    protected $primarykey = "id";
     protected $table = "variabel_penilaian";
     protected $fillable =[
         'versi',
         'kode_penilaian',
         'item_penilaian',
+        'deskripsi_item_penilaian',
         'nilai_maksimal',
         'inserted_by',
         'updated_by',

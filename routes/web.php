@@ -25,9 +25,8 @@ Route::get('/', function () {
 });
 
 Route::group(['middleware' => ['auth', 'level:Karyawan']], function(){
-    Route::get('/dashboard_karyawan', function () {
-        return view('karyawan.dashboard_karyawan');
-    })->name('dashboard_karyawan');
+    Route::get('/dashboard-karyawan', [KaryawanController::class, 'showDashboard'])
+        ->name('dashboard_karyawan');
 
     Route::get('/detail-dokumen', [KaryawanController::class, 'detail'])
         ->name('detail_dokumen');
@@ -47,7 +46,7 @@ Route::group(['middleware' => ['auth', 'level:Karyawan']], function(){
     Route::get('/show-dokumen/{id}', [KaryawanController::class, 'showDokumen'])
         ->name('show_dokumen');
     
-    Route::get('/show-dokumen/lihat-file/{id}', [KaryawanController::class, 'lihatFile'])
+    Route::get('/show-dokumen/lihat-file/{id}/{nama_dokumen}', [KaryawanController::class, 'lihatFile'])
         ->name('lihat_file');
     
     Route::get('/edit-skor/{id}', [KaryawanController::class, 'edit'])
@@ -93,9 +92,8 @@ Route::group(['middleware' => ['auth', 'level:Karyawan']], function(){
 });
 
 Route::group(['middleware' => ['auth', 'level:Admin']], function(){    
-    Route::get('/dashboard_admin', function () {
-        return view('admin.dashboard_admin');
-    })->name('dashboard_admin');
+    Route::get('/dashboard-admin', [KaryawanController::class, 'showDashboard'])
+        ->name('dashboard_admin');
 
     Route::get('/verifikasi_dokumen', function () {
         return view('admin.verifikasi_dokumen');

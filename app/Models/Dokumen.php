@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Dokumen extends Model
 {
-    protected $primarykey = "objective_id";
+    protected $primarykey = "id";
     protected $table = "dokumen";
     protected $fillable =[
-        'objective_id',
+        'kode_penilaian',
         'objective',
         'item_penilaian',
         'deskripsi_item_penilaian',
@@ -20,5 +20,10 @@ class Dokumen extends Model
         'updated_by',
         'flag_delete'
     ];
+
+    public function dokumens()
+    {
+        return $this->hasMany(Dokumen::class, 'id');
+    }
     // use HasFactory;
 }

@@ -35,7 +35,7 @@
                                 <label for="file" class="form-control-label">Nama Dokumen</label>
                                 <div class="@error('file') border border-danger rounded-3 @enderror">
                                     <div class="mb-3">
-                                        <input class="form-control" type="file" name="file" id="file" multiple>
+                                        <input class="form-control" type="file" name="file[]" id="file" multiple>
                                     </div>
                                 </div>
                                 @error('file') <div class="text-danger">{{ $message }}</div> @enderror

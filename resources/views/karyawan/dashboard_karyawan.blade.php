@@ -17,7 +17,7 @@
                                     <span class="visually-hidden">New</span>
                                 </span>
                             </span>
-                            <span class="btn-inner--text">Messages</span>
+                            <a href="{{ route('show_profile', ['id' => auth()->user()->id]) }}" class="btn-inner--text">Profile</a>
                         </button>
                         <button type="button" class="btn btn-sm btn-dark btn-icon d-flex align-items-center mb-0">
                             <span class="btn-inner--icon">
@@ -268,19 +268,19 @@
                             </div>
                             <div class="d-sm-flex align-items-top">
                                 <div class="circle-icon">
-                                    <img src="/assets/img/karyawan.png" alt="karyawan" class="rounded-circle" style="width: 100px; height: 100px">
+                                    <img src="{{ asset('uploads/profiles/' . $user->foto) }}" alt="karyawan" class="rounded-circle" style="width: 100px; height: 100px">
                                 </div>
                             <div class="mb-3">
                                 <div style="position: relative; left: 20px">
                                     <div>
                                         <h1 style="font-size: 20px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" class="font-weight-bolder">Karyawan</h1>
-                                        <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Nama:</p>
+                                        <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Nama <span style="margin-left: 20px;">: {{ $user->name }}</p>
                                         <p class="text-muted">
-                                        <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">NIK:</p>
-                                        <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Jabatan: </p>
-                                        <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Level:</p>
-                                        <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Dokumen Approve:</p>
-                                        <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Dokumen Tidak Approve:</p>
+                                        <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">NIK <span style="margin-left: 38px;">: {{ $user->nik }}</p>
+                                        <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Jabatan <span style="margin-left: 8px;">: {{ $user->jabatan }}</p>
+                                        <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Level <span style="margin-left: 26px;">: {{ $user->level }}</p>
+                                        <!-- <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Dokumen Approve: </p>
+                                        <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Dokumen Tidak Approve:</p> -->
                                     </div>
                                 </div>
                             </div>

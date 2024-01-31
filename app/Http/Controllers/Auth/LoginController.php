@@ -54,9 +54,9 @@ class LoginController extends Controller
         
             // Check if the authenticated user is not null before accessing the 'level' property
             if (Auth::user() && Auth::user()->level === 'Karyawan') {
-                return redirect()->intended('/dashboard_karyawan');
+                return redirect()->intended('/dashboard-karyawan');
             } elseif (Auth::user() && Auth::user()->level === 'Admin') {
-                return redirect()->intended('/dashboard_admin');
+                return redirect()->intended('/dashboard-admin');
             }
         
             // Handle other roles if needed
