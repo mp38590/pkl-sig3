@@ -28,6 +28,9 @@ Route::group(['middleware' => ['auth', 'level:Karyawan']], function(){
     Route::get('/dashboard-karyawan', [KaryawanController::class, 'showDashboard'])
         ->name('dashboard_karyawan');
 
+    Route::get('/sync', [KaryawanController::class, 'sync'])
+        ->name('sync');
+
     Route::get('/detail-dokumen', [KaryawanController::class, 'detail'])
         ->name('detail_dokumen');
 

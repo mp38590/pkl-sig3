@@ -7,6 +7,7 @@ use App\Models\Dokumen;
 use App\Models\VariabelPenilaian;
 use App\Models\Realisasi;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -15,16 +16,58 @@ class KaryawanController extends Controller
 {
     public function showDashboard()
     {
+        $jumlah_dokumen = [];
         $username = Auth::user()->username;
         $user = User::where('username', $username)->first();
         $level = $user->level;
 
+        $jumlah_dokumen = Dokumen::where('nama_dokumen', '!=', null)->where('inserted_by', $username)
+                                    ->count();
+
+        $rata_skor = Realisasi::where('nilai', '!=', null)->where('inserted_by', $username)
+                                ->avg('nilai');
+        $rata_skor = round($rata_skor, 4);
+
+        $existingDokumen = Dokumen::first();
+        $created_at = $existingDokumen->created_at;
+        $latestTimestamp = Dokumen::where('nama_dokumen', '!=', null)
+                                    ->where('inserted_by', $username)
+                                    ->max('created_at');
+        $tambah_dokumen = Dokumen::where('nama_dokumen', '!=', null)
+                                    ->where('inserted_by', $username)
+                                    ->where('created_at', $latestTimestamp)
+                                    ->count();
+        $presentase = ($jumlah_dokumen > 0) ? ($tambah_dokumen / ($jumlah_dokumen)) * 100 : 0;
+        $presentase = round($presentase, 4);
+
+        $data = Dokumen::select(DB::raw("EXTRACT(MONTH FROM updated_at) as month"), DB::raw('COUNT(*) as total'))
+                        ->where('nama_dokumen', '!=', null)
+                        ->groupBy('month')
+                        ->orderBy('month')
+                        ->get();
+
+        $labels = $data->pluck('month');
+        $values = $data->pluck('total');
+
+        $rata = Realisasi::select(DB::raw("EXTRACT(MONTH FROM updated_at) as month"), DB::raw('AVG(nilai) as average'))
+                        ->groupBy('month')
+                        ->orderBy('month')
+                        ->get();
+
+        $label = $rata->pluck('month');
+        $average = $rata->pluck('average');
+
         if($level =='Admin'){
-            return view('admin.dashboard_admin', compact('user'));
+            return view('admin.dashboard_admin', compact('user', 'jumlah_dokumen', 'rata_skor', 'presentase', 'latestTimestamp', 'labels', 'values', 'label', 'average'));
         }
         else{
-            return view('karyawan.dashboard_karyawan', compact('user'));
+            return view('karyawan.dashboard_karyawan', compact('user', 'jumlah_dokumen', 'rata_skor', 'presentase', 'latestTimestamp', 'labels', 'values', 'label', 'average'));
         }
+    }
+
+    public function sync()
+    {
+        return response()->json(['status' => 'success']);
     }
 
     /**
