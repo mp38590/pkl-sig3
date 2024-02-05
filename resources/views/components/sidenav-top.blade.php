@@ -7,12 +7,17 @@
         </nav>
         <ul class="navbar-nav d-none d-lg-flex">
             @if (auth()->user()->level=="Karyawan")
-            <li class="nav-item px-3 py-3 border-radius-sm  d-flex align-items-center">
+            <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center">
                 <a href="{{ route('dashboard_karyawan') }}" class="nav-link text-white p-0">
                     Dashboard
                 </a>
             </li>
-            <li class="nav-item px-3 py-3 border-radius-sm bg-slate-800 d-flex align-items-center">
+            <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center">
+                <a href="{{ route('detail_variabel') }}" class="nav-link text-white p-0">
+                    Detail Variabel Penilaian
+                </a>
+            </li>
+            <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center">
                 <a href="{{ route('detail_dokumen') }}" class="nav-link text-white p-0">
                     Detail Dokumen
                 </a>

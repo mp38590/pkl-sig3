@@ -21,26 +21,39 @@ class KaryawanController extends Controller
         $user = User::where('username', $username)->first();
         $level = $user->level;
 
-        $jumlah_dokumen = Dokumen::where('nama_dokumen', '!=', null)->where('inserted_by', $username)
-                                    ->count();
+        $data = Realisasi::where('inserted_by', $username)->get();
 
-        $rata_skor = Realisasi::where('nilai', '!=', null)->where('inserted_by', $username)
-                                ->avg('nilai');
+        $total_nilai = 0;
+        $jumlah_data = count($data);
+        
+        foreach ($data as $realisasi) {
+            if ($realisasi->nilai !== null) {
+                $total_nilai += $realisasi->nilai;
+            }
+        }
+        
+        $rata_skor = $total_nilai / $jumlah_data;                  
         $rata_skor = round($rata_skor, 4);
 
+        $latestTimestamp = Realisasi::where('nilai', '!=', null)
+                ->where('inserted_by', $username)
+                ->max('updated_at');
+
+        $jumlah_dokumen = Dokumen::where('nama_dokumen', '!=', null)->where('inserted_by', $username)
+                                    ->count();
         $existingDokumen = Dokumen::first();
         $created_at = $existingDokumen->created_at;
-        $latestTimestamp = Dokumen::where('nama_dokumen', '!=', null)
-                                    ->where('inserted_by', $username)
-                                    ->max('created_at');
+        $latestTimestampDokumen = Dokumen::where('nama_dokumen', '!=', null)
+                ->where('inserted_by', $username)
+                ->max('created_at');
         $tambah_dokumen = Dokumen::where('nama_dokumen', '!=', null)
                                     ->where('inserted_by', $username)
-                                    ->where('created_at', $latestTimestamp)
+                                    ->where('created_at', $latestTimestampDokumen)
                                     ->count();
         $presentase = ($jumlah_dokumen > 0) ? ($tambah_dokumen / ($jumlah_dokumen)) * 100 : 0;
         $presentase = round($presentase, 4);
 
-        $data = Dokumen::select(DB::raw("EXTRACT(MONTH FROM updated_at) as month"), DB::raw('COUNT(*) as total'))
+        $data = Dokumen::select(DB::raw("EXTRACT(MONTH FROM created_at) as month"), DB::raw('COUNT(*) as total'))
                         ->where('nama_dokumen', '!=', null)
                         ->groupBy('month')
                         ->orderBy('month')
@@ -49,10 +62,11 @@ class KaryawanController extends Controller
         $labels = $data->pluck('month');
         $values = $data->pluck('total');
 
-        $rata = Realisasi::select(DB::raw("EXTRACT(MONTH FROM updated_at) as month"), DB::raw('AVG(nilai) as average'))
+        $rata = Realisasi::select(DB::raw("EXTRACT(MONTH FROM created_at) as month"), DB::raw("$rata_skor as average"))
                         ->groupBy('month')
                         ->orderBy('month')
                         ->get();
+    
 
         $label = $rata->pluck('month');
         $average = $rata->pluck('average');
@@ -236,7 +250,7 @@ class KaryawanController extends Controller
                     $newDokumen->deskripsi_item_penilaian = $existingDokumen->deskripsi_item_penilaian;
                     $newDokumen->inserted_by = $existingDokumen->inserted_by;
                     $newDokumen->updated_by = $existingDokumen->updated_by;
-                    $newDokumen->flag_delete = $existingDokumen->flag_delete;
+                    $newDokumen->flag_delete = 0;
                     $newDokumen->nama_dokumen = $pdfName;
         
                     $newDokumen->save();
@@ -250,7 +264,7 @@ class KaryawanController extends Controller
 
     public function showDokumen($id)
     {
-        $dokumen = Dokumen::where('id', $id)->get();
+        $dokumen = Dokumen::where('id', $id)->where('flag_delete', '=', 0)->get();
         $variabelPenilaian = VariabelPenilaian::find($id);
         $realisasi = Realisasi::find($id);
 
@@ -313,30 +327,24 @@ class KaryawanController extends Controller
     {
         $variabelPenilaian = VariabelPenilaian::find($id);
         $realisasi = Realisasi::find($id);
-        $dokumen = Dokumen::find($id);
-
+        $dokumen = Dokumen::where('id', $id)->where('flag_delete', '=', 0)->get();
+        
         if ($variabelPenilaian || $realisasi || $dokumen->isEmpty()) {
             return view('karyawan.hapus_dokumen', compact('variabelPenilaian', 'realisasi', 'dokumen'))->with('error', 'Tidak Ada Data yang ditampilkan');
         }
         return view('karyawan.hapus_dokumen', compact('variabelPenilaian', 'realisasi', 'dokumen'));
     }
 
-    public function konfirmDelete($id)
+    public function konfirmDelete(Request $request, $id)
     {
         $loggedInUser = Auth::user();
 
         $variabelPenilaian = VariabelPenilaian::where('id', $id)->first();  // Use get() to retrieve the result
         $realisasi = Realisasi::where('id', $id)->first();
         $dokumen = Dokumen::where('id', $id)->first();
+        $selectedNamaDokumen = $request->nama_dokumen;
 
-        $variabelPenilaian->flag_delete = 1;
-        $variabelPenilaian->save();
-        
-        $realisasi->flag_delete = 1;
-        $realisasi->save();
-
-        $dokumen->flag_delete = 1;
-        $dokumen->save();
+        Dokumen::where('id', $id)->where('nama_dokumen', $selectedNamaDokumen)->update(['flag_delete' => 1]);
 
         return redirect()->route('detail_dokumen')->with('success', 'Data deleted successfully.');
     }
@@ -440,5 +448,136 @@ class KaryawanController extends Controller
             // Handle the case where the query did not return data
             dd("No data retrieved from the database");
         }
+    }
+
+    public function detailVariabel(Request $request)
+{
+    $versi = $request->get('versi');
+    
+    $query = VariabelPenilaian::groupBy('variabel_penilaian.id')
+                                ->where('variabel_penilaian.flag_delete', '=', 0);
+
+    // Check if the "tahun" parameter is provided
+    if ($versi) {
+        $query->where('variabel_penilaian.versi', '=', $versi);
+    }
+
+    $detail_variabel = $query->orderBy('variabel_penilaian.versi', 'asc')->get();
+
+    // Check if data is empty
+    if ($detail_variabel->isEmpty()) {
+        return view('karyawan.detail_variabel_penilaian', compact('detail_variabel'))->with('error', 'Tidak Ada Data yang ditampilkan');
+    }
+
+    return view('karyawan.detail_variabel_penilaian', compact('detail_variabel'));
+}
+
+
+    public function tambahVariabel()
+    {
+        return view('karyawan.tambah_variabel');
+    }
+    
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function simpanVariabel(Request $request)
+    {
+        $request->validate([
+            'versi' => 'required|min:1|max:5',
+            'kode_penilaian' => 'required|min:1|max:255',
+            'item_penilaian' => 'required|min:1|max:255',
+            'deskripsi_item_penilaian' => 'required|min:1|max:255',
+            'nilai_maksimal' => 'required|min:1|max:5',
+        ], [
+            'versi.required' => 'Versi dokumen harus dimasukkan',
+            'kode_penilaian.required' => 'Kode penilaian dokumen harus dimasukkan',
+            'item_penilaian.required' => 'Item penilaian dokumen harus dimasukkan',
+            'deskripsi_item_penilaian.required' => 'Deskripsi item penilaian dokumen harus dimasukkan',
+            'nilai_maksimal.required' => 'Nilai maksimal dokumen harus dimasukkan',
+        ]);
+
+        $loggedInUser = Auth::user();
+
+        $variabelPenilaian = new VariabelPenilaian();
+        $variabelPenilaian->versi = $request->versi;
+        $variabelPenilaian->item_penilaian = $request->item_penilaian;
+        $variabelPenilaian->kode_penilaian = $request->kode_penilaian;
+        $variabelPenilaian->deskripsi_item_penilaian = $request->deskripsi_item_penilaian;
+        $variabelPenilaian->nilai_maksimal = $request->nilai_maksimal;
+        $variabelPenilaian->flag_delete = 0;
+        $variabelPenilaian->inserted_by = $loggedInUser->username;
+        $variabelPenilaian->updated_by = $loggedInUser->username;
+        $variabelPenilaian->save();
+
+        return redirect()->route('detail_variabel')->with('success', 'Data berhasil dimasukkan dan ditambahkan dalam database');
+    }
+
+    public function editVariabel($id)
+    {
+        $variabelPenilaian = VariabelPenilaian::find($id);
+
+        if (!$variabelPenilaian) {
+            return view('karyawan.edit_variabel')->with('error', 'Tidak Ada Data yang ditampilkan');
+        }
+
+        return view('karyawan.edit_variabel', compact('variabelPenilaian'));
+    }
+
+    public function updateVariabel(Request $request, $id)
+    {
+        $loggedInUser = Auth::user();
+
+        $variabelPenilaian = VariabelPenilaian::where('id', $id);
+
+        $request->validate([
+            'versi' => 'required|min:1|max:5',
+            'kode_penilaian' => 'required|min:1|max:255',
+            'item_penilaian' => 'required|min:1|max:255',
+            'deskripsi_item_penilaian' => 'required|min:1|max:255',
+            'nilai_maksimal' => 'required|min:1|max:5',
+        ], [
+            'versi.required' => 'Versi dokumen harus dimasukkan',
+            'kode_penilaian.required' => 'Kode penilaian dokumen harus dimasukkan',
+            'item_penilaian.required' => 'Item penilaian dokumen harus dimasukkan',
+            'deskripsi_item_penilaian.required' => 'Deskripsi item penilaian dokumen harus dimasukkan',
+            'nilai_maksimal.required' => 'Nilai maksimal dokumen harus dimasukkan',
+        ]);
+
+        // Ubah nilai kolom sesuai dengan data yang diterima dari $request
+        $variabelPenilaian->update(['versi' => $request->input('versi')]);
+        $variabelPenilaian->update(['kode_penilaian' => $request->input('kode_penilaian')]);
+        $variabelPenilaian->update(['item_penilaian' => $request->input('item_penilaian')]);
+        $variabelPenilaian->update(['deskripsi_item_penilaian' => $request->input('deskripsi_item_penilaian')]);
+        $variabelPenilaian->update(['nilai_maksimal' => $request->input('nilai_maksimal')]);
+        $variabelPenilaian->update(['updated_by' => $loggedInUser->username]);
+
+        // Berikan respons sukses atau redirect sesuai kebutuhan Anda
+        return redirect()->route('detail_variabel')->with('success', 'Data variabel penilaian dokumen berhasil dimasukkan dan ditambahkan dalam database');
+    }
+
+    public function deleteVariabel($id)
+    {
+        $variabelPenilaian = VariabelPenilaian::find($id);
+
+        if (!$variabelPenilaian) {
+            return view('karyawan.hapus_variabel')->with('error', 'Tidak Ada Data yang ditampilkan');
+        }
+        return view('karyawan.hapus_variabel', compact('variabelPenilaian'));
+    }
+
+    public function konfirmDeleteVariabel($id)
+    {
+        $loggedInUser = Auth::user();
+
+        $variabelPenilaian = VariabelPenilaian::where('id', $id)->first();  // Use get() to retrieve the result
+
+        $variabelPenilaian->flag_delete = 1;
+        $variabelPenilaian->save();
+
+        return redirect()->route('detail_variabel')->with('success', 'Data deleted successfully.');
     }
 }

@@ -82,6 +82,33 @@ Route::group(['middleware' => ['auth', 'level:Karyawan']], function(){
     Route::get('/pilih-dokumen', [KaryawanController::class, 'pilihDokumen'])
         ->name('pilih_dokumen');
 
+    Route::get('/detail-variabel', [KaryawanController::class, 'detailVariabel'])
+        ->name('detail_variabel');
+
+    Route::get('/tambah-variabel', [KaryawanController::class, 'tambahVariabel'])
+        ->name('tambah_variabel');
+
+    Route::post('/tambah-variabel/simpan-variabel', [KaryawanController::class, 'simpanVariabel'])
+        ->name('simpan_variabel');
+
+    Route::get('/edit-variabel/{id}', [KaryawanController::class, 'editVariabel'])
+        ->name('edit_variabel');
+
+    Route::post('/edit-variabel/update-variabel/{id}', [KaryawanController::class, 'updateVariabel'])
+        ->name('update_variabel');
+
+    Route::get('/hapus-variabel/{id}', [KaryawanController::class, 'deleteVariabel'])
+        ->name('hapus_variabel');
+
+    Route::post('/hapus-variabel/konfirm-hapus-variabel/{id}', [KaryawanController::class, 'konfirmDeleteVariabel'])
+        ->name('konfirm_hapus_variabel');
+
+    Route::get('/hapus-file/{id}/{nama_dokumen}', [KaryawanController::class, 'deleteFile'])
+        ->name('hapus_file');
+
+    Route::post('/konfirm-hapus-file/{id}/{nama_dokumen}', [KaryawanController::class, 'konfirmDeleteFile'])
+        ->name('konfirm_hapus_file');
+
     // Route::get('/entry_dokumen', [KaryawanController::class, 'createEntry'])
     // ->name('entry_dokumen');
 

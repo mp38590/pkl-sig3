@@ -13,7 +13,9 @@
                 <div class="col-md-8 mx-auto mb-3 card-center">
                     <div class="card shadow-s border mb-4">
                         <div class="card-body pt-4 p-3">
-                            <form role="form" method="POST" action="{{ route('konfirm_hapus_dokumen', ['id' => $variabelPenilaian->id]) }}" enctype="multipart/form-data">
+                            @foreach($dokumen as $dok)
+                            <form role="form" method="POST" action="{{ route('konfirm_hapus_dokumen', ['id' => $dok->id]) }}" enctype="multipart/form-data">
+                            @endforeach
                             @csrf
                                 <div class="form-group">
                                     <label for="tahun" class="form-control-label">Tahun</label>
@@ -35,7 +37,9 @@
                                     <label for="nama_dokumen" class="form-control-label">Nama Dokumen</label>
                                     <select name="nama_dokumen" id="nama_dokumen" class="form-control">
                                         <option value="">-- Pilih Nama File Dokumen -- </option>
-                                            <option value="">{{ $dokumen->nama_dokumen }}</option>
+                                        @foreach($dokumen as $document)
+                                            <option value="{{ $document->nama_dokumen }}">{{ $document->nama_dokumen }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="card card-footer pe-3">
