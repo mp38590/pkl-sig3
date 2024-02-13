@@ -44,11 +44,19 @@
                                             <th class="font-weight-normal text-sm text-dark ps-1">{{ $dok->inserted_by }}</th>
                                             <th class="font-weight-normal text-sm text-dark ps-1">{{ $dok->updated_by }}</th>
                                             <th class="text-secondary text-xs font-weight-semibold ps-2 text-center">
-                                            <button type="button" class="btn btn-primary btn-sm position-relative mt-1 mb-1" style="width: 30px; height: 30px;">
-                                                <a href="{{ route('lihat_file', ['id' => $dok->id, 'nama_dokumen' => $dok->nama_dokumen]) }}" style="text-decoration: none; color: inherit;" target="_blank">
-                                                    <img src="../assets/img/small-logos/dokumen.png" alt="Logo" class="position-absolute start-50 top-50 translate-middle" style="width: 17px; height: 17px;">
-                                                </a>
-                                            </button>
+                                                @if($dok->nama_dokumen !== null)
+                                                    <button type="button" class="btn btn-primary btn-sm position-relative mt-1 mb-1" style="width: 30px; height: 30px;">
+                                                        <a href="{{ route('lihat_file', ['id' => $dok->id, 'nama_dokumen' => $dok->nama_dokumen]) }}" style="text-decoration: none; color: inherit;" target="_blank">
+                                                            <img src="../assets/img/small-logos/dokumen.png" alt="Logo" class="position-absolute start-50 top-50 translate-middle" style="width: 17px; height: 17px;">
+                                                        </a>
+                                                    </button>
+                                                @else
+                                                    <button type="button" class="btn btn-primary btn-sm position-relative mt-1 mb-1" style="width: 30px; height: 30px;" disabled>
+                                                        <a href="#" style="text-decoration: none; color: inherit;" target="_blank">
+                                                            <img src="../assets/img/small-logos/dokumen.png" alt="Logo" class="position-absolute start-50 top-50 translate-middle" style="width: 17px; height: 17px;">
+                                                        </a>
+                                                    </button>
+                                                @endif
                                             </th>
                                         </tr>
                                         @endforeach

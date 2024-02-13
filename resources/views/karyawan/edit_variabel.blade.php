@@ -18,35 +18,35 @@
                         <div class="form-group">
                             <label for="versi" class="form-control-label">Versi</label>
                             <div class="@error('versi')border border-danger rounded-3 @enderror">
-                                <input name="versi" class="form-control" type="text" placeholder="Masukkan versi dari dokumen" id="versi" value="{{ $variabelPenilaian->versi }}">
+                                <input name="versi" class="form-control" type="text" placeholder="{{ $variabelPenilaian->versi }}" id="versi" value="{{ old('versi') }}">
                             </div>
                             @error('versi') <div class="alertError2 text-danger">{{ $message }}</div> @enderror
                         </div>
                         <div class="form-group">
                             <label for="kode_penilaian" class="form-control-label">Kode Penilaian</label>
                             <div class="@error('kode_penilaian')border border-danger rounded-3 @enderror">
-                                <input name="kode_penilaian" class="form-control" type="text" placeholder="Masukkan kode penilaian dari dokumen" id="kode_penilaian" value="{{ $variabelPenilaian->kode_penilaian }}">
+                                <input name="kode_penilaian" class="form-control" type="text" placeholder="{{ $variabelPenilaian->kode_penilaian }}" id="kode_penilaian" value="{{ old('kode_penilaian') }}">
                             </div>
                             @error('kode_penilaian') <div class="alertError2 text-danger">{{ $message }}</div> @enderror
                         </div>
                         <div class="form-group">
                             <label for="item_penilaian" class="form-control-label">Item Penilaian</label>
                             <div class="@error('item_penilaian')border border-danger rounded-3 @enderror">
-                                <input name="item_penilaian" class="form-control" type="text" placeholder="Masukkan item penilaian dari dokumen" id="item_penilaian" value="{{ $variabelPenilaian->item_penilaian }}">
+                                <input name="item_penilaian" class="form-control" type="text" placeholder="{{ $variabelPenilaian->item_penilaian }}" id="item_penilaian" value="{{ old('item_penilaian') }}">
                             </div>
                             @error('item_penilaian') <div class="alertError2 text-danger">{{ $message }}</div> @enderror
                         </div>
                         <div class="form-group">
                             <label for="deskripsi_item_penilaian" class="form-control-label">Deskripsi Penilaian</label>
                             <div class="@error('deskripsi_item_penilaian')border border-danger rounded-3 @enderror">
-                                <input name="deskripsi_item_penilaian"class="form-control" type="text" placeholder="Masukkan deskripsi item penilaian dari dokumen" id="deskripsi_item_penilaian" value="{{ $variabelPenilaian->deskripsi_item_penilaian }}">
+                                <input name="deskripsi_item_penilaian"class="form-control" type="text" placeholder="{{ $variabelPenilaian->deskripsi_item_penilaian }}" id="deskripsi_item_penilaian" value="{{ old('deskripsi_item_penilaian') }}">
                             </div>
                             @error('deskripsi_item_penilaian') <div class="alertError2 text-danger">{{ $message }}</div> @enderror
                         </div>
                         <div class="form-group">
                             <label for="nilai_maksimal" class="form-control-label">Skor Maksimal</label>
                             <div class="@error('nilai_maksimal')border border-danger rounded-3 @enderror">
-                                <input name="nilai_maksimal"class="form-control" type="text" placeholder="Masukkan skor maksimal dari dokumen" id="nilai_maksimal" value="{{ $variabelPenilaian->nilai_maksimal }}">
+                                <input name="nilai_maksimal"class="form-control" type="text" placeholder="{{ $variabelPenilaian->nilai_maksimal }}" id="nilai_maksimal" value="{{ old('nilai_maksimal') }}">
                             </div>
                             @error('nilai_maksimal') <div class="alertError2 text-danger">{{ $message }}</div> @enderror
                         </div>

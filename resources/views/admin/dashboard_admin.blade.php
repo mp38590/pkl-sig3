@@ -7,7 +7,7 @@
                 <div class="col-md-12">
                     <div class="d-md-flex align-items-center mb-3 mx-2">
                         <div class="mb-md-0 mb-3">
-                            <h3 class="font-weight-bold mb-0">Hello, Putra</h3>
+                            <h3 class="font-weight-bold mb-0">Hello, {{ $user->name }}</h3>
                             <p class="mb-0">Apps you might like!</p>
                         </div>
                         <button type="button"
@@ -19,7 +19,7 @@
                             </span>
                             <span class="btn-inner--text">Messages</span>
                         </button>
-                        <button type="button" class="btn btn-sm btn-dark btn-icon d-flex align-items-center mb-0">
+                        <button type="button" class="btn btn-sm btn-dark btn-icon d-flex align-items-center mb-0" onclick="syncData()">
                             <span class="btn-inner--icon">
                                 <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" fill="none"
                                     viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="d-block me-2">
@@ -211,12 +211,12 @@
                                 <div style="position: relative; left: 20px">
                                     <div>
                                         <h1 style="font-size: 20px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" class="font-weight-bolder">Admin</h1>
-                                        <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Nama:</p>
+                                        <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Nama <span style="margin-left: 20px;">: {{ $user->name }}</p>
                                         <p class="text-muted">
-                                        <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">NIK:</p>
-                                        <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Jabatan: </p>
-                                        <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Level:</p>
-                                        <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Dokumen Approve:</p>
+                                        <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">NIK <span style="margin-left: 20px;">: {{ $user->nik }}</p>
+                                        <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Jabatan <span style="margin-left: 20px;">: {{ $user->jabatan }} </p>
+                                        <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Level <span style="margin-left: 20px;">: {{ $user->level }} </p>
+                                        <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Dokumen Approve: </p>
                                         <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Dokumen Tidak Approve:</p>
                                     </div>
                                 </div>
@@ -659,30 +659,25 @@
 </x-app-layout>
 
 <script type="https://code.highcharts.com/highcharts.js"></script>
-<script type="text/javascript">
-    var hari = 1;
-    var jumlah = 2;
-    Highcharts.chart('Grafik', {
-        title : {
-            text: 'Hari Dokumen Terupload'
-        },
-        xAxis : {
-            categories : hari
-        },
-        yAxis : {
-            title : {
-                text : Jumlah Dokumen Terupload
+
+<script>
+    function syncData() {
+        // Menggunakan Fetch API untuk mengirim permintaan ke server
+        fetch('{{ route('sync') }}', {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Menanggapi respons dari server
+            if (data.status === 'success') {
+                // Merefresh halaman
+                location.reload();
             }
-        },
-        plotOptions : {
-            series : {
-                allowPointSelect : true
-            }
-        },
-        series : [
-        {
-            name : 'Dokumen Terupload',
-            data : hari
-        }]
-    })
+        })
+        .catch(error => console.error('Error:', error));
+    }
 </script>

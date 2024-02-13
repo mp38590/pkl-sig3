@@ -3792,6 +3792,23 @@ fieldset:disabled .btn {
   --bs-btn-disabled-border-color: #156CBD;
 }
 
+.btn-light-blue {
+  --bs-btn-color: #000;
+  --bs-btn-bg: #DDF5FF;
+  --bs-btn-border-color: #156CBD;
+  --bs-btn-hover-color: #000;
+  --bs-btn-hover-bg: #DDF5FF;
+  --bs-btn-hover-border-color: #DDF5FF;
+  --bs-btn-focus-shadow-rgb: 173, 181, 191;
+  --bs-btn-active-color: #000;
+  --bs-btn-active-bg: #DDF5FF;
+  --bs-btn-active-border-color: #DDF5FF;
+  --bs-btn-active-shadow: none;
+  --bs-btn-disabled-color: #000;
+  --bs-btn-disabled-bg: #CBE5E6;
+  --bs-btn-disabled-border-color: #156CBD;
+}
+
 .btn-dark {
   --bs-btn-color: #fff;
   --bs-btn-bg: #1e293b;
@@ -20973,7 +20990,7 @@ fieldset:disabled .btn {
 }
 
 .breadcrumb-dark .breadcrumb-item a {
-  color: #f9fafb;
+  color: #110;
 }
 
 .breadcrumb-dark .breadcrumb-item a:hover {
@@ -25118,6 +25135,14 @@ p,
 
 .lead {
   font-size: 1.25rem;
+}
+
+.text-lggg {
+  font-size: 1.3rem !important;
+}
+
+.text-lgg {
+  font-size: 1.6rem !important;
 }
 
 .text-lg {

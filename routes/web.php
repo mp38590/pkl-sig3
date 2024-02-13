@@ -40,10 +40,10 @@ Route::group(['middleware' => ['auth', 'level:Karyawan']], function(){
     Route::post('/tambah-dokumen/simpan-dokumen', [KaryawanController::class, 'simpan'])
         ->name('simpan_dokumen');
 
-    Route::get('/tambah-file/{id}', [KaryawanController::class, 'file'])
+    Route::get('/tambah-file/{id}', [KaryawanController::class, 'tambahFile'])
         ->name('tambah_file');
 
-    Route::post('/tambah-file/upload-dokumen/{id}', [KaryawanController::class, 'upload'])
+    Route::post('/tambah-file/upload-dokumen/{id}', [KaryawanController::class, 'uploadFile'])
         ->name('upload_dokumen');
 
     Route::get('/show-dokumen/{id}', [KaryawanController::class, 'showDokumen'])
@@ -109,6 +109,15 @@ Route::group(['middleware' => ['auth', 'level:Karyawan']], function(){
     Route::post('/konfirm-hapus-file/{id}/{nama_dokumen}', [KaryawanController::class, 'konfirmDeleteFile'])
         ->name('konfirm_hapus_file');
 
+    Route::get('/detail-file-dokumen', [KaryawanController::class, 'detailFile'])
+        ->name('detail_file_dokumen');
+
+    Route::get('/detail-nilai-dokumen', [KaryawanController::class, 'detailNilai'])
+        ->name('detail_nilai_dokumen');
+
+    Route::post('/logout', [LoginController::class, 'destroy'])
+        ->name('logout');
+
     // Route::get('/entry_dokumen', [KaryawanController::class, 'createEntry'])
     // ->name('entry_dokumen');
 
@@ -124,6 +133,12 @@ Route::group(['middleware' => ['auth', 'level:Karyawan']], function(){
 Route::group(['middleware' => ['auth', 'level:Admin']], function(){    
     Route::get('/dashboard-admin', [KaryawanController::class, 'showDashboard'])
         ->name('dashboard_admin');
+
+    Route::get('/sync', [KaryawanController::class, 'sync'])
+        ->name('sync');
+
+    Route::post('/logout', [LoginController::class, 'destroy'])
+        ->name('logout');
 
     Route::get('/verifikasi_dokumen', function () {
         return view('admin.verifikasi_dokumen');
@@ -168,9 +183,6 @@ Route::get('/sign-in', [LoginController::class, 'create'])
     ->name('sign-in');
 
 Route::post('/sign-in', [LoginController::class, 'store']);
-
-Route::post('/logout', [LoginController::class, 'destroy'])
-    ->name('logout');
 
 Route::get('/forgot-password', [ForgotPasswordController::class, 'create'])
     ->middleware('guest')

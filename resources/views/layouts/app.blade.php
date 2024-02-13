@@ -70,7 +70,8 @@
 
 <body class="g-sidenav-show  bg-gray-100">
     @php
-        $topSidenavArray = ['detail_dokumen', 'show_dokumen', 'show_profile', 'data_pengguna', 'dashboard_karyawan', 'detail_variabel'];
+        $topSidenavArray = ['detail_dokumen', 'show_dokumen', 'show_profile', 'data_pengguna', 'dashboard_karyawan', 'detail_variabel',
+                            'dashboard_admin', 'verifikasi_dokumen', 'data_pengguna', 'detail_file_dokumen', 'detail_nilai_dokumen'];
         $topSidenavTransparent = ['signin', 'signup'];
         $topSidenavRTL = ['RTL'];
     @endphp

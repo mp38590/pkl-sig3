@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('variabel_penilaian', function (Blueprint $table) {
             $table->id();
             $table->string('versi', 5);
-            $table->string('item_penilaian', 500)->unique();
+            $table->string('item_penilaian', 500);
             $table->string('deskripsi_item_penilaian', 2000);
             $table->string('kode_penilaian', 10);
             $table->integer('nilai_maksimal');

@@ -1,14 +1,15 @@
 <x-app-layout>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
-        <x-app.navbar />
         <div class="container-fluid py-4 px-5">
             <div class="row">
                 <div class="col-md-12">
                     <div class="d-md-flex align-items-center mb-3 mx-2">
                         <div class="mb-md-0 mb-3">
                             <h3 class="font-weight-bold mb-0">Hello, {{ $user->name }}</h3>
-                            <p class="mb-0">Apps you might like!</p>
+                            <p class="mb-0">Silahkan Upload Dokumen Anda!</p>
                         </div>
                         <button type="button"
                             class="btn btn-sm btn-white btn-icon d-flex align-items-center mb-0 ms-md-auto mb-sm-0 mb-2 me-2">
@@ -17,7 +18,7 @@
                                     <span class="visually-hidden">New</span>
                                 </span>
                             </span>
-                            <a href="{{ route('show_profile', ['id' => auth()->user()->id]) }}" class="btn-inner--text">Profile</a>
+                            <a href="{{ route('show_profile', ['id' => auth()->user()->id]) }}" class="btn-white text-decoration-none">Profile</a>
                         </button>
                         <button type="button" class="btn btn-sm btn-dark btn-icon d-flex align-items-center mb-0" onclick="syncData()">
                             <span class="btn-inner--icon">
@@ -210,13 +211,13 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="w-100">
-                                        <p class="text-sm text-secondary mb-1">Jumlah Dokumen Terupload</p>
+                                        <p class="text-xl text-secondary mb-1">Jumlah Dokumen Terupload</p>
                                         <h4 class="mb-2 font-weight-bold">{{ $jumlah_dokumen }} Dokumen</h4>
                                         <div class="d-flex align-items-center">
                                             <span class="text-sm text-success font-weight-bolder">
                                                 <i class="fa fa-chevron-up text-xs me-1"></i>{{ $presentase }} %
                                             </span>
-                                            <span class="text-sm ms-1">dari {{ $jumlah_dokumen }} Dokumen</span>
+                                            <span class="text-xl ms-1">dari {{ $jumlah_dokumen }} Dokumen</span>
                                         </div>
                                     </div>
                                 </div>
@@ -241,10 +242,10 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="w-100">
-                                        <p class="text-sm text-secondary mb-1">Rata-Rata Skor dari Dokumen Terupload</p>
+                                        <p class="text-xl text-secondary mb-1">Rata-Rata Skor dari Dokumen Terupload</p>
                                         <h4 class="mb-2 font-weight-bold">{{ $rata_skor }}</h4>
                                         <div class="d-flex align-items-center">
-                                            <span class="text-sm ms-1">Berdasarkan perubahan terakhir <span class="text-info">{{ $latestTimestamp }}</span></span>
+                                            <span class="text-xl ms-1">Berdasarkan perubahan terakhir <span class="text-info">{{ $latestTimestamp }}</span></span>
                                         </div>
                                     </div>
                                 </div>
@@ -259,8 +260,8 @@
                         <div class="card-header pb-0">
                             <div class="d-sm-flex align-items-center mb-3">
                                 <div>
-                                    <h6 class="font-weight-semibold text-lg mb-0">Details User</h6>
-                                    <p class="text-sm mb-sm-0 mb-2">Here you have details about your data.</p>
+                                    <h4 class="text-lg mb-0">Detail Profile</h4>
+                                    <p class="text-s mb-sm-0 mb-2">Silahkan Cek dan Lakukan Perubahan untuk Data Pribadi Anda!</p>
                                 </div>
                             </div>
                             <div class="d-sm-flex align-items-top">
@@ -270,7 +271,7 @@
                             <div class="mb-3">
                                 <div style="position: relative; left: 20px">
                                     <div>
-                                        <h1 style="font-size: 20px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" class="font-weight-bolder">Karyawan</h1>
+                                        <h1 style="font-size: 25px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" class="font-weight-bolder">Karyawan</h1>
                                         <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Nama <span style="margin-left: 20px;">: {{ $user->name }}</p>
                                         <p class="text-muted">
                                         <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">NIK <span style="margin-left: 38px;">: {{ $user->nik }}</p>
@@ -300,7 +301,11 @@
             <div class="row pe-0">
                 <div class="col-6 mt-3 pe-2">
                     <div class="card shadow-xs border">
-                        <div class="card-header">Grafik Jumlah Dokumen Terupload</div>
+                        <div class="card-header font-weight-semibold d-flex justify-content-between align-items-center">Grafik Jumlah Dokumen Terupload
+                            <a href="{{ route('detail_file_dokumen') }}" type="button" class="btn btn-sm btn-dark btn-icon d-flex align-items-right justify-content-end mb-0 ms-5">
+                                <span class="btn-inner--text">Detail File Dokumen</span>
+                            </a>
+                        </div>
                         <div class="card-body">
                             <div id="Grafik1">
                                 <canvas id="dokumenChart" width="400" height="200"></canvas>
@@ -310,10 +315,37 @@
                 </div>
                 <div class="col-6 mt-3 pe-0">
                     <div class="card shadow-xs border">
-                        <div class="card-header">Grafik Rata-Rata Nilai Dokumen Terupload</div>
+                        <div class="card-header font-weight-semibold d-flex justify-content-between align-items-center">Grafik Rata-Rata Nilai Dokumen Terupload
+                            <a href="{{ route('detail_dokumen') }}" type="button" class="btn btn-sm btn-dark btn-icon d-flex align-items-right justify-content-end mb-0 ms-5">
+                                <span class="btn-inner--text">Detail Dokumen</span>
+                            </a>
+                        </div>
                         <div class="card-body">
                             <div id="Grafik2">
                                 <canvas id="realisasiChart" width="400" height="200"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row pe-0">
+                <div class="col-6 mt-3 pe-2">
+                    <div class="card shadow-xs border">
+                        <div class="card-header font-weight-semibold">Grafik Banyak Dokumen Terupload Setiap ID</div>
+                        <div class="card-body">
+                            <div id="Grafik1">
+                                <canvas id="banyakChart" width="400" height="200"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 mt-3 pe-0">
+                    <div class="card shadow-xs border">
+                        <div class="card-header font-weight-semibold">Grafik Nilai Dokumen Terupload Setiap Bulan</div>
+                        <div class="card-body">
+                            <div id="Grafik2">
+                                <canvas id="nilaiChart" width="400" height="200"></canvas>
                             </div>
                         </div>
                     </div>
@@ -370,6 +402,101 @@
         }
     });
 </script>
+
+<script>
+    var ctx = document.getElementById('banyakChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: @json($x),
+            datasets: [{
+                label: 'Banyak Dokumen per ID',
+                data: @json($y),
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                x: {
+                    ticks: {
+                        callback: function(value, index, values) {
+                            var startIndex = 0; // Nilai default jika data tidak ditemukan
+                            @if($banyak->isNotEmpty())
+                                startIndex = @json($banyak->first()->id);
+                            @endif // Mengambil id pertama dari data
+                            return (startIndex + index) + ' - ' + @json($z)[index];
+                        }
+                    }
+                },
+                y: {
+                    beginAtZero: true
+                }
+            },
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        title: function(tooltipItem) {
+                            return 'ID: ' + tooltipItem[0].label;
+                        }
+                    }
+                }
+            },
+            onClick: function(evt, element) {
+                if (element.length > 0) {
+                    var index = element[0].index;
+                    var id = @json($x)[index]; // Mengambil ID dari data yang diklik
+                    window.location.href = "{{ route('show_dokumen', ['id' => ':id']) }}".replace(':id', id);
+                }
+            }
+        }
+    });
+</script>
+
+<script>
+    var ctx = document.getElementById('nilaiChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: @json($m),
+            datasets: [{
+                label: 'Nilai Dokumen Setiap Bulan',
+                data: @json($l),
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                x: {
+                    beginAtZero: true // Mulai dari 0
+                },
+                y: {
+                    beginAtZero: true
+                }
+            },
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        title: function(tooltipItem) {
+                            return 'ID: ' + tooltipItem[0].label;
+                        }
+                    }
+                }
+            },
+            onClick: function(evt, element) {
+                if (element.length > 0) {
+                    var index = element[0].index;
+                    var id = @json($x)[index]; // Mengambil ID dari data yang diklik
+                    window.location.href = "/detail-nilai-dokumen";
+                }
+            }
+        }
+    });
+</script>
+
 
 <script>
     function syncData() {

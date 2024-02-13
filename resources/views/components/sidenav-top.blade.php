@@ -1,23 +1,26 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
 <nav class="navbar bg-slate-900 navbar-expand-lg flex-wrap top-0 px-0 py-0">
     <div class="container py-2">
         <nav aria-label="breadcrumb">
             <div class="d-flex align-items-center">
-                <span class="px-3 font-weight-bold text-lg text-white me-4">SIG</span>
+                <span class="px-3 font-weight-bold text-lgg text-white me-4">SIG</span>
             </div>
         </nav>
         <ul class="navbar-nav d-none d-lg-flex">
             @if (auth()->user()->level=="Karyawan")
-            <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center">
+            <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center text-lggg">
                 <a href="{{ route('dashboard_karyawan') }}" class="nav-link text-white p-0">
                     Dashboard
                 </a>
             </li>
-            <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center">
+            <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center text-lggg">
                 <a href="{{ route('detail_variabel') }}" class="nav-link text-white p-0">
                     Detail Variabel Penilaian
                 </a>
             </li>
-            <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center">
+            <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center text-lggg">
                 <a href="{{ route('detail_dokumen') }}" class="nav-link text-white p-0">
                     Detail Dokumen
                 </a>
@@ -25,17 +28,17 @@
             @endif
 
             @if (auth()->user()->level=="Admin")
-            <li class="nav-item px-3 py-3 border-radius-sm  d-flex align-items-center">
+            <li class="nav-item px-3 py-3 border-radius-sm  d-flex align-items-center text-lggg">
                 <a href="{{ route('dashboard_admin') }}" class="nav-link text-white p-0">
                     Dashboard
                 </a>
             </li>
-            <li class="nav-item px-3 py-3 border-radius-sm bg-slate-800 d-flex align-items-center">
+            <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center text-lggg">
                 <a href="{{ route('verifikasi_dokumen') }}" class="nav-link text-white p-0">
                     Verifikasi Dokumen
                 </a>
             </li>
-            <li class="nav-item px-3 py-3 border-radius-sm bg-slate-800 d-flex align-items-center">
+            <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center text-lggg">
                 <a href="{{ route('data_pengguna') }}" class="nav-link text-white p-0">
                     Data Pengguna
                 </a>

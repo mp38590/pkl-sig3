@@ -21,61 +21,93 @@ class KaryawanController extends Controller
         $user = User::where('username', $username)->first();
         $level = $user->level;
 
-        $data = Realisasi::where('inserted_by', $username)->get();
+        if ($level == 'Karyawan')
+        {
+            $data = Realisasi::where('inserted_by', $username)->get();
 
-        $total_nilai = 0;
-        $jumlah_data = count($data);
-        
-        foreach ($data as $realisasi) {
-            if ($realisasi->nilai !== null) {
-                $total_nilai += $realisasi->nilai;
+            $total_nilai = 0;
+            $jumlah_data = count($data);
+            
+            foreach ($data as $realisasi) {
+                if ($realisasi->nilai !== null) {
+                    $total_nilai += $realisasi->nilai;
+                }
             }
-        }
+
+            $rata_skor = $jumlah_data !== 0 ? $total_nilai / $jumlah_data : 0;
+            $rata_skor = round($rata_skor, 4);
+
+            $latestTimestamp = Realisasi::where('nilai', '!=', null)
+                    ->where('inserted_by', $username)
+                    ->max('updated_at');
+
+            $jumlah_dokumen = Dokumen::where('nama_dokumen', '!=', null)->where('inserted_by', $username)
+                                        ->count();
+                                        
+            $existingDokumen = Dokumen::first();
+            $created_at = optional($existingDokumen)->created_at;
+            $latestTimestampDokumen = Dokumen::where('nama_dokumen', '!=', null)
+                    ->where('inserted_by', $username)
+                    ->max('created_at');
+            $tambah_dokumen = Dokumen::where('nama_dokumen', '!=', null)
+                                        ->where('inserted_by', $username)
+                                        ->where('created_at', $latestTimestampDokumen)
+                                        ->count();
+            $presentase = ($jumlah_dokumen > 0) ? ($tambah_dokumen / ($jumlah_dokumen)) * 100 : 0;
+            $presentase = round($presentase, 4);
+
+            $data = Dokumen::select(DB::raw("EXTRACT(MONTH FROM created_at) as month"), DB::raw('COUNT(*) as total'))
+                            ->where('nama_dokumen', '!=', null)
+                            ->groupBy('month')
+                            ->orderBy('month')
+                            ->get();
+
+            $labels = $data->pluck('month');
+            $values = $data->pluck('total');
+
+            $rata = Realisasi::select(DB::raw("EXTRACT(MONTH FROM created_at) as month"), DB::raw("$rata_skor as average"))
+                            ->groupBy('month')
+                            ->orderBy('month')
+                            ->get();
         
-        $rata_skor = $total_nilai / $jumlah_data;                  
-        $rata_skor = round($rata_skor, 4);
+            $label = $rata->pluck('month');
+            $average = $rata->pluck('average');
 
-        $latestTimestamp = Realisasi::where('nilai', '!=', null)
-                ->where('inserted_by', $username)
-                ->max('updated_at');
+            $banyak_dokumen = Dokumen::where('nama_dokumen', '!=', null)
+                                        ->where('inserted_by', $username)
+                                        ->count();
 
-        $jumlah_dokumen = Dokumen::where('nama_dokumen', '!=', null)->where('inserted_by', $username)
-                                    ->count();
-        $existingDokumen = Dokumen::first();
-        $created_at = $existingDokumen->created_at;
-        $latestTimestampDokumen = Dokumen::where('nama_dokumen', '!=', null)
-                ->where('inserted_by', $username)
-                ->max('created_at');
-        $tambah_dokumen = Dokumen::where('nama_dokumen', '!=', null)
-                                    ->where('inserted_by', $username)
-                                    ->where('created_at', $latestTimestampDokumen)
-                                    ->count();
-        $presentase = ($jumlah_dokumen > 0) ? ($tambah_dokumen / ($jumlah_dokumen)) * 100 : 0;
-        $presentase = round($presentase, 4);
+            $banyak = Dokumen::select(DB::raw("EXTRACT(MONTH FROM created_at) as month"), DB::raw("id as id"), DB::raw("COUNT(nama_dokumen) as banyak"))
+                                                    ->groupBy('month', 'id')
+                                                    ->orderBy('month')
+                                                    ->orderBy('id')
+                                                    ->get();
+                                                
+            $x = $banyak->pluck('id');
+            $y = $banyak->pluck('banyak');
+            $z = $banyak->pluck('month');
 
-        $data = Dokumen::select(DB::raw("EXTRACT(MONTH FROM created_at) as month"), DB::raw('COUNT(*) as total'))
-                        ->where('nama_dokumen', '!=', null)
-                        ->groupBy('month')
-                        ->orderBy('month')
-                        ->get();
+            $nilai_dokumen = Realisasi::where('nilai', '!=', null)
+                            ->where('inserted_by', $username)
+                            ->get();
 
-        $labels = $data->pluck('month');
-        $values = $data->pluck('total');
+            $nilai = Realisasi::select(DB::raw("kode_penilaian as kode_penilaian"), DB::raw("SUM(nilai) as total_nilai"))
+                                ->where('nilai', '!=', null)
+                                ->where('inserted_by', $username)
+                                ->where('flag_delete', '=', 0)
+                                ->groupBy('kode_penilaian')
+                                ->orderBy('kode_penilaian')
+                                ->get();
 
-        $rata = Realisasi::select(DB::raw("EXTRACT(MONTH FROM created_at) as month"), DB::raw("$rata_skor as average"))
-                        ->groupBy('month')
-                        ->orderBy('month')
-                        ->get();
-    
-
-        $label = $rata->pluck('month');
-        $average = $rata->pluck('average');
+            $l = $nilai->pluck('total_nilai');
+            $m = $nilai->pluck('kode_penilaian');
+        }
 
         if($level =='Admin'){
-            return view('admin.dashboard_admin', compact('user', 'jumlah_dokumen', 'rata_skor', 'presentase', 'latestTimestamp', 'labels', 'values', 'label', 'average'));
+            return view('admin.dashboard_admin', compact('user'));
         }
         else{
-            return view('karyawan.dashboard_karyawan', compact('user', 'jumlah_dokumen', 'rata_skor', 'presentase', 'latestTimestamp', 'labels', 'values', 'label', 'average'));
+            return view('karyawan.dashboard_karyawan', compact('user', 'jumlah_dokumen', 'rata_skor', 'presentase', 'latestTimestamp', 'labels', 'values', 'label', 'average', 'x', 'y', 'z', 'banyak', 'l', 'm'));
         }
     }
 
@@ -90,30 +122,35 @@ class KaryawanController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function detail(Request $request)
-{
-    $tahun = $request->get('tahun');
+    {
+        $tahun = $request->get('tahun');
     
-    $query = DB::table('variabel_penilaian')
-        ->join('realisasi', 'variabel_penilaian.item_penilaian', '=', 'realisasi.item_penilaian')
-        ->groupBy('realisasi.id', 'variabel_penilaian.id')
-        ->where('variabel_penilaian.flag_delete', '=', 0)
-        ->distinct();
-
-    // Check if the "tahun" parameter is provided
-    if ($tahun) {
-        $query->where('realisasi.tahun', '=', $tahun);
+        $query = DB::table('realisasi')
+            ->leftJoin('variabel_penilaian', function($join) {
+                $join->on('realisasi.id', '=', 'variabel_penilaian.id')
+                     ->where('variabel_penilaian.flag_delete', '=', 0);
+            })
+            ->where('realisasi.flag_delete', '=', 0)
+            ->select('realisasi.*', 'variabel_penilaian.versi', 'variabel_penilaian.nilai_maksimal')
+            ->orderBy('realisasi.id')
+            ->distinct();
+    
+        // Check if the "tahun" parameter is provided
+        if ($tahun) {
+            $query->where('realisasi.tahun', '=', $tahun);
+        }
+    
+        $detail_dokumen = $query->paginate(5);
+    
+        // Check if data is empty
+        if ($detail_dokumen->isEmpty()) {
+            return view('karyawan.detail_dokumen', compact('detail_dokumen'))->with('error', 'Tidak Ada Data yang ditampilkan');
+        }
+    
+        return view('karyawan.detail_dokumen', compact('detail_dokumen'));
     }
-
-    $detail_dokumen = $query->orderBy('realisasi.tahun', 'asc')->get();
-
-    // Check if data is empty
-    if ($detail_dokumen->isEmpty()) {
-        return view('karyawan.detail_dokumen', compact('detail_dokumen'))->with('error', 'Tidak Ada Data yang ditampilkan');
-    }
-
-    return view('karyawan.detail_dokumen', compact('detail_dokumen'));
-}
-
+    
+    
 
     public function tambah()
     {
@@ -201,7 +238,7 @@ class KaryawanController extends Controller
         return redirect()->route('detail_dokumen')->with('success', 'Data berhasil dimasukkan dan ditambahkan dalam database');
     }
 
-    public function file($id)
+    public function tambahFile($id)
     {
         $dokumen = Dokumen::find($id);
         $variabelPenilaian = VariabelPenilaian::find($id);
@@ -209,7 +246,7 @@ class KaryawanController extends Controller
         return view('karyawan.upload_dokumen', compact('dokumen', 'variabelPenilaian', 'realisasi'));
     }
     
-    public function upload(Request $request, $id)
+    public function uploadFile(Request $request, $id)
     {
         $loggedInUser = Auth::user();
 
@@ -268,6 +305,9 @@ class KaryawanController extends Controller
         $variabelPenilaian = VariabelPenilaian::find($id);
         $realisasi = Realisasi::find($id);
 
+        if ($dokumen->isEmpty()) {
+            return view('karyawan.view_dokumen', compact('dokumen'))->with('error', 'Tidak Ada Data yang ditampilkan');
+        }
         return view('karyawan.view_dokumen', compact('dokumen', 'variabelPenilaian', 'realisasi'));
     }
 
@@ -451,26 +491,17 @@ class KaryawanController extends Controller
     }
 
     public function detailVariabel(Request $request)
-{
-    $versi = $request->get('versi');
-    
-    $query = VariabelPenilaian::groupBy('variabel_penilaian.id')
-                                ->where('variabel_penilaian.flag_delete', '=', 0);
-
-    // Check if the "tahun" parameter is provided
-    if ($versi) {
-        $query->where('variabel_penilaian.versi', '=', $versi);
-    }
-
-    $detail_variabel = $query->orderBy('variabel_penilaian.versi', 'asc')->get();
+{   
+    $detail_variabel = VariabelPenilaian::where('flag_delete', '=', 0)->paginate(5, ['*'], 'page', request()->page);
 
     // Check if data is empty
-    if ($detail_variabel->isEmpty()) {
+    if (!$detail_variabel) {
         return view('karyawan.detail_variabel_penilaian', compact('detail_variabel'))->with('error', 'Tidak Ada Data yang ditampilkan');
     }
 
     return view('karyawan.detail_variabel_penilaian', compact('detail_variabel'));
 }
+
 
 
     public function tambahVariabel()
@@ -532,6 +563,7 @@ class KaryawanController extends Controller
         $loggedInUser = Auth::user();
 
         $variabelPenilaian = VariabelPenilaian::where('id', $id);
+        $realisasi = Realisasi::where('id', $id);
 
         $request->validate([
             'versi' => 'required|min:1|max:5',
@@ -548,12 +580,33 @@ class KaryawanController extends Controller
         ]);
 
         // Ubah nilai kolom sesuai dengan data yang diterima dari $request
-        $variabelPenilaian->update(['versi' => $request->input('versi')]);
-        $variabelPenilaian->update(['kode_penilaian' => $request->input('kode_penilaian')]);
-        $variabelPenilaian->update(['item_penilaian' => $request->input('item_penilaian')]);
-        $variabelPenilaian->update(['deskripsi_item_penilaian' => $request->input('deskripsi_item_penilaian')]);
-        $variabelPenilaian->update(['nilai_maksimal' => $request->input('nilai_maksimal')]);
-        $variabelPenilaian->update(['updated_by' => $loggedInUser->username]);
+
+        $variabelPenilaian->where('id', $request->id)->update(['flag_delete' => 2]);
+        $realisasi->where('id', $request->id)->update(['flag_delete' => 2]);
+
+        $variabelPenilaian = new VariabelPenilaian();
+        $variabelPenilaian->id = $request->id;
+        $variabelPenilaian->versi = $request->versi;
+        $variabelPenilaian->item_penilaian = $request->item_penilaian;
+        $variabelPenilaian->kode_penilaian = $request->kode_penilaian;
+        $variabelPenilaian->deskripsi_item_penilaian = $request->deskripsi_item_penilaian;
+        $variabelPenilaian->nilai_maksimal = $request->nilai_maksimal;
+        $variabelPenilaian->flag_delete = 0;
+        $variabelPenilaian->inserted_by = $loggedInUser->username;
+        $variabelPenilaian->updated_by = $loggedInUser->username;
+        $variabelPenilaian->save();
+
+        $realisasi = new Realisasi();
+        $realisasi->id = $request->id;
+        $realisasi->tahun = Realisasi::find($request->id)->tahun;
+        $realisasi->item_penilaian = $request->item_penilaian;
+        $realisasi->kode_penilaian = $request->kode_penilaian;
+        $realisasi->deskripsi_item_penilaian = $request->deskripsi_item_penilaian;
+        $realisasi->nilai = $request->nilai;
+        $realisasi->flag_delete = 0;
+        $realisasi->inserted_by = $loggedInUser->username;
+        $realisasi->updated_by = $loggedInUser->username;
+        $realisasi->save();
 
         // Berikan respons sukses atau redirect sesuai kebutuhan Anda
         return redirect()->route('detail_variabel')->with('success', 'Data variabel penilaian dokumen berhasil dimasukkan dan ditambahkan dalam database');
@@ -573,11 +626,61 @@ class KaryawanController extends Controller
     {
         $loggedInUser = Auth::user();
 
-        $variabelPenilaian = VariabelPenilaian::where('id', $id)->first();  // Use get() to retrieve the result
+        $variabelPenilaian = VariabelPenilaian::where('id', $id)->first();
+        $realisasi = Realisasi::where('id', $id)->first();  // Use get() to retrieve the result
 
         $variabelPenilaian->flag_delete = 1;
         $variabelPenilaian->save();
 
+        if(!$realisasi){
+            
+        }
+        else{
+            $realisasi->flag_delete = 1;
+            $realisasi->save();
+        }
+
         return redirect()->route('detail_variabel')->with('success', 'Data deleted successfully.');
+    }
+
+    public function detailFile()
+    {
+        $dokumen = Dokumen::where('flag_delete', '=', 0)->where('nama_dokumen', '!=', 'null')->paginate(5);
+
+        if ($dokumen->isEmpty()) {
+            return view('karyawan.detail_file_dokumen', compact('dokumen'))->with('error', 'Tidak Ada Data yang ditampilkan');
+        }
+        return view('karyawan.detail_file_dokumen', compact('dokumen'));
+    }
+
+    public function detailNilai(Request $request)
+    {
+        $tahun = $request->get('tahun');
+        $bulan = $request->get('bulan');
+
+        $query = DB::table('realisasi')
+            ->leftJoin('variabel_penilaian', function($join) {
+                $join->on('realisasi.id', '=', 'variabel_penilaian.id')
+                    ->where('variabel_penilaian.flag_delete', '=', 0);
+            })
+            ->where('realisasi.flag_delete', '=', 0)
+            ->where('realisasi.nilai', '!=', null)
+            ->select('realisasi.*', 'variabel_penilaian.versi', 'variabel_penilaian.nilai_maksimal')
+            ->orderBy('realisasi.id')
+            ->distinct();
+
+        // Check if the "tahun" parameter is provided
+        if ($tahun) {
+            $query->whereYear('realisasi.tanggal', '=', $tahun);
+        }
+        
+        $nilai_dokumen = $query->paginate(5);
+
+        // Check if data is empty
+        if ($nilai_dokumen->isEmpty()) {
+            return view('karyawan.detail_nilai_dokumen', compact('nilai_dokumen'))->with('error', 'Tidak Ada Data yang ditampilkan');
+        }
+
+        return view('karyawan.detail_nilai_dokumen', compact('nilai_dokumen'));
     }
 }

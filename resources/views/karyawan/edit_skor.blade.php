@@ -41,7 +41,7 @@
                         <div class="form-group">
                             <label for="nilai" class="form-control-label">Skor Final</label>
                             <div class="@error('nilai')border border-danger rounded-3 @enderror">
-                                <input name="nilai" class="form-control" type="text" placeholder="Masukkan skor final dari dokumen" id="nilai" value="{{ old('nilai', $realisasi->nilai) }}">
+                                <input name="nilai" class="form-control" type="text" placeholder="{{ $realisasi->nilai ?? 'Masukkan skor final dari dokumen' }}" id="nilai" value="{{ old('nilai') }}">
                             </div>
                             @error('nilai') <div class="alertError2 text-danger">{{ $message }}</div> @enderror
                         </div>
