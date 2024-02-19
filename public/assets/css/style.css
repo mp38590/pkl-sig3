@@ -1,0 +1,114 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500');
+* {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  text-decoration: none;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+.sidebar {
+  position: fixed;
+  right: -250px;
+  top: 0px;
+  width: 250px;
+  height: 790px;
+  background: #042331;
+  transition: all .5s ease;
+}
+
+.sidebar header {
+  font-size: 22px;
+  color: white;
+  line-height: 70px;
+  text-align: center;
+  background: #063146;
+  user-select: none;
+}
+
+.sidebar ul a {
+  display: block;
+  height: 100%;
+  width: 100%;
+  line-height: 65px;
+  font-size: 20px;
+  color: white;
+  padding-left: 5px;
+  box-sizing: border-box;
+  border-bottom: 1px solid black;
+  border-top: 1px solid rgba(255, 255, 255, .1);
+  transition: .4s;
+}
+
+ul li:hover a {
+  padding-left: 50px;
+}
+
+.sidebar ul a i {
+  margin-right: 16px;
+}
+
+#check {
+  display: none;
+}
+
+label #btn,
+label #cancel {
+  position: fixed;
+  border-radius: 3px;
+  cursor: pointer;
+  z-index: 10000; /* Ensure the cancel button is on top */
+}
+
+/* Updated CSS for the button */
+label #btn {
+  align-items: end;
+  justify-content: flex-end;
+  position: fixed;
+  right: 25px;
+  top: 25px;
+  font-size: 35px;
+  color: white;
+  padding: 6px 12px;
+  transition: all .5s;
+}
+
+label #cancel {
+  right: -40px;
+  top: 5px;
+  font-size: 30px;
+  color: #0a5275;
+  padding: 4px 9px;
+  transition: all .5s ease;
+}
+
+#check:checked~.sidebar {
+  right: 0;
+  z-index: 9999;
+}
+
+#check:checked~label #btn {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#check:checked~label #cancel {
+  right: 5px;
+}
+
+#check:checked~section {
+  margin-left: 250px;
+}
+
+section {
+  background: url(bg.jpeg) no-repeat;
+  background-position: center;
+  background-size: cover;
+  height: 100vh;
+  transition: margin-right .5s;
+  margin-right: 0;
+  position: fixed;
+}

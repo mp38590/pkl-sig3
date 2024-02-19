@@ -81,10 +81,10 @@
                 <div class="sidebar">
                     <header>SIG</header>
                         <ul>
-                            <li><a href="{{ route('show_profile', ['id' => auth()->user()->id]) }}"><i class="fas fa-user"></i>Profile</a></li>
-                            <li><a href="#"><i class="far fa-question-circle"></i>About</a></li>
-                            <li><a href="#"><i class="far fa-envelope"></i>Contact</a></li>
-                            <li><a href="#"><i class="fas fa-sliders-h"></i>Logout</a></li>
+                            <li><a href="{{ route('show_profile', ['id' => auth()->user()->id]) }}"><i class="fas fa-user"></i>Profil</a></li>
+                            <li><a href="#" id="syncLink"><i class="fas fa-repeat"></i>Sync</a></li>
+                            <li><a href="{{ route('detail_perusahaan') }}"><i class="far fa-question-circle"></i>Tentang</a></li>
+                            <li><a href="{{ route('kontak') }}"><i class="far fa-envelope"></i>Kontak</a></li>
                         </ul>
                 </div>
                 <!-- <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
@@ -209,3 +209,17 @@
     <hr class="horizontal w-100 my-0 dark">
     </div>
 </nav>
+
+<script>
+    // Ambil elemen link dengan ID syncLink
+    var syncLink = document.getElementById('syncLink');
+
+    // Tambahkan event listener untuk klik pada link
+    syncLink.addEventListener('click', function(event) {
+        // Berhenti default behavior dari link (tidak mengarahkan ke halaman baru)
+        event.preventDefault();
+
+        // Merefresh halaman
+        location.reload();
+    });
+</script>

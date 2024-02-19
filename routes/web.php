@@ -28,9 +28,6 @@ Route::group(['middleware' => ['auth', 'level:Karyawan']], function(){
     Route::get('/dashboard-karyawan', [KaryawanController::class, 'showDashboard'])
         ->name('dashboard_karyawan');
 
-    Route::get('/sync', [KaryawanController::class, 'sync'])
-        ->name('sync');
-
     Route::get('/detail-dokumen', [KaryawanController::class, 'detail'])
         ->name('detail_dokumen');
 
@@ -157,6 +154,13 @@ Route::group(['middleware' => ['auth', 'level:Admin']], function(){
     })->name('pills_profile');
 });
 
+Route::get('/detail-perusahaan', function () {
+    return view('auth.detail_perusahaan');
+})->name('detail_perusahaan')->middleware('auth');
+
+Route::get('/kontak', function () {
+    return view('auth.kontak');
+})->name('kontak')->middleware('auth');
 
 Route::get('/RTL', function () {
     return view('RTL');

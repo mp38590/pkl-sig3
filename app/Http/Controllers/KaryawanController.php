@@ -121,11 +121,6 @@ class KaryawanController extends Controller
         }
     }
 
-    public function sync()
-    {
-        return response()->json(['status' => 'success']);
-    }
-
     /**
      * Show the form for creating a new resource.
      *
