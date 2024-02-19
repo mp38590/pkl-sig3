@@ -77,12 +77,14 @@ class LoginController extends Controller
      */
     public function destroy(Request $request)
     {
-        Auth::logout();
-
-        $request->session()->invalidate();
-
-        $request->session()->regenerateToken();
-
-        return redirect('/sign-in');
+        if(Auth::user()->level === 'Karyawan' || Auth::user()->level === 'Admin') {
+            Auth::logout();
+    
+            $request->session()->invalidate();
+    
+            $request->session()->regenerateToken();
+    
+            return redirect('/sign-in');
+        }
     }
 }

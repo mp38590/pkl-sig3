@@ -10,44 +10,84 @@
         </nav>
         <ul class="navbar-nav d-none d-lg-flex">
             @if (auth()->user()->level=="Karyawan")
-            <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center text-lggg">
-                <a href="{{ route('dashboard_karyawan') }}" class="nav-link text-white p-0">
+            <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center">
+                <a href="{{ route('dashboard_karyawan') }}" class="nav-link text-white p-0 text-lg">
                     Dashboard
                 </a>
             </li>
-            <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center text-lggg">
-                <a href="{{ route('detail_variabel') }}" class="nav-link text-white p-0">
+            <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center">
+                <a href="{{ route('detail_variabel') }}" class="nav-link text-white p-0 text-lg">
                     Detail Variabel Penilaian
                 </a>
             </li>
-            <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center text-lggg">
-                <a href="{{ route('detail_dokumen') }}" class="nav-link text-white p-0">
+            <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center">
+                <a href="{{ route('detail_dokumen') }}" class="nav-link text-white p-0 text-lg">
                     Detail Dokumen
                 </a>
             </li>
             @endif
 
             @if (auth()->user()->level=="Admin")
-            <li class="nav-item px-3 py-3 border-radius-sm  d-flex align-items-center text-lggg">
-                <a href="{{ route('dashboard_admin') }}" class="nav-link text-white p-0">
+            <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center">
+                <a href="{{ route('dashboard_admin') }}" class="nav-link text-white p-0 text-lg">
                     Dashboard
                 </a>
             </li>
-            <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center text-lggg">
-                <a href="{{ route('verifikasi_dokumen') }}" class="nav-link text-white p-0">
+            <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center">
+                <a href="{{ route('verifikasi_dokumen') }}" class="nav-link text-white p-0 text-lg">
                     Verifikasi Dokumen
                 </a>
             </li>
-            <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center text-lggg">
-                <a href="{{ route('data_pengguna') }}" class="nav-link text-white p-0">
+            <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center">
+                <a href="{{ route('data_pengguna') }}" class="nav-link text-white p-0 text-lg">
                     Data Pengguna
                 </a>
             </li>
             @endif
         </ul>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
-            <ul class="navbar-nav ms-md-auto  justify-content-end">
-                <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
+        <form action="
+            @if(Route::currentRouteName() == 'detail_variabel')
+                {{ route('detail_variabel') }}
+            @elseif(Route::currentRouteName() == 'detail_dokumen')
+                {{ route('detail_dokumen') }}
+            @elseif(Route::currentRouteName() == 'detail_nilai_dokumen')
+                {{ route('detail_nilai_dokumen') }}
+            @endif
+        " method="get">
+            <div class="d-flex align-items-center w-sm-45" style="margin-left: 345px; margin-top: 20px; height: 30px;">
+                <div class="input-group border-dark">
+                    <button class="input-group-button border-dark bg-light btn btn-lgg" type="submit">
+                        <i class="fas fa-search fixed-plugin-button-nav cursor-pointer text-dark"></i>
+                    </button>
+                    <input type="text" class="form-control border-dark bg-light text-white" name="search" placeholder="Search"
+                            onfocus="focused(this)" onfocusout="defocused(this)" style="height: 40px;">
+                </div>
+            </div>
+        </form>
+        <li class="nav-item px-3 d-flex align-items-center ms-auto mt-3" style="margin-right: -25px;">
+            <form action="{{ route('logout') }}" method="POST" class="nav-link text-white p-0">
+                @csrf
+                <button type="submit" class="btn btn-link btn-lg">
+                    <i class="fas fa-power-off fixed-plugin-button-nav cursor-pointer text-white"></i>
+                </button>
+            </form>
+        </li>
+            <input type="checkbox" id="check">
+                <label for="check">
+                    <i class="fas fa-bars" id="btn"></i>
+                    <i class="fas fa-times" id="cancel"></i>
+                </label>
+                <div class="sidebar">
+                    <header>SIG</header>
+                        <ul>
+                            <li><a href="{{ route('show_profile', ['id' => auth()->user()->id]) }}"><i class="fas fa-user"></i>Profile</a></li>
+                            <li><a href="#"><i class="far fa-question-circle"></i>About</a></li>
+                            <li><a href="#"><i class="far fa-envelope"></i>Contact</a></li>
+                            <li><a href="#"><i class="fas fa-sliders-h"></i>Logout</a></li>
+                        </ul>
+                </div>
+                <!-- <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
                     <a href="javascript:;" class="nav-link text-white p-0" id="iconNavbarSidenav">
                         <div class="sidenav-toggler-inner">
                             <i class="sidenav-toggler-line bg-white"></i>
@@ -153,54 +193,19 @@
                             </a>
                         </li>
                     </ul>
-                </li>
-                <li class="nav-item d-flex align-items-center ps-2">
+                </li> -->
+                <!-- <li class="nav-item d-flex align-items-center ps-2">
                     <a href="javascript:;" class="nav-link text-white font-weight-bold px-0">
                 <li class="nav-item dropdown pe-2 d-flex align-items-center">
                     <div class="avatar avatar-sm position-relative">
-                        <img src="../assets/img/team-2.jpg" alt="profile_image" class="w-100 border-radius-md">
+                        <img src="../assets/img/small-logos/settings2.png" alt="profile_image" class="w-100 border-radius-md">
                     </div>
-                </li>
+                </li> -->
                 </a>
                 </li>
             </ul>
         </div>
     </div>
     <hr class="horizontal w-100 my-0 dark">
-    <div class="container pb-3 pt-3">
-        <ul class="navbar-nav d-none d-lg-flex">
-            <li class="nav-item border-radius-sm px-3 py-3 me-2  d-flex align-items-center">
-                <a href="{{ route('show_profile', ['id' => auth()->user()->id]) }}" class="nav-link text-white p-0">
-                    Profile
-                </a>
-            </li>
-            <li class="nav-item border-radius-sm px-3 py-3 me-2  d-flex align-items-center">
-                <a href="{{ route('signin') }}" class="nav-link text-white p-0">
-                    Sign In
-                </a>
-            </li>
-            <li class="nav-item border-radius-sm px-3 py-3 me-2  d-flex align-items-center">
-                <a href="{{ route('signup') }}" class="nav-link text-white p-0">
-                    Sign Up
-                </a>
-            </li>
-        </ul>
-        <form action="{{ route('detail_dokumen') }}" method="get">
-            <div class="ms-md-auto p-0 d-flex align-items-center w-sm-100">
-                <div class="input-group border-dark">
-                <button class="input-group-button border-dark bg-dark" type="submit">
-                    <span class="input-group-button border-white border-2 bg-dark text-white">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px"
-                            viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="opacity-8">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                        </svg>
-                    </span>
-                </button>
-                <input type="text" class="form-control border-dark bg-dark text-white" name="tahun" placeholder="Search"
-                    onfocus="focused(this)" onfocusout="defocused(this)">
-                </div>
-            </div>
-        </form>
     </div>
 </nav>

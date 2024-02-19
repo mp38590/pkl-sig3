@@ -23,7 +23,7 @@ class KaryawanController extends Controller
 
         if ($level == 'Karyawan')
         {
-            $data = Realisasi::where('inserted_by', $username)->get();
+            $data = Realisasi::where('flag_delete', '=', 0)->get();
 
             $total_nilai = 0;
             $jumlah_data = count($data);
@@ -87,6 +87,10 @@ class KaryawanController extends Controller
             $y = $banyak->pluck('banyak');
             $z = $banyak->pluck('month');
 
+            $latestTimestampRealisasi = Realisasi::where('nilai', '!=', null)
+                    ->where('inserted_by', $username)
+                    ->max('updated_at');
+
             $nilai_dokumen = Realisasi::where('nilai', '!=', null)
                             ->where('inserted_by', $username)
                             ->get();
@@ -95,12 +99,18 @@ class KaryawanController extends Controller
                                 ->where('nilai', '!=', null)
                                 ->where('inserted_by', $username)
                                 ->where('flag_delete', '=', 0)
+                                ->whereIn('updated_at', function($query) {
+                                    $query->select(DB::raw('MAX(updated_at)'))
+                                        ->from('realisasi')
+                                        ->whereRaw('realisasi.kode_penilaian = kode_penilaian')
+                                        ->where('flag_delete', '=', 0)
+                                        ->groupBy('kode_penilaian');
+                                })
                                 ->groupBy('kode_penilaian')
                                 ->orderBy('kode_penilaian')
                                 ->get();
-
-            $l = $nilai->pluck('total_nilai');
-            $m = $nilai->pluck('kode_penilaian');
+        $l = $nilai->pluck('total_nilai');
+        $m = $nilai->pluck('kode_penilaian');                
         }
 
         if($level =='Admin'){
@@ -123,9 +133,9 @@ class KaryawanController extends Controller
      */
     public function detail(Request $request)
     {
-        $tahun = $request->get('tahun');
-    
-        $query = DB::table('realisasi')
+        $search = $request->get('search');
+
+        $detail_dokumen = DB::table('realisasi')
             ->leftJoin('variabel_penilaian', function($join) {
                 $join->on('realisasi.id', '=', 'variabel_penilaian.id')
                      ->where('variabel_penilaian.flag_delete', '=', 0);
@@ -134,13 +144,26 @@ class KaryawanController extends Controller
             ->select('realisasi.*', 'variabel_penilaian.versi', 'variabel_penilaian.nilai_maksimal')
             ->orderBy('realisasi.id')
             ->distinct();
-    
-        // Check if the "tahun" parameter is provided
-        if ($tahun) {
-            $query->where('realisasi.tahun', '=', $tahun);
-        }
-    
-        $detail_dokumen = $query->paginate(5);
+
+        if ($search) {
+            $detail_dokumen->where(function($query) use ($search) {
+                // Check if the search term is an integer
+                if (ctype_digit($search)) {
+                    // If the search term is an integer, search only in the 'detail' column of 'realisasi'
+                    $query->where('realisasi.nilai', 'like', '%' . $search . '%')
+                        ->orWhere('variabel_penilaian.versi', 'like', '%' . $search . '%')
+                        ->orWhere('variabel_penilaian.nilai_maksimal', 'like', '%' . $search . '%');
+                } else {
+                    // If the search term is not an integer, search in all relevant columns
+                    $query->where('realisasi.tahun', 'like', '%' . $search . '%')
+                        ->orWhere('realisasi.kode_penilaian', 'like', '%' . $search . '%')
+                        ->orWhere('realisasi.item_penilaian', 'like', '%' . $search . '%')
+                        ->orWhere('realisasi.deskripsi_item_penilaian', 'like', '%' . $search . '%');
+                }
+            });
+        }    
+            
+        $detail_dokumen = $detail_dokumen->paginate(5, ['*'], 'page', request()->page);
     
         // Check if data is empty
         if ($detail_dokumen->isEmpty()) {
@@ -149,7 +172,6 @@ class KaryawanController extends Controller
     
         return view('karyawan.detail_dokumen', compact('detail_dokumen'));
     }
-    
     
 
     public function tambah()
@@ -491,18 +513,27 @@ class KaryawanController extends Controller
     }
 
     public function detailVariabel(Request $request)
-{   
-    $detail_variabel = VariabelPenilaian::where('flag_delete', '=', 0)->paginate(5, ['*'], 'page', request()->page);
+    {   
+        $search = $request->get('search');
+        $detail_variabel = VariabelPenilaian::where('flag_delete', '=', 0);
 
-    // Check if data is empty
-    if (!$detail_variabel) {
-        return view('karyawan.detail_variabel_penilaian', compact('detail_variabel'))->with('error', 'Tidak Ada Data yang ditampilkan');
+        if ($search) {
+            $detail_variabel = $detail_variabel->where('versi', 'like', '%'.$search.'%')
+                                            ->orWhere('kode_penilaian', 'like', '%'.$search.'%')
+                                            ->orWhere('item_penilaian', 'like', '%'.$search.'%')
+                                            ->orWhere('deskripsi_item_penilaian', 'like', '%'.$search.'%')
+                                            ->orWhere('nilai_maksimal', 'like', '%'.$search.'%');
+        }
+
+        $detail_variabel = $detail_variabel->paginate(5, ['*'], 'page', request()->page);
+
+        // Check if data is empty
+        if ($detail_variabel->isEmpty()) {
+            return view('karyawan.detail_variabel_penilaian')->with('error', 'Tidak Ada Data yang ditampilkan');
+        }
+
+        return view('karyawan.detail_variabel_penilaian', compact('detail_variabel'));
     }
-
-    return view('karyawan.detail_variabel_penilaian', compact('detail_variabel'));
-}
-
-
 
     public function tambahVariabel()
     {
@@ -654,33 +685,47 @@ class KaryawanController extends Controller
     }
 
     public function detailNilai(Request $request)
-    {
-        $tahun = $request->get('tahun');
-        $bulan = $request->get('bulan');
+{
+    $search = $request->get('search');
+    $kode_penilaian = $request->get('kode');
 
-        $query = DB::table('realisasi')
-            ->leftJoin('variabel_penilaian', function($join) {
-                $join->on('realisasi.id', '=', 'variabel_penilaian.id')
-                    ->where('variabel_penilaian.flag_delete', '=', 0);
-            })
-            ->where('realisasi.flag_delete', '=', 0)
-            ->where('realisasi.nilai', '!=', null)
-            ->select('realisasi.*', 'variabel_penilaian.versi', 'variabel_penilaian.nilai_maksimal')
-            ->orderBy('realisasi.id')
-            ->distinct();
+    // Base query without search and chart interaction
+    $nilai_dokumen = DB::table('realisasi')
+        ->leftJoin('variabel_penilaian', function($join) {
+            $join->on('realisasi.id', '=', 'variabel_penilaian.id')
+                ->where('variabel_penilaian.flag_delete', '=', 0);
+        })
+        ->where('realisasi.flag_delete', '=', 0)
+        ->where('realisasi.nilai', '!=', null)
+        ->select('realisasi.*', 'variabel_penilaian.versi', 'variabel_penilaian.nilai_maksimal');
 
-        // Check if the "tahun" parameter is provided
-        if ($tahun) {
-            $query->whereYear('realisasi.tanggal', '=', $tahun);
-        }
-        
-        $nilai_dokumen = $query->paginate(5);
+    // Apply search filter if search parameter is provided
+    if ($search) {
+        $nilai_dokumen->where(function($query) use ($search) {
+            // Check if the search term is an integer
+            if (ctype_digit($search)) {
+                // If the search term is an integer, search only in the 'nilai' column of 'realisasi'
+                $query->where('realisasi.nilai', 'like', '%' . $search . '%');
+            } else {
+                // If the search term is not an integer, search in all relevant columns
+                $query->where('realisasi.tahun', 'like', '%' . $search . '%')
+                    ->orWhere('realisasi.kode_penilaian', 'like', '%' . $search . '%')
+                    ->orWhere('realisasi.item_penilaian', 'like', '%' . $search . '%')
+                    ->orWhere('realisasi.deskripsi_item_penilaian', 'like', '%' . $search . '%');
+            }
+        });
+    }    
 
-        // Check if data is empty
-        if ($nilai_dokumen->isEmpty()) {
-            return view('karyawan.detail_nilai_dokumen', compact('nilai_dokumen'))->with('error', 'Tidak Ada Data yang ditampilkan');
-        }
-
-        return view('karyawan.detail_nilai_dokumen', compact('nilai_dokumen'));
+    // Apply kode_penilaian filter if kode_penilaian parameter is provided
+    if ($kode_penilaian) {
+        $nilai_dokumen->where('variabel_penilaian.kode_penilaian', $kode_penilaian);
     }
+
+    // Paginate the results
+    $nilai_dokumen = $nilai_dokumen->orderBy('realisasi.tahun')->distinct()->paginate(5);
+
+    // Return view with data
+    return view('karyawan.detail_nilai_dokumen', compact('nilai_dokumen'));
+}
+
 }

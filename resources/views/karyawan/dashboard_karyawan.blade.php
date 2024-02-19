@@ -7,29 +7,11 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="d-md-flex align-items-center mb-3 mx-2">
-                        <div class="mb-md-0 mb-3">
+                        <div class="mb-md-0 mb-3 mt-5">
                             <h3 class="font-weight-bold mb-0">Hello, {{ $user->name }}</h3>
-                            <p class="mb-0">Silahkan Upload Dokumen Anda!</p>
+                            <p class="mb-0">Halaman Ini Merupakan Halaman Terkait Informasi Penting PT Semen Indonesia (Persero) Tbk. </br>
+                                            Secara Singkat dan Aktivitas Anda dalam Penggunaan Website SimL.</p>
                         </div>
-                        <button type="button"
-                            class="btn btn-sm btn-white btn-icon d-flex align-items-center mb-0 ms-md-auto mb-sm-0 mb-2 me-2">
-                            <span class="btn-inner--icon">
-                                <span class="p-1 bg-success rounded-circle d-flex ms-auto me-2">
-                                    <span class="visually-hidden">New</span>
-                                </span>
-                            </span>
-                            <a href="{{ route('show_profile', ['id' => auth()->user()->id]) }}" class="btn-white text-decoration-none">Profile</a>
-                        </button>
-                        <button type="button" class="btn btn-sm btn-dark btn-icon d-flex align-items-center mb-0" onclick="syncData()">
-                            <span class="btn-inner--icon">
-                                <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                    viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="d-block me-2">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
-                                </svg>
-                            </span>
-                            <span class="btn-inner--text">Sync</span>
-                        </button>
                     </div>
                 </div>
             </div>
@@ -329,7 +311,7 @@
                 </div>
             </div>
 
-            <div class="row pe-0">
+            <!-- <div class="row pe-0">
                 <div class="col-6 mt-3 pe-2">
                     <div class="card shadow-xs border">
                         <div class="card-header font-weight-semibold">Grafik Banyak Dokumen Terupload Setiap ID</div>
@@ -340,7 +322,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-6 mt-3 pe-0">
+                <div class="col-6 mt-3 pe-0"> -->
                     <div class="card shadow-xs border">
                         <div class="card-header font-weight-semibold">Grafik Nilai Dokumen Terupload Setiap Bulan</div>
                         <div class="card-body">
@@ -403,7 +385,7 @@
     });
 </script>
 
-<script>
+<!-- <script>
     var ctx = document.getElementById('banyakChart').getContext('2d');
     var myChart = new Chart(ctx, {
         type: 'line',
@@ -452,7 +434,7 @@
             }
         }
     });
-</script>
+</script> -->
 
 <script>
     var ctx = document.getElementById('nilaiChart').getContext('2d');
@@ -481,7 +463,7 @@
                 tooltip: {
                     callbacks: {
                         title: function(tooltipItem) {
-                            return 'ID: ' + tooltipItem[0].label;
+                            return 'Kode Penilaian: ' + tooltipItem[0].label;
                         }
                     }
                 }
@@ -489,8 +471,8 @@
             onClick: function(evt, element) {
                 if (element.length > 0) {
                     var index = element[0].index;
-                    var id = @json($x)[index]; // Mengambil ID dari data yang diklik
-                    window.location.href = "/detail-nilai-dokumen";
+                    var kode_penilaian = @json($m)[index]; // Mengambil kode penilaian dari data yang diklik
+                    window.location.href = "/detail-nilai-dokumen?kode=" + kode_penilaian;
                 }
             }
         }
@@ -499,23 +481,23 @@
 
 
 <script>
-    function syncData() {
-        // Menggunakan Fetch API untuk mengirim permintaan ke server
-        fetch('{{ route('sync') }}', {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-        })
-        .then(response => response.json())
-        .then(data => {
-            // Menanggapi respons dari server
-            if (data.status === 'success') {
-                // Merefresh halaman
-                location.reload();
-            }
-        })
-        .catch(error => console.error('Error:', error));
-    }
+function syncData() {
+    // Menggunakan Fetch API untuk mengirim permintaan ke server
+    fetch('{{ route('sync') }}', {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Menanggapi respons dari server
+        if (data.status === 'success') {
+            // Merefresh halaman
+            location.reload();
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
 </script>
