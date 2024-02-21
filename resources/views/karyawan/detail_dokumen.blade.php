@@ -65,21 +65,17 @@
                                             {!! nl2br(wordwrap($detail->deskripsi_item_penilaian, 30, "\n", true)) !!}
                                         </th>
                                         <th class="text-secondary text-xs font-weight-semibold ps-2 text-center">
-                                        <a href="{{ route('tambah_file', ['id' => $detail->id]) }}" class="btn btn-dark btn-sm position-relative mt-1 mb-1" style="width: 40px; height: 32px;">
+                                        <a href="{{ route('tambah_file', ['id_variabel_penilaian' => $detail->id_variabel_penilaian]) }}" class="btn btn-dark btn-sm position-relative mt-1 mb-1" style="width: 40px; height: 32px;">
                                                 <img src="../assets/img/small-logos/upload.png" alt="Logo" class="position-absolute start-50 top-50 translate-middle"
                                                     style="width: 15px; height: 15px;">
                                         </a>
                                         </th>
                                         <th class="text-secondary text-xs font-weight-semibold ps-2 text-center">
-                                        <a href="{{ route('show_dokumen', ['id' => $detail->id]) }}" class="btn btn-primary btn-sm position-relative mt-1 mb-1" style="width: 40px; height: 32px;">
+                                        <a href="{{ route('show_dokumen', ['id_variabel_penilaian' => $detail->id_variabel_penilaian]) }}" class="btn btn-primary btn-sm position-relative mt-1 mb-1" style="width: 40px; height: 32px;">
                                                 <img src="../assets/img/small-logos/dokumen.png" alt="Logo" class="position-absolute start-50 top-50 translate-middle"
                                                     style="width: 17px; height: 17px;">
                                         </a> <br>
-                                        <a href="{{ route('edit_skor', ['id' => $detail->id]) }}" class="btn btn-warning btn-sm position-relative mt-1 mb-1 text-center" style="width: 40px; height: 32px;">
-                                                <img src="../assets/img/small-logos/tool.png" alt="Logo" class="position-absolute start-50 top-50 translate-middle"
-                                                    style="width: 15px; height: 15px;">
-                                        </a> <br>
-                                        <a href="{{ route('hapus_dokumen', ['id' => $detail->id]) }}" class="btn btn-danger btn-sm position-relative mt-1 mb-1 text-center" style="width: 40px; height: 32px;">
+                                        <a href="{{ route('hapus_dokumen', ['id_variabel_penilaian' => $detail->id_variabel_penilaian]) }}" class="btn btn-danger btn-sm position-relative mt-1 mb-1 text-center" style="width: 40px; height: 32px;">
                                                 <img src="../assets/img/small-logos/eraser.png" alt="Logo" class="position-absolute start-50 top-50 translate-middle"
                                                     style="width: 15px; height: 15px;">
                                         </a>

@@ -12,9 +12,7 @@
             <div class="row">
                 <div class="col-md-8 mx-auto mb-3 card-center">
                     <div class="card shadow-s border mb-4">
-                    @if (!is_null($dokumen->id_variabel_penilaian))
-                    <form role="form" method="POST" action="{{ route('upload_dokumen', ['id_variabel_penilaian' => $dokumen->id_variabel_penilaian]) }}" enctype="multipart/form-data">
-                    @endif
+                    <form role="form" method="POST" action="{{ route('upload_dokumen_admin', ['id_variabel_penilaian' => $dokumen->id_variabel_penilaian]) }}" enctype="multipart/form-data">
                     @csrf
                         <div class="card-body pt-4 p-3">
                             <div class="form-group">
@@ -43,7 +41,7 @@
                                 @error('file') <div class="text-danger">{{ $message }}</div> @enderror
                             </div>
                         <div class="card-footer">
-                            <button href=/detail-dokumen type="submit" class="btn btn-primary">Simpan</button>
+                            <button href=/detail-dokumen-admin type="submit" class="btn btn-primary">Simpan</button>
                         </div>
                     </div>
                     </form>

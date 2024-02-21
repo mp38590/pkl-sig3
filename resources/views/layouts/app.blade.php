@@ -72,6 +72,7 @@
     @php
         $topSidenavArray = ['detail_dokumen', 'show_dokumen', 'show_profile', 'data_pengguna', 'dashboard_karyawan', 'detail_variabel',
                             'dashboard_admin', 'verifikasi_dokumen', 'data_pengguna', 'detail_file_dokumen', 'detail_nilai_dokumen',
+                            'show_profile_admin', 'detail_dokumen_admin', 'show_dokumen_admin',
                             'detail_perusahaan', 'kontak'];
         $topSidenavTransparent = ['signin', 'signup'];
         $topSidenavRTL = ['RTL'];

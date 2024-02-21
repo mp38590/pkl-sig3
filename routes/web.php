@@ -8,6 +8,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\KaryawanController;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,28 +38,22 @@ Route::group(['middleware' => ['auth', 'level:Karyawan']], function(){
     Route::post('/tambah-dokumen/simpan-dokumen', [KaryawanController::class, 'simpan'])
         ->name('simpan_dokumen');
 
-    Route::get('/tambah-file/{id}', [KaryawanController::class, 'tambahFile'])
+    Route::get('/tambah-file/{id_variabel_penilaian}', [KaryawanController::class, 'tambahFile'])
         ->name('tambah_file');
 
-    Route::post('/tambah-file/upload-dokumen/{id}', [KaryawanController::class, 'uploadFile'])
+    Route::post('/tambah-file/upload-dokumen/{id_variabel_penilaian}', [KaryawanController::class, 'uploadFile'])
         ->name('upload_dokumen');
 
-    Route::get('/show-dokumen/{id}', [KaryawanController::class, 'showDokumen'])
+    Route::get('/show-dokumen/{id_variabel_penilaian}', [KaryawanController::class, 'showDokumen'])
         ->name('show_dokumen');
     
-    Route::get('/show-dokumen/lihat-file/{id}/{nama_dokumen}', [KaryawanController::class, 'lihatFile'])
+    Route::get('/show-dokumen/lihat-file/{id_variabel_penilaian}/{nama_dokumen}', [KaryawanController::class, 'lihatFile'])
         ->name('lihat_file');
     
-    Route::get('/edit-skor/{id}', [KaryawanController::class, 'edit'])
-        ->name('edit_skor');
-
-    Route::post('/edit-skor/update-skor/{id}', [KaryawanController::class, 'update'])
-        ->name('update_skor');
-    
-    Route::get('/hapus-dokumen/{id}', [KaryawanController::class, 'delete'])
+    Route::get('/hapus-dokumen/{id_variabel_penilaian}', [KaryawanController::class, 'delete'])
         ->name('hapus_dokumen');
 
-    Route::post('/hapus-dokumen/konfirm-hapus-dokumen/{id}', [KaryawanController::class, 'konfirmDelete'])
+    Route::post('/hapus-dokumen/konfirm-hapus-dokumen/{id_variabel_penilaian}', [KaryawanController::class, 'konfirmDelete'])
         ->name('konfirm_hapus_dokumen');
 
     Route::get('/show-profile/{id}', [KaryawanController::class, 'showProfile'])
@@ -70,10 +65,10 @@ Route::group(['middleware' => ['auth', 'level:Karyawan']], function(){
     Route::post('/edit-profile/update-profile/{id}', [KaryawanController::class, 'updateProfile'])
         ->name('update_profile');
 
-    Route::get('/edit-data_profile/{id}', [KaryawanController::class, 'editDataProfile'])
+    Route::get('/edit-data-profile/{id}', [KaryawanController::class, 'editDataProfile'])
         ->name('edit_data_profile');
 
-    Route::post('/edit-data_profile/update-data_profile/{id}', [KaryawanController::class, 'updateDataProfile'])
+    Route::post('/edit-data-profile/update-data-profile/{id}', [KaryawanController::class, 'updateDataProfile'])
         ->name('update_data_profile');
     
     Route::get('/pilih-dokumen', [KaryawanController::class, 'pilihDokumen'])
@@ -88,22 +83,22 @@ Route::group(['middleware' => ['auth', 'level:Karyawan']], function(){
     Route::post('/tambah-variabel/simpan-variabel', [KaryawanController::class, 'simpanVariabel'])
         ->name('simpan_variabel');
 
-    Route::get('/edit-variabel/{id}', [KaryawanController::class, 'editVariabel'])
+    Route::get('/edit-variabel/{id_variabel_penilaian}', [KaryawanController::class, 'editVariabel'])
         ->name('edit_variabel');
 
-    Route::post('/edit-variabel/update-variabel/{id}', [KaryawanController::class, 'updateVariabel'])
+    Route::post('/edit-variabel/update-variabel/{id_variabel_penilaian}', [KaryawanController::class, 'updateVariabel'])
         ->name('update_variabel');
 
-    Route::get('/hapus-variabel/{id}', [KaryawanController::class, 'deleteVariabel'])
+    Route::get('/hapus-variabel/{id_variabel_penilaian}', [KaryawanController::class, 'deleteVariabel'])
         ->name('hapus_variabel');
 
-    Route::post('/hapus-variabel/konfirm-hapus-variabel/{id}', [KaryawanController::class, 'konfirmDeleteVariabel'])
+    Route::post('/hapus-variabel/konfirm-hapus-variabel/{id_variabel_penilaian}', [KaryawanController::class, 'konfirmDeleteVariabel'])
         ->name('konfirm_hapus_variabel');
 
-    Route::get('/hapus-file/{id}/{nama_dokumen}', [KaryawanController::class, 'deleteFile'])
+    Route::get('/hapus-file/{id_variabel_penilaian}/{nama_dokumen}', [KaryawanController::class, 'deleteFile'])
         ->name('hapus_file');
 
-    Route::post('/konfirm-hapus-file/{id}/{nama_dokumen}', [KaryawanController::class, 'konfirmDeleteFile'])
+    Route::post('/konfirm-hapus-file/{id_variabel_penilaian}/{nama_dokumen}', [KaryawanController::class, 'konfirmDeleteFile'])
         ->name('konfirm_hapus_file');
 
     Route::get('/detail-file-dokumen', [KaryawanController::class, 'detailFile'])
@@ -114,6 +109,9 @@ Route::group(['middleware' => ['auth', 'level:Karyawan']], function(){
 
     Route::post('/logout', [LoginController::class, 'destroy'])
         ->name('logout');
+
+    Route::get('/sync', [KaryawanController::class, 'sync'])
+        ->name('sync');
 
     // Route::get('/entry_dokumen', [KaryawanController::class, 'createEntry'])
     // ->name('entry_dokumen');
@@ -128,14 +126,59 @@ Route::group(['middleware' => ['auth', 'level:Karyawan']], function(){
 });
 
 Route::group(['middleware' => ['auth', 'level:Admin']], function(){    
-    Route::get('/dashboard-admin', [KaryawanController::class, 'showDashboard'])
+    Route::get('/dashboard-admin', [AdminController::class, 'showDashboardAdmin'])
         ->name('dashboard_admin');
+    
+    Route::get('/detail-dokumen-admin', [AdminController::class, 'detailAdmin'])
+        ->name('detail_dokumen_admin');
+    
+    Route::get('/tambah-file-admin/{id_variabel_penilaian}', [AdminController::class, 'tambahFileAdmin'])
+        ->name('tambah_file_admin');
 
-    Route::get('/sync', [KaryawanController::class, 'sync'])
+    Route::post('/tambah-file-admin/upload-dokumen-admin/{id_variabel_penilaian}', [AdminController::class, 'uploadFileAdmin'])
+        ->name('upload_dokumen_admin');
+
+    Route::get('/show-dokumen-admin/{id_variabel_penilaian}', [AdminController::class, 'showDokumenAdmin'])
+        ->name('show_dokumen_admin');
+    
+    Route::get('/show-dokumen-admin/lihat-file-admin/{id_variabel_penilaian}/{nama_dokumen}', [AdminController::class, 'lihatFileAdmin'])
+        ->name('lihat_file_admin');
+
+    Route::get('/show-dokumen-admin/update-status-admin/{id_variabel_penilaian}/{nama_dokumen}', [AdminController::class, 'updateStatus'])
+        ->name('update_status_admin');
+    
+    Route::get('/hapus-dokumen-admin/{id_variabel_penilaian}', [AdminController::class, 'deleteAdmin'])
+        ->name('hapus_dokumen_admin');
+
+    Route::post('/hapus-dokumen-admin/konfirm-hapus-dokumen-admin/{id_variabel_penilaian}', [AdminController::class, 'konfirmDeleteAdmin'])
+        ->name('konfirm_hapus_dokumen_admin');
+
+    Route::get('/edit-skor-admin/{id_variabel_penilaian}', [AdminController::class, 'editAdmin'])
+        ->name('edit_skor_admin');
+
+    Route::post('/edit-skor-admin/update-skor-admin/{id_variabel_penilaian}', [AdminController::class, 'updateAdmin'])
+        ->name('update_skor_admin');
+
+    Route::get('/sync', [AdminController::class, 'sync'])
         ->name('sync');
 
     Route::post('/logout', [LoginController::class, 'destroy'])
         ->name('logout');
+
+    Route::get('/show-profile-admin/{id}', [AdminController::class, 'showProfileAdmin'])
+        ->name('show_profile_admin');
+
+    Route::get('/edit-profile-admin/{id}', [AdminController::class, 'editProfileAdmin'])
+        ->name('edit_profile_admin');
+    
+    Route::post('/edit-profile-admin/update-profile-admin/{id}', [AdminController::class, 'updateProfileAdmin'])
+        ->name('update_profile_admin');
+
+    Route::get('/edit-data-profile-admin/{id}', [AdminController::class, 'editDataProfileAdmin'])
+        ->name('edit_data_profile_admin');
+
+    Route::post('/edit-data-profile-admin/update-data-profile-admin/{id}', [AdminController::class, 'updateDataProfileAdmin'])
+        ->name('update_data_profile_admin');
 
     Route::get('/verifikasi_dokumen', function () {
         return view('admin.verifikasi_dokumen');

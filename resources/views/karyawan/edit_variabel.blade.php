@@ -2,17 +2,17 @@
 <script src="https://unpkg.com/gijgo@1.9.14/js/gijgo.min.js" type="text/javascript"></script>
 <link href="https://unpkg.com/gijgo@1.9.14/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <main class="main-content max-height-vh-100 h-100">
-    <x-app.navbar />
         <div class="pt-5 pb-6 bg-cover" style="background-image: url('../assets/img/header-blue-purple.jpg')"></div>
         <div class="container my-3 py-3">
             <hr class="horizontal mb-3 dark">
             <div class="row">
                 <div class="col-md-8 mx-auto mb-3 card-center">
                     <div class="card shadow-s border mb-4">
-                    <form role="form" method="POST" action="{{ route('update_variabel', ['id' => $variabelPenilaian->id]) }}" enctype="multipart/form-data">
+                    <form role="form" method="POST" action="{{ route('update_variabel', ['id_variabel_penilaian' => $variabelPenilaian->id_variabel_penilaian]) }}" enctype="multipart/form-data">
                     @csrf
                     <div class="card card-body pt-4 p-3">
                         <div class="form-group">
@@ -50,7 +50,7 @@
                             </div>
                             @error('nilai_maksimal') <div class="alertError2 text-danger">{{ $message }}</div> @enderror
                         </div>
-                        <div class="card card-footer pe-3">
+                        <div class="card-footer">
                             <button href=/detail-variabel type="submit" class="btn btn-primary">Simpan</button>
                         </div>
                     </div>

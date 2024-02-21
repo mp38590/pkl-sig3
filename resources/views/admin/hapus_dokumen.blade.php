@@ -14,7 +14,7 @@
                     <div class="card shadow-s border mb-4">
                         <div class="card-body pt-4 p-3">
                             @foreach($dokumen as $dok)
-                            <form role="form" method="POST" action="{{ route('konfirm_hapus_dokumen', ['id_variabel_penilaian' => $dok->id_variabel_penilaian]) }}" enctype="multipart/form-data">
+                            <form role="form" method="POST" action="{{ route('konfirm_hapus_dokumen_admin', ['id_variabel_penilaian' => $dok->id_variabel_penilaian]) }}" enctype="multipart/form-data">
                             @endforeach
                             @csrf
                                 <div class="form-group">
@@ -43,7 +43,7 @@
                                     </select>
                                 </div>
                                 <div class="card-footer">
-                                    <button href=/detail-dokumen type="submit" class="btn btn-primary">Hapus</button>
+                                    <button href="{{ route('show_dokumen_admin', ['id_variabel_penilaian' => $variabelPenilaian->id_variabel_penilaian]) }}" type="submit" class="btn btn-primary">Hapus</button>
                                 </div>
                             </div>
                             </form>

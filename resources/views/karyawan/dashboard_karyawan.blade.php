@@ -385,57 +385,6 @@
     });
 </script>
 
-<!-- <script>
-    var ctx = document.getElementById('banyakChart').getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: @json($x),
-            datasets: [{
-                label: 'Banyak Dokumen per ID',
-                data: @json($y),
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                x: {
-                    ticks: {
-                        callback: function(value, index, values) {
-                            var startIndex = 0; // Nilai default jika data tidak ditemukan
-                            @if($banyak->isNotEmpty())
-                                startIndex = @json($banyak->first()->id);
-                            @endif // Mengambil id pertama dari data
-                            return (startIndex + index) + ' - ' + @json($z)[index];
-                        }
-                    }
-                },
-                y: {
-                    beginAtZero: true
-                }
-            },
-            plugins: {
-                tooltip: {
-                    callbacks: {
-                        title: function(tooltipItem) {
-                            return 'ID: ' + tooltipItem[0].label;
-                        }
-                    }
-                }
-            },
-            onClick: function(evt, element) {
-                if (element.length > 0) {
-                    var index = element[0].index;
-                    var id = @json($x)[index]; // Mengambil ID dari data yang diklik
-                    window.location.href = "{{ route('show_dokumen', ['id' => ':id']) }}".replace(':id', id);
-                }
-            }
-        }
-    });
-</script> -->
-
 <script>
     var ctx = document.getElementById('nilaiChart').getContext('2d');
     var myChart = new Chart(ctx, {

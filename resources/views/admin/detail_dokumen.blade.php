@@ -11,10 +11,6 @@
             <div class="row">
                 <div class="col-md-12 mb-6">
                     <div class="card shadow-s border mb-4">
-                        <div class="d-flex justify-content-end">
-                            <a href="{{ route('tambah_variabel') }}" class="btn btn-light btn-sm position-relative btn-md mt-3 mb-3 me-3 font-weight-semibold" style="border: 2px solid #35A8CC;">+ Tambah
-                            </a>
-                        </div>
                         <div class="text-center">
                             @if (session('success'))
                                 <div class="font-medium text-sm text-green-600 alert2 alert-success" role="alert2">
@@ -37,41 +33,52 @@
                                                     id="flexCheckDefault">
                                             </div> -->
                                             <th class="text-info text-lg font-weight-semibold ps-3" style="text-align: center;">No.</th>
+                                            <th class="text-info text-lg font-weight-semibold ps-2" style="text-align: center;">Tahun</th>
                                             <th class="text-info text-lg font-weight-semibold ps-1" style="text-align: center;">Versi</th>
                                             <th class="text-info text-lg font-weight-semibold ps-1" style="text-align: center;">Kode Penilaian</th>
                                             <th class="text-info text-lg font-weight-semibold ps-1" style="text-align: center;">Item Penilaian</th>
-                                            <th class="text-info text-lg font-weight-semibold ps-1" style="text-align: center;">Skor Maksimal</th>
-                                            <th class="text-info text-lg font-weight-semibold ps-1" style="text-align: center;">Deskripsi Penilaian</th>
+                                            <th class="text-info text-lg font-weight-semibold ps-4" style="text-align: center;">Skor Maksimal</th>
+                                            <th class="text-info text-lg font-weight-semibold ps-2" style="text-align: center;">Skor Final</th>
+                                            <th class="text-info text-lg font-weight-semibold ps-2" style="text-align: center;">Deskripsi Penilaian</th>
+                                            <th class="text-info text-lg font-weight-semibold ps-2" style="text-align: center;">Nama Dokumen</th>
                                             <th class="text-info text-lg font-weight-semibold ps-2" style="text-align: center;">Action</th>
                                         <!-- </span> -->
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse($detail_variabel as $key => $variabel)
+                                    @forelse($detail_dokumen as $key => $detail)
                                     <tr>
-                                        <th class="font-weight-normal text-xl text-dark ps-3">{{ $detail_variabel->firstItem() + $key }}</th>
-                                        <th class="font-weight-normal text-xl text-dark ps-1">{{ $variabel->versi }}</th>
-                                        <th class="font-weight-normal text-xl text-dark ps-1">{{ $variabel->kode_penilaian }}</th>
+                                        <th class="font-weight-normal text-xl text-dark ps-3">{{ $detail_dokumen->firstItem() + $key}}</th>
+                                        <th class="font-weight-normal text-xl text-dark ps-0 me-4">{{ $detail->tahun }}</th>
+                                        <th class="font-weight-normal text-xl text-dark ps-1">{{ $detail->versi }}</th>
+                                        <th class="font-weight-normal text-xl text-dark ps-1">{{ $detail->kode_penilaian }}</th>
                                         <th class="font-weight-normal text-xl text-dark ps-2">
-                                            {!! nl2br(wordwrap($variabel->item_penilaian, 30, "\n", true)) !!}
+                                            {!! nl2br(wordwrap($detail->item_penilaian, 20, "\n", true)) !!}
                                         </th>
-                                        <th class="font-weight-normal text-xl text-dark ps-1 text-center">{{ $variabel->nilai_maksimal }}</th>
+                                        <th class="font-weight-normal text-xl text-dark ps-4">{{ $detail->nilai_maksimal }}</th>
+                                        <th class="font-weight-normal text-xl text-dark ps-4">{{ $detail->nilai }}</th>
                                         <th class="font-weight-normal text-xl text-dark ps-2 pe-2" style="text-align: justify;">
-                                            {!! nl2br(wordwrap($variabel->deskripsi_item_penilaian, 55, "\n", true)) !!}
+                                            {!! nl2br(wordwrap($detail->deskripsi_item_penilaian, 30, "\n", true)) !!}
                                         </th>
-                                        <th class="text-secondary text-xl font-weight-semibold ps-2 text-center">
-                                        @if (!is_null($variabel->id_variabel_penilaian))
-                                            <a href="{{ route('edit_variabel', ['id_variabel_penilaian' => $variabel->id_variabel_penilaian]) }}" class="btn btn-warning btn-sm position-relative mt-1 mb-1 text-center" style="width: 40px; height: 32px;">
-                                                <img src="../assets/img/small-logos/tool.png" alt="Logo" class="position-absolute start-50 top-50 translate-middle" style="width: 15px; height: 15px;">
-                                            </a>
-                                        <a href="{{ route('hapus_variabel', ['id_variabel_penilaian' => $variabel->id_variabel_penilaian]) }}" class="btn btn-danger btn-sm position-relative mt-1 mb-1 text-center" style="width: 40px; height: 32px;">
+                                        <th class="text-secondary text-xs font-weight-semibold ps-2 text-center">
+                                        <a href="{{ route('tambah_file_admin', ['id_variabel_penilaian' => $detail->id_variabel_penilaian]) }}" class="btn btn-dark btn-sm position-relative mt-1 mb-1" style="width: 40px; height: 32px;">
+                                                <img src="../assets/img/small-logos/upload.png" alt="Logo" class="position-absolute start-50 top-50 translate-middle"
+                                                    style="width: 15px; height: 15px;">
+                                        </a>
+                                        </th>
+                                        <th class="text-secondary text-xs font-weight-semibold ps-2 text-center">
+                                        <a href="{{ route('show_dokumen_admin', ['id_variabel_penilaian' => $detail->id_variabel_penilaian]) }}" class="btn btn-primary btn-sm position-relative mt-1 mb-1" style="width: 40px; height: 32px;">
+                                                <img src="../assets/img/small-logos/dokumen.png" alt="Logo" class="position-absolute start-50 top-50 translate-middle"
+                                                    style="width: 17px; height: 17px;">
+                                        </a> <br>
+                                        <a href="{{ route('edit_skor_admin', ['id_variabel_penilaian' => $detail->id_variabel_penilaian]) }}" class="btn btn-warning btn-sm position-relative mt-1 mb-1 text-center" style="width: 40px; height: 32px;">
+                                                <img src="../assets/img/small-logos/tool.png" alt="Logo" class="position-absolute start-50 top-50 translate-middle"
+                                                    style="width: 15px; height: 15px;">
+                                        </a> <br>
+                                        <a href="{{ route('hapus_dokumen_admin', ['id_variabel_penilaian' => $detail->id_variabel_penilaian]) }}" class="btn btn-danger btn-sm position-relative mt-1 mb-1 text-center" style="width: 40px; height: 32px;">
                                                 <img src="../assets/img/small-logos/eraser.png" alt="Logo" class="position-absolute start-50 top-50 translate-middle"
                                                     style="width: 15px; height: 15px;">
                                         </a>
-                                        @else
-                                            <!-- Tambahkan pesan atau tindakan yang sesuai jika id_variabel_penilaian null -->
-                                            <span class="text-muted">Variabel penilaian belum tersedia</span>
-                                        @endif
                                         </th>
                                     </tr>
                                     @empty
@@ -82,15 +89,15 @@
                                 </tbody>
                             </table>
                             <div class="mt-2 me-3 justify-content-end d-flex">
-                                {{ $detail_variabel->links() }}
+                                {{ $detail_dokumen->links() }}
                             </div>
                             <div class="me-3 justify-content-end d-flex">
                                 Showing
-                                {{ $detail_variabel->firstItem() }}
+                                {{ $detail_dokumen->firstItem() }}
                                 to
-                                {{ $detail_variabel->lastItem() }}
+                                {{ $detail_dokumen->lastItem() }}
                                 of
-                                {{ $detail_variabel->total() }}
+                                {{ $detail_dokumen->total() }}
                                 entries
                             </div>
                         </div>

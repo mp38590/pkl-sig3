@@ -13,11 +13,13 @@ return new class extends Migration
     {
         Schema::create('variabel_penilaian', function (Blueprint $table) {
             $table->id();
+            $table->integer('id_variabel_penilaian')->nullable();
             $table->string('versi', 5);
             $table->string('item_penilaian', 500);
             $table->string('deskripsi_item_penilaian', 2000);
             $table->string('kode_penilaian', 10);
             $table->integer('nilai_maksimal');
+            $table->string('status', 50)->nullable();
             $table->string('inserted_by', 25)->nullable();
             $table->string('updated_by', 25)->nullable();
             $table->integer('flag_delete');
