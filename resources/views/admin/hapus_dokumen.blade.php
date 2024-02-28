@@ -43,7 +43,7 @@
                                     </select>
                                 </div>
                                 <div class="card-footer">
-                                    <button href="{{ route('show_dokumen_admin', ['id_variabel_penilaian' => $variabelPenilaian->id_variabel_penilaian]) }}" type="submit" class="btn btn-primary">Hapus</button>
+                                    <button href="{{ route('detail_dokumen_admin') }}" type="submit" class="btn btn-primary">Hapus</button>
                                 </div>
                             </div>
                             </form>

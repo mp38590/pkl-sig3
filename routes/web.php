@@ -107,6 +107,12 @@ Route::group(['middleware' => ['auth', 'level:Karyawan']], function(){
     Route::get('/detail-nilai-dokumen', [KaryawanController::class, 'detailNilai'])
         ->name('detail_nilai_dokumen');
 
+    Route::get('/edit-file/{id_variabel_penilaian}', [KaryawanController::class, 'editDokumen'])
+        ->name('edit_file');
+
+    Route::post('/edit-file/update-file/{id_variabel_penilaian}', [KaryawanController::class, 'updateDokumen'])
+        ->name('update_file');
+
     Route::post('/logout', [LoginController::class, 'destroy'])
         ->name('logout');
 

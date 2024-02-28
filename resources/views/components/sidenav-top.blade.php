@@ -81,8 +81,8 @@
             </li>
                 <input type="checkbox" id="check">
                     <label for="check">
-                        <i class="fas fa-bars" id="btn"></i>
-                        <i class="fas fa-times" id="cancel"></i>
+                        <i class="fas fa-bars fixed-plugin-button-nav cursor-pointer text-white" id="btn"></i>
+                        <i class="fas fa-times fixed-plugin-button-nav cursor-pointer text-white" id="cancel"></i>
                     </label>
                     <div class="sidebar">
                         <header>SIG</header>

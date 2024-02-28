@@ -29,15 +29,15 @@
                                         <div class="card-body text-start px-3 py-0 w-100">
                                             <div class="row mt-12">
                                                 <div class="col-sm-3 mt-auto">
-                                                    <h4 class="text-dark font-weight-bolder">#1</h4>
-                                                    <p class="text-dark opacity-6 text-xs font-weight-bolder mb-0">PT Semen Padang (Persero) Tbk.
+                                                    <h4 class="text-white font-weight-bolder">#1</h4>
+                                                    <p class="text-white opacity-6 text-xs font-weight-bolder mb-0">PT Semen Padang (Persero) Tbk.
                                                     </p>
-                                                    <h5 class="text-dark font-weight-bolder">Indarung, Sumatera Barat</h5>
+                                                    <h5 class="text-white font-weight-bolder">Indarung, Sumatera Barat</h5>
                                                 </div>
                                                 <div class="col-sm-3 ms-auto mt-auto">
-                                                    <p class="text-dark opacity-6 text-xs font-weight-bolder mb-0">
+                                                    <p class="text-white opacity-6 text-xs font-weight-bolder mb-0">
                                                         Lima Pabrik Semen</p>
-                                                    <h5 class="text-dark font-weight-bolder">8,5 Juta Ton Semen per Tahun</h5>
+                                                    <h5 class="text-white font-weight-bolder">8,5 Juta Ton Semen per Tahun</h5>
                                                 </div>
                                             </div>
                                         </div>
@@ -52,14 +52,14 @@
                                     <div class="card-body text-start px-3 py-0 w-100">
                                         <div class="row mt-12">
                                             <div class="col-sm-3 mt-auto">
-                                                <h4 class="text-dark font-weight-bolder">#2</h4>
-                                                <p class="text-dark opacity-6 text-xs font-weight-bolder mb-0">PT Semen Gresik (Persero) Tbk.</p>
-                                                <h5 class="text-dark font-weight-bolder">Rembang, Jawa Tengah</h5>
+                                                <h4 class="text-white font-weight-bolder">#2</h4>
+                                                <p class="text-white opacity-6 text-xs font-weight-bolder mb-0">PT Semen Gresik (Persero) Tbk.</p>
+                                                <h5 class="text-white font-weight-bolder">Rembang, Jawa Tengah</h5>
                                             </div>
                                             <div class="col-sm-3 ms-auto mt-auto">
-                                                <p class="text-dark opacity-6 text-xs font-weight-bolder mb-0">Lima Pabrik Semen
+                                                <p class="text-white opacity-6 text-xs font-weight-bolder mb-0">Lima Pabrik Semen
                                                 </p>
-                                                <h5 class="text-dark font-weight-bolder">17,7 Juta Ton Semen per Tahun</h5>
+                                                <h5 class="text-white font-weight-bolder">17,7 Juta Ton Semen per Tahun</h5>
                                             </div>
                                         </div>
                                     </div>
@@ -73,14 +73,14 @@
                                     <div class="card-body text-start px-3 py-0 w-100">
                                         <div class="row mt-12">
                                             <div class="col-sm-3 mt-auto">
-                                                <h4 class="text-dark font-weight-bolder">#3</h4>
-                                                <p class="text-dark opacity-6 text-xs font-weight-bolder mb-0">PT Semen Tonasa (Persero) Tbk.</p>
-                                                <h5 class="text-dark font-weight-bolder">Pangkep, Sulawesi Selatan</h5>
+                                                <h4 class="text-white font-weight-bolder">#3</h4>
+                                                <p class="text-white opacity-6 text-xs font-weight-bolder mb-0">PT Semen Tonasa (Persero) Tbk.</p>
+                                                <h5 class="text-white font-weight-bolder">Pangkep, Sulawesi Selatan</h5>
                                             </div>
                                             <div class="col-sm-3 ms-auto mt-auto">
-                                                <p class="text-dark opacity-6 text-xs font-weight-bolder mb-0">Empat Pabrik Semen
+                                                <p class="text-white opacity-6 text-xs font-weight-bolder mb-0">Empat Pabrik Semen
                                                 </p>
-                                                <h5 class="text-dark font-weight-bolder">7,4 Juta Ton per Tahun</h5>
+                                                <h5 class="text-white font-weight-bolder">7,4 Juta Ton per Tahun</h5>
                                             </div>
                                         </div>
                                     </div>
@@ -94,14 +94,14 @@
                                     <div class="card-body text-start px-3 py-0 w-100">
                                         <div class="row mt-12">
                                             <div class="col-sm-3 mt-auto">
-                                                <h4 class="text-dark font-weight-bolder">#4</h4>
-                                                <p class="text-dark opacity-6 text-xs font-weight-bolder mb-0">PT Semen Baturaja (Persero) Tbk.</p>
-                                                <h5 class="text-dark font-weight-bolder">Baturaja, Sumatera Selatan</h5>
+                                                <h4 class="text-white font-weight-bolder">#4</h4>
+                                                <p class="text-white opacity-6 text-xs font-weight-bolder mb-0">PT Semen Baturaja (Persero) Tbk.</p>
+                                                <h5 class="text-white font-weight-bolder">Baturaja, Sumatera Selatan</h5>
                                             </div>
                                             <div class="col-sm-3 ms-auto mt-auto">
-                                                <p class="text-dark opacity-6 text-xs font-weight-bolder mb-0">Satu Pabrik Semen
+                                                <p class="text-white opacity-6 text-xs font-weight-bolder mb-0">Satu Pabrik Semen
                                                 </p>
-                                                <h5 class="text-dark font-weight-bolder">1,25 Juta Ton per Tahun</h5>
+                                                <h5 class="text-white font-weight-bolder">1,25 Juta Ton per Tahun</h5>
                                             </div>
                                         </div>
                                     </div>
@@ -115,14 +115,14 @@
                                     <div class="card-body text-start px-3 py-0 w-100">
                                         <div class="row mt-12">
                                             <div class="col-sm-3 mt-auto">
-                                                <h4 class="text-dark font-weight-bolder">#5</h4>
-                                                <p class="text-dark opacity-6 text-xs font-weight-bolder mb-0">PT Solusi Bangun Indonesia (Persero) Tbk.</p>
-                                                <h5 class="text-dark font-weight-bolder">Sidoarjo, Jawa Timur</h5>
+                                                <h4 class="text-white font-weight-bolder">#5</h4>
+                                                <p class="text-white opacity-6 text-xs font-weight-bolder mb-0">PT Solusi Bangun Indonesia (Persero) Tbk.</p>
+                                                <h5 class="text-white font-weight-bolder">Sidoarjo, Jawa Timur</h5>
                                             </div>
                                             <div class="col-sm-3 ms-auto mt-auto">
-                                                <p class="text-dark opacity-6 text-xs font-weight-bolder mb-0">Enam Pabrik Semen
+                                                <p class="text-white opacity-6 text-xs font-weight-bolder mb-0">Enam Pabrik Semen
                                                 </p>
-                                                <h5 class="text-dark font-weight-bolder">14,8 Juta Ton per Tahun</h5>
+                                                <h5 class="text-white font-weight-bolder">14,8 Juta Ton per Tahun</h5>
                                             </div>
                                         </div>
                                     </div>
@@ -136,14 +136,14 @@
                                     <div class="card-body text-start px-3 py-0 w-100">
                                         <div class="row mt-12">
                                             <div class="col-sm-3 mt-auto">
-                                                <h4 class="text-dark font-weight-bolder">#6</h4>
-                                                <p class="text-dark opacity-6 text-xs font-weight-bolder mb-0">Thang Long Cement Join Stock Company (TLCC)</p>
-                                                <h5 class="text-dark font-weight-bolder">Quang Ninh, Vietnam</h5>
+                                                <h4 class="text-white font-weight-bolder">#6</h4>
+                                                <p class="text-white opacity-6 text-xs font-weight-bolder mb-0">Thang Long Cement Join Stock Company (TLCC)</p>
+                                                <h5 class="text-white font-weight-bolder">Quang Ninh, Vietnam</h5>
                                             </div>
                                             <div class="col-sm-3 ms-auto mt-auto">
-                                                <p class="text-dark opacity-6 text-xs font-weight-bolder mb-0">Satu Pabrik Semen
+                                                <p class="text-white opacity-6 text-xs font-weight-bolder mb-0">Satu Pabrik Semen
                                                 </p>
-                                                <h5 class="text-dark font-weight-bolder">2,3 Juta Ton per Tahun</h5>
+                                                <h5 class="text-white font-weight-bolder">2,3 Juta Ton per Tahun</h5>
                                             </div>
                                         </div>
                                     </div>
@@ -157,14 +157,14 @@
                                     <div class="card-body text-start px-3 py-0 w-100">
                                         <div class="row mt-12">
                                             <div class="col-sm-3 mt-auto">
-                                                <h4 class="text-dark font-weight-bolder">#7</h4>
-                                                <p class="text-dark opacity-6 text-xs font-weight-bolder mb-0">PT Semen Indonesia Aceh (Persero) Tbk.</p>
-                                                <h5 class="text-dark font-weight-bolder">Kecamatan Batee dan Muara Tiga, Kabupaten Pidie, Aceh</h5>
+                                                <h4 class="text-white font-weight-bolder">#7</h4>
+                                                <p class="text-white opacity-6 text-xs font-weight-bolder mb-0">PT Semen Indonesia Aceh (Persero) Tbk.</p>
+                                                <h5 class="text-white font-weight-bolder">Kecamatan Batee dan Muara Tiga, Kabupaten Pidie, Aceh</h5>
                                             </div>
                                             <div class="col-sm-3 ms-auto mt-auto">
-                                                <p class="text-dark opacity-6 text-xs font-weight-bolder mb-0">Satu Pabrik Semen
+                                                <p class="text-white opacity-6 text-xs font-weight-bolder mb-0">Satu Pabrik Semen
                                                 </p>
-                                                <h5 class="text-dark font-weight-bolder">3 Juta Ton per Tahun</h5>
+                                                <h5 class="text-white font-weight-bolder">3 Juta Ton per Tahun</h5>
                                             </div>
                                         </div>
                                     </div>
@@ -177,18 +177,11 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-xl-6 col-sm-6 mb-xl-0">
+                <div class="col-xl-4 col-sm-6 mb-xl-0">
                     <div class="card border shadow-xs mb-4">
                         <div class="card-body text-start p-3 w-100">
-                            <div
-                                class="icon icon-shape icon-sm bg-dark text-white text-center border-radius-sm d-flex align-items-center justify-content-center mb-3">
-                                <svg height="16" width="16" xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M4.5 3.75a3 3 0 00-3 3v.75h21v-.75a3 3 0 00-3-3h-15z" />
-                                    <path fill-rule="evenodd"
-                                        d="M22.5 9.75h-21v7.5a3 3 0 003 3h15a3 3 0 003-3v-7.5zm-18 3.75a.75.75 0 01.75-.75h6a.75.75 0 010 1.5h-6a.75.75 0 01-.75-.75zm.75 2.25a.75.75 0 000 1.5h3a.75.75 0 000-1.5h-3z"
-                                        clip-rule="evenodd" />
-                                </svg>
+                            <div class="icon icon-sm position-relative mt-1 mb-3 border-radius-sm" style="width: 30px; height: 30px; background: #000; border: #000;">
+                                <img src="../assets/img/small-logos/file.png" alt="Logo" class="position-absolute start-50 top-50 translate-middle" style="width: 20px; height: 20px;">
                             </div>
                             <div class="row">
                                 <div class="col-12">
@@ -207,19 +200,34 @@
                         </div>
                     </div>
                 </div>
-            <div class="col-xl-6 col-sm-6 mb-xl-0">
+                <div class="col-xl-4 col-sm-6 mb-xl-0">
                     <div class="card border shadow-xs mb-4">
                         <div class="card-body text-start p-3 w-100">
-                            <div
-                                class="icon icon-shape icon-sm bg-dark text-white text-center border-radius-sm d-flex align-items-center justify-content-center mb-3">
-                                <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 24 24" fill="currentColor">
-                                    <path fill-rule="evenodd"
-                                        d="M7.5 5.25a3 3 0 013-3h3a3 3 0 013 3v.205c.933.085 1.857.197 2.774.334 1.454.218 2.476 1.483 2.476 2.917v3.033c0 1.211-.734 2.352-1.936 2.752A24.726 24.726 0 0112 15.75c-2.73 0-5.357-.442-7.814-1.259-1.202-.4-1.936-1.541-1.936-2.752V8.706c0-1.434 1.022-2.7 2.476-2.917A48.814 48.814 0 017.5 5.455V5.25zm7.5 0v.09a49.488 49.488 0 00-6 0v-.09a1.5 1.5 0 011.5-1.5h3a1.5 1.5 0 011.5 1.5zm-3 8.25a.75.75 0 100-1.5.75.75 0 000 1.5z"
-                                        clip-rule="evenodd" />
-                                    <path
-                                        d="M3 18.4v-2.796a4.3 4.3 0 00.713.31A26.226 26.226 0 0012 17.25c2.892 0 5.68-.468 8.287-1.335.252-.084.49-.189.713-.311V18.4c0 1.452-1.047 2.728-2.523 2.923-2.12.282-4.282.427-6.477.427a49.19 49.19 0 01-6.477-.427C4.047 21.128 3 19.852 3 18.4z" />
-                                </svg>
+                            <div class="icon icon-sm position-relative mt-1 mb-3 border-radius-sm" style="width: 30px; height: 30px; background: #000; border: #000;">
+                                <img src="../assets/img/small-logos/verif.png" alt="Logo" class="position-absolute start-50 top-50 translate-middle" style="width: 20px; height: 20px;">
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="w-100">
+                                        <p class="text-xl text-secondary mb-1">Jumlah Dokumen Terverifikasi</p>
+                                        <h4 class="mb-2 font-weight-bold">{{ $verifikasi }} Dokumen</h4>
+                                        <div class="d-flex align-items-center">
+                                            <span class="text-sm text-success font-weight-bolder">
+                                                <i class="fa fa-chevron-up text-xs me-1"></i>{{ $presentaseVerifikasi }} %
+                                            </span>
+                                            <span class="text-xl ms-1">dari {{ $jumlah_verifikasi }} Dokumen</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-sm-6 mb-xl-0">
+                    <div class="card border shadow-xs mb-4">
+                        <div class="card-body text-start p-3 w-100">
+                        <div class="icon icon-sm position-relative mt-1 mb-3 border-radius-sm" style="width: 30px; height: 30px; background: #000; border: #000;">
+                                <img src="../assets/img/small-logos/nilai.png" alt="Logo" class="position-absolute start-50 top-50 translate-middle" style="width: 20px; height: 20px;">
                             </div>
                             <div class="row">
                                 <div class="col-12">
@@ -310,25 +318,13 @@
                     </div>
                 </div>
             </div>
-
-            <!-- <div class="row pe-0">
-                <div class="col-6 mt-3 pe-2">
-                    <div class="card shadow-xs border">
-                        <div class="card-header font-weight-semibold">Grafik Banyak Dokumen Terupload Setiap ID</div>
-                        <div class="card-body">
-                            <div id="Grafik1">
-                                <canvas id="banyakChart" width="400" height="200"></canvas>
-                            </div>
-                        </div>
+            <div class="col-13 mt-3">
+                <div class="card shadow-xs border">
+                    <div class="card-header font-weight-semibold d-flex justify-content-between align-items-center">Grafik Jumlah Dokumen Terupload
                     </div>
-                </div>
-                <div class="col-6 mt-3 pe-0"> -->
-                    <div class="card shadow-xs border">
-                        <div class="card-header font-weight-semibold">Grafik Nilai Dokumen Terupload Setiap Bulan</div>
-                        <div class="card-body">
-                            <div id="Grafik2">
-                                <canvas id="nilaiChart" width="400" height="200"></canvas>
-                            </div>
+                    <div class="card-body">
+                        <div id="Grafik2">
+                            <canvas id="nilaiChart" width="400" height="200"></canvas>
                         </div>
                     </div>
                 </div>
@@ -387,45 +383,71 @@
 
 <script>
     var ctx = document.getElementById('nilaiChart').getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: @json($m),
-            datasets: [{
-                label: 'Nilai Dokumen Setiap Bulan',
-                data: @json($l),
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                x: {
-                    beginAtZero: true // Mulai dari 0
-                },
-                y: {
-                    beginAtZero: true
-                }
+var nilaiData = @json($l);
+var nilaiLabels = @json($m);
+
+// Fungsi untuk menentukan warna sesuai dengan nilai
+function getColor(value) {
+    switch (value) {
+        case 1:
+            return 'rgba(255, 0, 0, 0.2)'; // Merah
+        case 2:
+            return 'rgba(255, 165, 0, 0.2)'; // Oren
+        case 3:
+            return 'rgba(255, 255, 0, 0.2)'; // Kuning
+        case 4:
+            return 'rgba(00, 128, 0, 0.2)'; // Hijau
+        case 5:
+            return 'rgba(75, 192, 192, 0.2)'; // Biru
+    }
+}
+
+var datasets = [];
+for (var i = 1; i <= 5; i++) {
+    var filteredData = nilaiData.map((nilai) => nilai === i ? nilai : null);
+    datasets.push({
+        label: 'Nilai ' + i, // Nama label sesuai dengan nilai
+        data: filteredData,
+        backgroundColor: getColor(i), // Warna sesuai dengan nilai
+        borderColor: getColor(i).replace("0.2", "1"), // Warna border dengan opasitas penuh
+        borderWidth: 1
+    });
+}
+
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: nilaiLabels,
+        datasets: datasets
+    },
+    options: {
+        scales: {
+            x: {
+                beginAtZero: true // Mulai dari 0
             },
-            plugins: {
-                tooltip: {
-                    callbacks: {
-                        title: function(tooltipItem) {
-                            return 'Kode Penilaian: ' + tooltipItem[0].label;
-                        }
+            y: {
+                beginAtZero: true
+            }
+        },
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    title: function(tooltipItem) {
+                        return 'Kode Penilaian: ' + tooltipItem[0].label;
                     }
                 }
-            },
-            onClick: function(evt, element) {
-                if (element.length > 0) {
-                    var index = element[0].index;
-                    var kode_penilaian = @json($m)[index]; // Mengambil kode penilaian dari data yang diklik
-                    window.location.href = "/detail-nilai-dokumen?kode=" + kode_penilaian;
-                }
+            }
+        },
+        onClick: function(evt, element) {
+            if (element.length > 0) {
+                var index = element[0].index;
+                var kode_penilaian = nilaiLabels[index]; // Mengambil kode penilaian dari data yang diklik
+                window.location.href = "/detail-nilai-dokumen?kode=" + kode_penilaian;
             }
         }
-    });
+    }
+});
+
 </script>
 
 

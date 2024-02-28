@@ -94,7 +94,6 @@ class KaryawanController extends Controller
                         ->get();
 
         $nilai = Realisasi::select(DB::raw("kode_penilaian as kode_penilaian"), DB::raw("SUM(nilai) as total_nilai"))
-                            ->where('nilai', '!=', null)
                             ->where('inserted_by', $username)
                             ->where('flag_delete', '=', 0)
                             ->whereIn('updated_at', function($query) {
@@ -108,9 +107,30 @@ class KaryawanController extends Controller
                             ->orderBy('kode_penilaian')
                             ->get();
         $l = $nilai->pluck('total_nilai');
-        $m = $nilai->pluck('kode_penilaian');                
+        $m = $nilai->pluck('kode_penilaian');
 
-        return view('karyawan.dashboard_karyawan', compact('user', 'jumlah_dokumen', 'rata_skor', 'presentase', 'latestTimestamp', 'labels', 'values', 'label', 'average', 'x', 'y', 'z', 'banyak', 'l', 'm'));
+        $latestTimestampVerifikasi = Dokumen::where('nama_dokumen', '!=', null)
+                                    ->where('status', '=', 'approve')
+                                    ->where('inserted_by', $username)
+                                    ->select(DB::raw("MAX(DATE(updated_at)) as latest_date"))
+                                    ->value('latest_date');
+
+        $verifikasi = Dokumen::where('nama_dokumen', '!=', null)
+                                ->where('inserted_by', $username)
+                                ->where('status', '=', 'approve')
+                                ->whereDate('updated_at', $latestTimestampVerifikasi)
+                                ->count();
+
+        
+        $jumlah_verifikasi = Dokumen::where('nama_dokumen', '!=', null)->where('inserted_by', $username)
+                                    ->where('status', '=', 'approve')
+                                    ->count();
+
+        $presentaseVerifikasi = ($jumlah_verifikasi > 0) ? ($verifikasi / ($jumlah_verifikasi)) * 100 : 0;
+        $presentaseVerifikasi = round($presentaseVerifikasi, 4);
+
+        return view('karyawan.dashboard_karyawan', compact('user', 'jumlah_dokumen', 'rata_skor', 'presentase', 'latestTimestamp', 'labels', 'values', 
+                                                            'label', 'average', 'x', 'y', 'z', 'banyak', 'l', 'm', 'verifikasi', 'jumlah_verifikasi', 'presentaseVerifikasi'));
     }
 
     /**
@@ -650,7 +670,7 @@ class KaryawanController extends Controller
             $newRealisasi->save();
         }
 
-        $dokumen = pilihDokumen::where('id_variabel_penilaian', $id_variabel_penilaian)->first();
+        $dokumen = Dokumen::where('id_variabel_penilaian', $id_variabel_penilaian)->first();
 
         // Jika realisasi ditemukan, maka update juga realisasi
         if ($dokumen) {
@@ -667,8 +687,6 @@ class KaryawanController extends Controller
             $newDokumen->inserted_by = $loggedInUser->username;
             $newDokumen->updated_by = $loggedInUser->username;
             $newDokumen->flag_delete = 0;
-
-            $newDokumen->tahun = $realisasi->tahun;
             $newDokumen->save();
         }
 
@@ -759,6 +777,74 @@ class KaryawanController extends Controller
 
     // Return view with data
     return view('karyawan.detail_nilai_dokumen', compact('nilai_dokumen'));
+}
+
+    public function editDokumen($id_variabel_penilaian)
+    {
+        $dokumen = Dokumen::find($id_variabel_penilaian);
+        $variabelPenilaian = VariabelPenilaian::find($id_variabel_penilaian);
+        $realisasi = Realisasi::find($id_variabel_penilaian);
+
+        if ($dokumen || $variabelPenilaian || $realisasi->isEmpty()) {
+            return view('karyawan.edit_file', compact('dokumen', 'variabelPenilaian', 'realisasi'))->with('error', 'Tidak Ada Data yang ditampilkan');
+        }
+
+        return view('karyawan.edit_file', compact('dokumen', 'variabelPenilaian', 'realisasi'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param int $id
+     */
+    public function updateDokumen(Request $request, $id_variabel_penilaian)
+{
+    $loggedInUser = Auth::user();
+
+    $request->validate([
+        'file' => 'required|mimes:pdf',
+    ], [
+        'file.required' => 'Nama Dokumen harus dimasukkan',
+        'file.mimes' => 'Dokumen harus dalam format pdf',
+    ]);
+
+    // Ambil dokumen lama yang belum diapprove
+    $existingDokumen = Dokumen::where('id_variabel_penilaian', $id_variabel_penilaian)
+                              ->where('status', 'not approve')
+                              ->where('flag_delete', '=', 0)
+                              ->first();
+
+    // Jika ada file baru yang diunggah
+    if ($request->hasFile('file')) {
+        $pdf = $request->file('file');
+        $pdfName = $pdf->getClientOriginalName();
+        $pdf->move(public_path('uploads/file'), $pdfName);
+    }
+
+    // Jika ada dokumen yang lama dan belum diapprove
+    if ($existingDokumen) {
+        // Update flag_delete untuk dokumen lama
+        $existingDokumen->update([
+            'flag_delete' => 2,
+        ]);
+    }
+
+    // Buat dokumen baru
+    $newDokumen = new Dokumen;
+    $newDokumen->id_variabel_penilaian = $id_variabel_penilaian; // Gunakan parameter yang diterima dari fungsi
+    $newDokumen->kode_penilaian = $existingDokumen->kode_penilaian; // Gunakan kode_penilaian dari dokumen lama
+    $newDokumen->item_penilaian = $existingDokumen->item_penilaian; // Gunakan item_penilaian dari dokumen lama
+    $newDokumen->deskripsi_item_penilaian = $existingDokumen->deskripsi_item_penilaian; // Gunakan deskripsi_item_penilaian dari dokumen lama
+    $newDokumen->nama_dokumen = $pdfName;
+    $newDokumen->status = 'not approve';
+    $newDokumen->inserted_by = $loggedInUser->username;
+    $newDokumen->updated_by = $loggedInUser->username;
+    $newDokumen->flag_delete = 0; // Default flag_delete for new document
+
+    $newDokumen->save();
+
+    // Berikan respons sukses atau redirect sesuai kebutuhan Anda
+    return redirect()->route('show_dokumen', ['id_variabel_penilaian' => $id_variabel_penilaian])->with('success', 'File dokumen baru berhasil dimasukkan dan ditambahkan dalam database');
 }
 
 }

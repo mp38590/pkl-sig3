@@ -62,6 +62,9 @@ class AdminController extends Controller
         }    
             
         $detail_dokumen = $detail_dokumen->paginate(5, ['*'], 'page', request()->page);
+
+        $existingDokumen = Dokumen::first();
+        $dokumen = $existingDokumen->id_variabel_penilaian;
     
         // Check if data is empty
         if ($detail_dokumen->isEmpty()) {
@@ -167,14 +170,20 @@ class AdminController extends Controller
 
     public function editAdmin($id_variabel_penilaian)
     {
-        $variabelPenilaian = VariabelPenilaian::find($id_variabel_penilaian);
-        $realisasi = Realisasi::find($id_variabel_penilaian);
+        $dokumen = Dokumen::where('id_variabel_penilaian', $id_variabel_penilaian)
+                            ->first();
+    
+        $realisasi = Realisasi::where('id_variabel_penilaian', $id_variabel_penilaian)
+                                ->first();
 
-        if ($variabelPenilaian || $realisasi->isEmpty()) {
-            return view('admin.edit_skor', compact('variabelPenilaian', 'realisasi'))->with('error', 'Tidak Ada Data yang ditampilkan');
+        $variabelPenilaian = VariabelPenilaian::where('id_variabel_penilaian', $id_variabel_penilaian)
+                                                ->first();
+
+        if ($dokumen || $variabelPenilaian || $realisasi->isEmpty()) {
+            return view('admin.edit_skor', compact('dokumen', 'variabelPenilaian', 'realisasi'))->with('error', 'Tidak Ada Data yang ditampilkan');
         }
 
-        return view('admin.edit_skor', compact('variabelPenilaian', 'realisasi'));
+        return view('admin.edit_skor', compact('variabelPenilaian', 'realisasi', 'dokumen'));
     }
 
     /**
@@ -182,11 +191,14 @@ class AdminController extends Controller
      *
      * @param int $id
      */
-    public function updateAdmin(Request $request, $id_variabel_penilaian, $nama_dokumen)
+    public function updateAdmin(Request $request, $id_variabel_penilaian)
     {
         $loggedInUser = Auth::user();
 
-        $realisasi = Realisasi::where('id_variabel_penilaian', $id_variabel_penilaian);
+        $realisasi = Realisasi::where('id_variabel_penilaian', $id_variabel_penilaian)->first();
+
+        $dokumen = Dokumen::where('id_variabel_penilaian', $id_variabel_penilaian)
+                            ->first();
 
         $request->validate([
             'nilai' => 'required|min:1|max:5',
@@ -299,6 +311,13 @@ class AdminController extends Controller
     $dokumen = Dokumen::where('id_variabel_penilaian', $id_variabel_penilaian)
                     ->where('nama_dokumen', $nama_dokumen)
                     ->first();
+    
+    $realisasi = Realisasi::where('id_variabel_penilaian', $id_variabel_penilaian)
+                ->first();
+
+    $variabelPenilaian = VariabelPenilaian::where('id_variabel_penilaian', $id_variabel_penilaian)
+                ->first();
+        
 
     // Memastikan dokumen ditemukan
     if (!$dokumen) {
@@ -313,6 +332,12 @@ class AdminController extends Controller
         // Jika status adalah not approve, ubah menjadi approve
         $dokumen->status = 'approve';
         $dokumen->save();
+
+        $variabelPenilaian->status = 'approve';
+        $variabelPenilaian->save();
+
+        $realisasi->status = 'approve';
+        $realisasi->save();
 
         return redirect()->route('show_dokumen_admin', ['id_variabel_penilaian' => $id_variabel_penilaian])->with('success', 'Status verifikasi berhasil diubah menjadi "Disetujui" dan tersimpan dalam database');
     }

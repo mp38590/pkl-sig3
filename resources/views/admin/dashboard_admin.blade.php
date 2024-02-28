@@ -29,15 +29,15 @@
                                         <div class="card-body text-start px-3 py-0 w-100">
                                             <div class="row mt-12">
                                                 <div class="col-sm-3 mt-auto">
-                                                    <h4 class="text-dark font-weight-bolder">#1</h4>
-                                                    <p class="text-dark opacity-6 text-xs font-weight-bolder mb-0">PT Semen Padang (Persero) Tbk.
+                                                    <h4 class="text-white font-weight-bolder">#1</h4>
+                                                    <p class="text-white opacity-6 text-xs font-weight-bolder mb-0">PT Semen Padang (Persero) Tbk.
                                                     </p>
-                                                    <h5 class="text-dark font-weight-bolder">Indarung, Sumatera Barat</h5>
+                                                    <h5 class="text-white font-weight-bolder">Indarung, Sumatera Barat</h5>
                                                 </div>
                                                 <div class="col-sm-3 ms-auto mt-auto">
-                                                    <p class="text-dark opacity-6 text-xs font-weight-bolder mb-0">
+                                                    <p class="text-white opacity-6 text-xs font-weight-bolder mb-0">
                                                         Lima Pabrik Semen</p>
-                                                    <h5 class="text-dark font-weight-bolder">8,5 Juta Ton Semen per Tahun</h5>
+                                                    <h5 class="text-white font-weight-bolder">8,5 Juta Ton Semen per Tahun</h5>
                                                 </div>
                                             </div>
                                         </div>
@@ -52,14 +52,14 @@
                                     <div class="card-body text-start px-3 py-0 w-100">
                                         <div class="row mt-12">
                                             <div class="col-sm-3 mt-auto">
-                                                <h4 class="text-dark font-weight-bolder">#2</h4>
-                                                <p class="text-dark opacity-6 text-xs font-weight-bolder mb-0">PT Semen Gresik (Persero) Tbk.</p>
-                                                <h5 class="text-dark font-weight-bolder">Rembang, Jawa Tengah</h5>
+                                                <h4 class="text-white font-weight-bolder">#2</h4>
+                                                <p class="text-white opacity-6 text-xs font-weight-bolder mb-0">PT Semen Gresik (Persero) Tbk.</p>
+                                                <h5 class="text-white font-weight-bolder">Rembang, Jawa Tengah</h5>
                                             </div>
                                             <div class="col-sm-3 ms-auto mt-auto">
-                                                <p class="text-dark opacity-6 text-xs font-weight-bolder mb-0">Lima Pabrik Semen
+                                                <p class="text-white opacity-6 text-xs font-weight-bolder mb-0">Lima Pabrik Semen
                                                 </p>
-                                                <h5 class="text-dark font-weight-bolder">17,7 Juta Ton Semen per Tahun</h5>
+                                                <h5 class="text-white font-weight-bolder">17,7 Juta Ton Semen per Tahun</h5>
                                             </div>
                                         </div>
                                     </div>
@@ -73,14 +73,14 @@
                                     <div class="card-body text-start px-3 py-0 w-100">
                                         <div class="row mt-12">
                                             <div class="col-sm-3 mt-auto">
-                                                <h4 class="text-dark font-weight-bolder">#3</h4>
-                                                <p class="text-dark opacity-6 text-xs font-weight-bolder mb-0">PT Semen Tonasa (Persero) Tbk.</p>
-                                                <h5 class="text-dark font-weight-bolder">Pangkep, Sulawesi Selatan</h5>
+                                                <h4 class="text-white font-weight-bolder">#3</h4>
+                                                <p class="text-white opacity-6 text-xs font-weight-bolder mb-0">PT Semen Tonasa (Persero) Tbk.</p>
+                                                <h5 class="text-white font-weight-bolder">Pangkep, Sulawesi Selatan</h5>
                                             </div>
                                             <div class="col-sm-3 ms-auto mt-auto">
-                                                <p class="text-dark opacity-6 text-xs font-weight-bolder mb-0">Empat Pabrik Semen
+                                                <p class="text-white opacity-6 text-xs font-weight-bolder mb-0">Empat Pabrik Semen
                                                 </p>
-                                                <h5 class="text-dark font-weight-bolder">7,4 Juta Ton per Tahun</h5>
+                                                <h5 class="text-white font-weight-bolder">7,4 Juta Ton per Tahun</h5>
                                             </div>
                                         </div>
                                     </div>
@@ -94,14 +94,14 @@
                                     <div class="card-body text-start px-3 py-0 w-100">
                                         <div class="row mt-12">
                                             <div class="col-sm-3 mt-auto">
-                                                <h4 class="text-dark font-weight-bolder">#4</h4>
-                                                <p class="text-dark opacity-6 text-xs font-weight-bolder mb-0">PT Semen Baturaja (Persero) Tbk.</p>
-                                                <h5 class="text-dark font-weight-bolder">Baturaja, Sumatera Selatan</h5>
+                                                <h4 class="text-white font-weight-bolder">#4</h4>
+                                                <p class="text-white opacity-6 text-xs font-weight-bolder mb-0">PT Semen Baturaja (Persero) Tbk.</p>
+                                                <h5 class="text-white font-weight-bolder">Baturaja, Sumatera Selatan</h5>
                                             </div>
                                             <div class="col-sm-3 ms-auto mt-auto">
-                                                <p class="text-dark opacity-6 text-xs font-weight-bolder mb-0">Satu Pabrik Semen
+                                                <p class="text-white opacity-6 text-xs font-weight-bolder mb-0">Satu Pabrik Semen
                                                 </p>
-                                                <h5 class="text-dark font-weight-bolder">1,25 Juta Ton per Tahun</h5>
+                                                <h5 class="text-white font-weight-bolder">1,25 Juta Ton per Tahun</h5>
                                             </div>
                                         </div>
                                     </div>
@@ -115,14 +115,14 @@
                                     <div class="card-body text-start px-3 py-0 w-100">
                                         <div class="row mt-12">
                                             <div class="col-sm-3 mt-auto">
-                                                <h4 class="text-dark font-weight-bolder">#5</h4>
-                                                <p class="text-dark opacity-6 text-xs font-weight-bolder mb-0">PT Solusi Bangun Indonesia (Persero) Tbk.</p>
-                                                <h5 class="text-dark font-weight-bolder">Sidoarjo, Jawa Timur</h5>
+                                                <h4 class="text-white font-weight-bolder">#5</h4>
+                                                <p class="text-white opacity-6 text-xs font-weight-bolder mb-0">PT Solusi Bangun Indonesia (Persero) Tbk.</p>
+                                                <h5 class="text-white font-weight-bolder">Sidoarjo, Jawa Timur</h5>
                                             </div>
                                             <div class="col-sm-3 ms-auto mt-auto">
-                                                <p class="text-dark opacity-6 text-xs font-weight-bolder mb-0">Enam Pabrik Semen
+                                                <p class="text-white opacity-6 text-xs font-weight-bolder mb-0">Enam Pabrik Semen
                                                 </p>
-                                                <h5 class="text-dark font-weight-bolder">14,8 Juta Ton per Tahun</h5>
+                                                <h5 class="text-white font-weight-bolder">14,8 Juta Ton per Tahun</h5>
                                             </div>
                                         </div>
                                     </div>
@@ -136,14 +136,14 @@
                                     <div class="card-body text-start px-3 py-0 w-100">
                                         <div class="row mt-12">
                                             <div class="col-sm-3 mt-auto">
-                                                <h4 class="text-dark font-weight-bolder">#6</h4>
-                                                <p class="text-dark opacity-6 text-xs font-weight-bolder mb-0">Thang Long Cement Join Stock Company (TLCC)</p>
-                                                <h5 class="text-dark font-weight-bolder">Quang Ninh, Vietnam</h5>
+                                                <h4 class="text-white font-weight-bolder">#6</h4>
+                                                <p class="text-white opacity-6 text-xs font-weight-bolder mb-0">Thang Long Cement Join Stock Company (TLCC)</p>
+                                                <h5 class="text-white font-weight-bolder">Quang Ninh, Vietnam</h5>
                                             </div>
                                             <div class="col-sm-3 ms-auto mt-auto">
-                                                <p class="text-dark opacity-6 text-xs font-weight-bolder mb-0">Satu Pabrik Semen
+                                                <p class="text-white opacity-6 text-xs font-weight-bolder mb-0">Satu Pabrik Semen
                                                 </p>
-                                                <h5 class="text-dark font-weight-bolder">2,3 Juta Ton per Tahun</h5>
+                                                <h5 class="text-white font-weight-bolder">2,3 Juta Ton per Tahun</h5>
                                             </div>
                                         </div>
                                     </div>
@@ -157,14 +157,14 @@
                                     <div class="card-body text-start px-3 py-0 w-100">
                                         <div class="row mt-12">
                                             <div class="col-sm-3 mt-auto">
-                                                <h4 class="text-dark font-weight-bolder">#7</h4>
-                                                <p class="text-dark opacity-6 text-xs font-weight-bolder mb-0">PT Semen Indonesia Aceh (Persero) Tbk.</p>
-                                                <h5 class="text-dark font-weight-bolder">Kecamatan Batee dan Muara Tiga, Kabupaten Pidie, Aceh</h5>
+                                                <h4 class="text-white font-weight-bolder">#7</h4>
+                                                <p class="text-white opacity-6 text-xs font-weight-bolder mb-0">PT Semen Indonesia Aceh (Persero) Tbk.</p>
+                                                <h5 class="text-white font-weight-bolder">Kecamatan Batee dan Muara Tiga, Kabupaten Pidie, Aceh</h5>
                                             </div>
                                             <div class="col-sm-3 ms-auto mt-auto">
-                                                <p class="text-dark opacity-6 text-xs font-weight-bolder mb-0">Satu Pabrik Semen
+                                                <p class="text-white opacity-6 text-xs font-weight-bolder mb-0">Satu Pabrik Semen
                                                 </p>
-                                                <h5 class="text-dark font-weight-bolder">3 Juta Ton per Tahun</h5>
+                                                <h5 class="text-white font-weight-bolder">3 Juta Ton per Tahun</h5>
                                             </div>
                                         </div>
                                     </div>

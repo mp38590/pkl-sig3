@@ -43,8 +43,6 @@
                                                 </div> -->
                                                 <th class="text-info text-s font-weight-semibold ps-3" style="text-align: center;">No.</th>
                                                 <th class="text-info text-s font-weight-semibold ps-2" style="text-align: center;">Nama Dokumen</th>
-                                                <th class="text-info text-s font-weight-semibold ps-1" style="text-align: center;">Inserted By</th>
-                                                <th class="text-info text-s font-weight-semibold ps-1" style="text-align: center;">Updated By</th>
                                                 <th class="text-info text-s font-weight-semibold ps-1" style="text-align: center;">FIle</th>
                                                 <th class="text-info text-s font-weight-semibold ps-1" style="text-align: center;">Verifikasi</th>
                                                 <th class="text-info text-s font-weight-semibold ps-2" style="text-align: center;">Action</th>
@@ -55,12 +53,10 @@
                                         @php
                                         $index = 0
                                         @endphp
-                                        @forelse($dokumen as $dok)
+                                        @forelse($dokumen as $key => $dok)
                                         <tr>
-                                            <th class="font-weight-normal text-sm text-dark ps-3">{{ $loop->iteration }}</th>
+                                            <th class="font-weight-normal text-sm text-dark pe-4 text-center">{{ $loop->iteration }}</th>
                                             <th class="font-weight-normal text-sm text-dark ps-2 me-4">{{ $dok->nama_dokumen }}</th>
-                                            <th class="font-weight-normal text-sm text-dark ps-1">{{ $dok->inserted_by }}</th>
-                                            <th class="font-weight-normal text-sm text-dark ps-1">{{ $dok->updated_by }}</th>
                                             <th class="text-secondary text-xs font-weight-semibold ps-2 text-center">
                                                 @if($dok->nama_dokumen !== null)
                                                     <button type="button" class="btn btn-primary btn-sm position-relative mt-1 mb-1" style="width: 30px; height: 30px;">
@@ -80,26 +76,39 @@
                                                 @if ($dok->status == "approve")
                                                     <a href="{{ route('update_status_admin', ['id_variabel_penilaian' => $dok->id_variabel_penilaian, 'nama_dokumen' => $dok->nama_dokumen]) }}" class="btn btn-success btn-sm position-relative mt-1 mb-1 text-center" disabled>Disetujui</a>&nbsp;
                                                 @else
-                                                    <a href="{{ route('update_status_admin', ['id_variabel_penilaian' => $dok->id_variabel_penilaian, 'nama_dokumen' => $dok->nama_dokumen]) }}" class="btn btn-danger btn-sm position-relative mt-1 mb-1 text-center">Belum Disetujui</a>&nbsp;
+                                                    @if ($dok->nama_dokumen !== null)
+                                                        <a href="{{ route('update_status_admin', ['id_variabel_penilaian' => $dok->id_variabel_penilaian, 'nama_dokumen' => $dok->nama_dokumen]) }}" class="btn btn-danger btn-sm position-relative mt-1 mb-1 text-center">Belum Disetujui</a>&nbsp;
+                                                    @else
+                                                        <button class="btn btn-danger btn-sm position-relative mt-1 mb-1 text-center" disabled>Belum Disetujui</button>&nbsp;
+                                                    @endif
                                                 @endif
                                             </th>
-                                        <th class="text-secondary text-xs font-weight-semibold ps-2 text-center">
-                                            @if ($dok->status == "approve")
-                                                <button href="{{ route('edit_skor_admin', ['id_variabel_penilaian' => $dok->id_variabel_penilaian]) }}" class="btn btn-warning btn-sm position-relative mt-1 mb-1 text-center" style="width: 40px; height: 32px;" disabled>
-                                                    <img src="../assets/img/small-logos/tool.png" alt="Logo" class="position-absolute start-50 top-50 translate-middle" style="width: 15px; height: 15px;">
-                                                </button>
-                                                <button href="{{ route('hapus_dokumen_admin', ['id_variabel_penilaian' => $dok->id_variabel_penilaian]) }}" class="btn btn-danger btn-sm position-relative mt-1 mb-1 text-center" style="width: 40px; height: 32px;" disabled>
-                                                    <img src="../assets/img/small-logos/eraser.png" alt="Logo" class="position-absolute start-50 top-50 translate-middle" style="width: 15px; height: 15px;">
-                                                </button>
-                                            @else
-                                                <a href="{{ route('edit_skor_admin', ['id_variabel_penilaian' => $dok->id_variabel_penilaian]) }}" class="btn btn-warning btn-sm position-relative mt-1 mb-1 text-center" style="width: 40px; height: 32px;">
-                                                    <img src="../assets/img/small-logos/tool.png" alt="Logo" class="position-absolute start-50 top-50 translate-middle" style="width: 15px; height: 15px;">
-                                                </a>
-                                                <a href="{{ route('hapus_dokumen_admin', ['id_variabel_penilaian' => $dok->id_variabel_penilaian]) }}" class="btn btn-danger btn-sm position-relative mt-1 mb-1 text-center" style="width: 40px; height: 32px;">
-                                                    <img src="../assets/img/small-logos/eraser.png" alt="Logo" class="position-absolute start-50 top-50 translate-middle" style="width: 15px; height: 15px;">
-                                                </a>
-                                            @endif
-                                        </th>
+                                            <th class="text-secondary text-xs font-weight-semibold ps-2 text-center">
+                                                @if ($dok->status == "approve")
+                                                    <button href="{{ route('edit_skor_admin', ['id_variabel_penilaian' => $dok->id_variabel_penilaian]) }}" class="btn btn-warning btn-sm position-relative mt-1 mb-1 text-center" style="width: 40px; height: 32px;" disabled>
+                                                        <img src="../assets/img/small-logos/editDok.png" alt="Logo" class="position-absolute start-50 top-50 translate-middle" style="width: 20px; height: 20px;">
+                                                    </button>
+                                                    <!-- <button href="{{ route('hapus_dokumen_admin', ['id_variabel_penilaian' => $dok->id_variabel_penilaian]) }}" class="btn btn-danger btn-sm position-relative mt-1 mb-1 text-center" style="width: 40px; height: 32px;" disabled>
+                                                        <img src="../assets/img/small-logos/eraser.png" alt="Logo" class="position-absolute start-50 top-50 translate-middle" style="width: 15px; height: 15px;">
+                                                    </button> -->
+                                                @else
+                                                    @if ($dok->nama_dokumen !== null)
+                                                        <a href="{{ route('edit_skor_admin', ['id_variabel_penilaian' => $dok->id_variabel_penilaian]) }}" class="btn btn-warning btn-sm position-relative mt-1 mb-1 text-center" style="width: 40px; height: 32px;">
+                                                            <img src="../assets/img/small-logos/editDok.png" alt="Logo" class="position-absolute start-50 top-50 translate-middle" style="width: 20px; height: 20px;">
+                                                        </a>
+                                                        <!-- <a href="{{ route('hapus_dokumen_admin', ['id_variabel_penilaian' => $dok->id_variabel_penilaian]) }}" class="btn btn-danger btn-sm position-relative mt-1 mb-1 text-center" style="width: 40px; height: 32px;">
+                                                            <img src="../assets/img/small-logos/eraser.png" alt="Logo" class="position-absolute start-50 top-50 translate-middle" style="width: 15px; height: 15px;">
+                                                        </a> -->
+                                                    @else
+                                                        <button href="{{ route('edit_skor_admin', ['id_variabel_penilaian' => $dok->id_variabel_penilaian]) }}" class="btn btn-warning btn-sm position-relative mt-1 mb-1 text-center" style="width: 40px; height: 32px;" disabled>
+                                                            <img src="../assets/img/small-logos/editDok.png" alt="Logo" class="position-absolute start-50 top-50 translate-middle" style="width: 20px; height: 20px;">
+                                                        </button>
+                                                        <!-- <button href="{{ route('hapus_dokumen_admin', ['id_variabel_penilaian' => $dok->id_variabel_penilaian]) }}" class="btn btn-danger btn-sm position-relative mt-1 mb-1 text-center" style="width: 40px; height: 32px;" disabled>
+                                                            <img src="../assets/img/small-logos/eraser.png" alt="Logo" class="position-absolute start-50 top-50 translate-middle" style="width: 15px; height: 15px;">
+                                                        </button> -->
+                                                    @endif
+                                                @endif
+                                            </th>
                                         </tr>
                                         @empty
                                         <tr>
