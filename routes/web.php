@@ -186,13 +186,17 @@ Route::group(['middleware' => ['auth', 'level:Admin']], function(){
     Route::post('/edit-data-profile-admin/update-data-profile-admin/{id}', [AdminController::class, 'updateDataProfileAdmin'])
         ->name('update_data_profile_admin');
 
-    Route::get('/verifikasi_dokumen', function () {
-        return view('admin.verifikasi_dokumen');
-    })->name('verifikasi_dokumen');
+    Route::get('/detail-file-dokumen-admin', [AdminController::class, 'detailFileAdmin'])
+        ->name('detail_file_dokumen_admin');
 
-    Route::get('/data_pengguna', function () {
-        return view('admin.data_pengguna');
-    })->name('data_pengguna');
+    Route::get('/detail-file-approve-admin', [AdminController::class, 'detailApproveAdmin'])
+        ->name('detail_file_approve_admin');
+    
+    Route::get('/detail-nilai-dokumen-admin', [AdminController::class, 'detailNilaiAdmin'])
+        ->name('detail_nilai_dokumen_admin');
+
+    Route::get('/detail-pengguna', [AdminController::class, 'detailPengguna'])
+        ->name('detail_pengguna');
 
     Route::get('/pills_home', function () {
         return view('admin.data_pengguna');

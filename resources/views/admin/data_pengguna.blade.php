@@ -1,110 +1,120 @@
 <x-app-layout>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-</head>
-<body>
-<main class="main-content max-height-vh-100 h-100">
-    <div class="pt-5 pb-6 bg-cover" style="background-image: url('../assets/img/header-blue-purple.jpg')"></div>
-    <div class="container my-3 py-3">
-        <div class="container mt-3">
-        <!-- Nav pills -->
-        <ul class="nav nav-pills" role="tablist">
-            <li class="nav-item">
-            <a class="nav-link active" data-bs-toggle="pill" href="#home">Karyawan</a>
-            </li>
-            <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="pill" href="#profile">Admin</a>
-            </li>
-        </ul>
+<script src="https://unpkg.com/gijgo@1.9.14/js/gijgo.min.js" type="text/javascript"></script>
+<link href="https://unpkg.com/gijgo@1.9.14/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-        <!-- Tab panes -->
-        <div class="tab-content">
-            <div id="home" class="container tab-pane active"><br>
-            <div class="col-md-12 mb-6">
-            <div class="card shadow-xs border mb-4">
-                <div class="table-responsive p-0">
-                    <table class="table align-items-center mb-0">
-                        <thead>
-                            <tr>
-                                <!-- <span class="d-flex align-items-center py-3 px-4 text-sm"> -->
-                                    <!-- <div class="form-check mb-0">
-                                        <input class="form-check-input" type="checkbox" value=""
-                                            id="flexCheckDefault">
-                                    </div> -->
-                                    <th class="text-info text-s font-weight-semibold ps-3">No.</th>
-                                    <th class="text-info text-s font-weight-semibold ps-1">Nama Lengkap</th>
-                                    <th class="text-info text-s font-weight-semibold ps-1">Username</th>
-                                    <th class="text-info text-s font-weight-semibold ps-3">Alamat Rumah</th>
-                                    <th class="text-info text-s font-weight-semibold ps-4">Email</th>
-                                    <th class="text-info text-s font-weight-semibold ps-4">No Rekening</th>
-                                <!-- </span> -->
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <!-- <td class="d-flex align-items-center py-3 px-4 text-sm"> -->
-                                    <th class="font-weight-normal text-sm text-dark ps-3">1.</th>
-                                    <th class="font-weight-normal text-sm text-dark ps-1">Subardi Wirawan Putra</th>
-                                    <th class="font-weight-normal text-sm text-dark ps-1">KHidenife</th>
-                                    <th class="font-weight-normal text-sm text-dark ps-3">KHidenifedewf</th>
-                                    <th class="font-weight-normal text-sm text-dark ps-4">KHidenifedew</th>
-                                    <th class="font-weight-normal text-sm text-dark ps-4">KHidenifedewf</th>
-                                <!-- </td> -->
-                            </tr>
-                        </tbody>
-                    </table>
+    <main class="main-content max-height-vh-100 h-100">
+        <div class="pt-5 pb-6 bg-cover" style="background-image: url('../assets/img/header-blue-purple.jpg')"></div>
+            <div class="container my-3 py-3">
+                <!-- Nav pills -->
+                <nav class="nav nav-pills">
+                    <li class="nav-item">
+                        <a href="#home" class="nav-item nav-link active" data-bs-toggle="pill">
+                            <i class="fas fa-users"></i> Karyawan
+                        </a>
+                    <li>
+                    <li class="nav-item">
+                        <a href="#profile" class="nav-item nav-link" data-bs-toggle="pill">
+                            <i class="fas fa-user"></i> Admin
+                        </a>
+                    <li>
+                </nav>
+
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div id="home" class="container tab-pane active"><br>
+                        <div class="col-md-12 mb-6">
+                            <div class="card shadow-xs border mb-4">
+                                <div class="table-responsive p-0 mt-4">
+                                    <table class="table align-items-center mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-info text-s font-weight-semibold ps-3" style="text-align: center;">No.</th>
+                                                <th class="text-info text-s font-weight-semibold ps-2" style="text-align: center;">Nama Lengkap</th>
+                                                <th class="text-info text-s font-weight-semibold ps-1" style="text-align: center;">Username</th>
+                                                <th class="text-info text-s font-weight-semibold ps-1" style="text-align: center;">Alamat Rumah</th>
+                                                <th class="text-info text-s font-weight-semibold ps-1" style="text-align: center;">Email</th>
+                                                <th class="text-info text-s font-weight-semibold ps-2" style="text-align: center;">Nomer Rekening</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                @php
+                                                $index = 0
+                                                @endphp
+                                                @foreach($user as $us)
+                                                @if($us->level == 'Karyawan')
+                                                <tr>
+                                                    <th class="font-weight-normal text-sm text-dark pe-4 text-center">{{ $index + 1 }}</th>
+                                                    <th class="font-weight-normal text-sm text-dark ps-2 text-center">{{ $us->name }}</th>
+                                                    <th class="font-weight-normal text-sm text-dark ps-1 text-center">{{ $us->username }}</th>
+                                                    <th class="font-weight-normal text-sm text-dark ps-1 text-center">{{ $us->alamat_rumah }}</th>
+                                                    <th class="font-weight-normal text-sm text-dark pe-4 text-center">{{ $us->email }}</th>
+                                                    <th class="font-weight-normal text-sm text-dark pe-4 text-center">{{ $us->no_rekening }}</th>
+                                                </tr>
+                                                @endif
+                                                @endforeach
+                                            </tr>
+                                            <tr>
+                                                @if($user->isEmpty())
+                                                    <td colspan="10" class="text-center">{{ 'Tidak Ada Data yang ditampilkan' }}</td>
+                                                @endif
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
             </div>
             <div id="profile" class="container tab-pane fade"><br>
-            <div class="col-md-12 mb-6">
-            <div class="card shadow-xs border mb-4">
-                <div class="table-responsive p-0">
-                    <table class="table align-items-center mb-0">
-                        <thead>
-                            <tr>
-                                <!-- <span class="d-flex align-items-center py-3 px-4 text-sm"> -->
-                                    <!-- <div class="form-check mb-0">
-                                        <input class="form-check-input" type="checkbox" value=""
-                                            id="flexCheckDefault">
-                                    </div> -->
-                                    <th class="text-info text-s font-weight-semibold ps-3">No.</th>
-                                    <th class="text-info text-s font-weight-semibold ps-1">Nama Lengkap</th>
-                                    <th class="text-info text-s font-weight-semibold ps-1">Username</th>
-                                    <th class="text-info text-s font-weight-semibold ps-3">Alamat Rumah</th>
-                                    <th class="text-info text-s font-weight-semibold ps-4">Email</th>
-                                    <th class="text-info text-s font-weight-semibold ps-4">No Rekening</th>
-                                <!-- </span> -->
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <!-- <td class="d-flex align-items-center py-3 px-4 text-sm"> -->
-                                    <th class="font-weight-normal text-sm text-dark ps-3">1.</th>
-                                    <th class="font-weight-normal text-sm text-dark ps-1">Subardi Wirawan Putra</th>
-                                    <th class="font-weight-normal text-sm text-dark ps-1">KHidenife</th>
-                                    <th class="font-weight-normal text-sm text-dark ps-3">KHidenifedewf</th>
-                                    <th class="font-weight-normal text-sm text-dark ps-4">KHidenifedew</th>
-                                    <th class="font-weight-normal text-sm text-dark ps-4">KHidenifedewf</th>
-                                <!-- </td> -->
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="col-md-12 mb-6">
+                    <div class="card shadow-xs border mb-4">
+                        <div class="table-responsive p-0 mt-4">
+                            <table class="table align-items-center mb-0">
+                                <thead>
+                                    <tr>
+                                        <th class="text-info text-s font-weight-semibold ps-3" style="text-align: center;">No.</th>
+                                        <th class="text-info text-s font-weight-semibold ps-2" style="text-align: center;">Nama Lengkap</th>
+                                        <th class="text-info text-s font-weight-semibold ps-1" style="text-align: center;">Username</th>
+                                        <th class="text-info text-s font-weight-semibold ps-1" style="text-align: center;">Alamat Rumah</th>
+                                        <th class="text-info text-s font-weight-semibold ps-1" style="text-align: center;">Email</th>
+                                        <th class="text-info text-s font-weight-semibold ps-2" style="text-align: center;">Nomer Rekening</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        @php
+                                        $index = 0
+                                        @endphp
+                                        @foreach($user as $us)
+                                        @if($us->level == 'Admin')
+                                        <tr>
+                                            <th class="font-weight-normal text-sm text-dark pe-4 text-center">{{ $index + 1}}</th>
+                                            <th class="font-weight-normal text-sm text-dark ps-2 text-center">{{ $us->name }}</th>
+                                            <th class="font-weight-normal text-sm text-dark ps-1 text-center">{{ $us->username }}</th>
+                                            <th class="font-weight-normal text-sm text-dark ps-1 text-center">{{ $us->alamat_rumah }}</th>
+                                            <th class="font-weight-normal text-sm text-dark pe-4 text-center">{{ $us->email }}</th>
+                                            <th class="font-weight-normal text-sm text-dark pe-4 text-center">{{ $us->no_rekening }}</th>
+                                        </tr>
+                                        @endif
+                                        @endforeach
+                                    </tr>
+                                    <tr>
+                                        @if($user->isEmpty())
+                                            <td colspan="10" class="text-center">{{ 'Tidak Ada Data yang ditampilkan' }}</td>
+                                        @endif
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-            </div>
-        </div>
-        </div>
-</body>
-</html>
     </main>
-</body>
 
 </x-app-layout>

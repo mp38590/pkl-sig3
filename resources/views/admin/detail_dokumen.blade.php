@@ -33,15 +33,15 @@
                                                     id="flexCheckDefault">
                                             </div> -->
                                             <th class="text-info text-lg font-weight-semibold ps-3" style="text-align: center;">No.</th>
-                                            <th class="text-info text-lg font-weight-semibold ps-2" style="text-align: center;">Tahun</th>
+                                            <th class="text-info text-lg font-weight-semibold ps-1" style="text-align: center;">Tahun</th>
                                             <th class="text-info text-lg font-weight-semibold ps-1" style="text-align: center;">Versi</th>
                                             <th class="text-info text-lg font-weight-semibold ps-1" style="text-align: center;">Kode Penilaian</th>
                                             <th class="text-info text-lg font-weight-semibold ps-1" style="text-align: center;">Item Penilaian</th>
-                                            <th class="text-info text-lg font-weight-semibold ps-4" style="text-align: center;">Skor Maksimal</th>
-                                            <th class="text-info text-lg font-weight-semibold ps-2" style="text-align: center;">Skor Final</th>
-                                            <th class="text-info text-lg font-weight-semibold ps-2" style="text-align: center;">Deskripsi Penilaian</th>
-                                            <th class="text-info text-lg font-weight-semibold ps-2" style="text-align: center;">Nama Dokumen</th>
-                                            <th class="text-info text-lg font-weight-semibold ps-2" style="text-align: center;">Action</th>
+                                            <th class="text-info text-lg font-weight-semibold ps-1" style="text-align: center;">Skor Maksimal</th>
+                                            <th class="text-info text-lg font-weight-semibold ps-1" style="text-align: center;">Skor Final</th>
+                                            <th class="text-info text-lg font-weight-semibold ps-1" style="text-align: center;">Deskripsi Penilaian</th>
+                                            <th class="text-info text-lg font-weight-semibold ps-1" style="text-align: center;">Nama Dokumen</th>
+                                            <th class="text-info text-lg font-weight-semibold ps-1" style="text-align: center;">Action</th>
                                         <!-- </span> -->
                                     </tr>
                                 </thead>
@@ -49,24 +49,24 @@
                                     @forelse($detail_dokumen as $key => $detail)
                                     <tr>
                                         <th class="font-weight-normal text-xl text-dark ps-3">{{ $detail_dokumen->firstItem() + $key}}</th>
-                                        <th class="font-weight-normal text-xl text-dark ps-0 me-4">{{ $detail->tahun }}</th>
+                                        <th class="font-weight-normal text-xl text-dark ps-1 me-4">{{ $detail->tahun }}</th>
                                         <th class="font-weight-normal text-xl text-dark ps-1">{{ $detail->versi }}</th>
                                         <th class="font-weight-normal text-xl text-dark ps-1">{{ $detail->kode_penilaian }}</th>
-                                        <th class="font-weight-normal text-xl text-dark ps-2">
+                                        <th class="font-weight-normal text-xl text-dark ps-1">
                                             {!! nl2br(wordwrap($detail->item_penilaian, 20, "\n", true)) !!}
                                         </th>
-                                        <th class="font-weight-normal text-xl text-dark ps-4">{{ $detail->nilai_maksimal }}</th>
-                                        <th class="font-weight-normal text-xl text-dark ps-4">{{ $detail->nilai }}</th>
+                                        <th class="font-weight-normal text-xl text-dark ps-1">{{ $detail->nilai_maksimal }}</th>
+                                        <th class="font-weight-normal text-xl text-dark ps-1">{{ $detail->nilai }}</th>
                                         <th class="font-weight-normal text-xl text-dark ps-2 pe-2" style="text-align: justify;">
                                             {!! nl2br(wordwrap($detail->deskripsi_item_penilaian, 30, "\n", true)) !!}
                                         </th>
-                                        <th class="text-secondary text-xs font-weight-semibold ps-2 text-center">
+                                        <th class="text-secondary text-xs font-weight-semibold ps-1 text-center">
                                         <a href="{{ route('tambah_file_admin', ['id_variabel_penilaian' => $detail->id_variabel_penilaian]) }}" class="btn btn-dark btn-sm position-relative mt-1 mb-1" style="width: 40px; height: 32px;">
                                                 <img src="../assets/img/small-logos/upload.png" alt="Logo" class="position-absolute start-50 top-50 translate-middle"
                                                     style="width: 15px; height: 15px;">
                                         </a>
                                         </th>
-                                        <th class="text-secondary text-xs font-weight-semibold ps-2 text-center">
+                                        <th class="text-secondary text-xs font-weight-semibold ps-1 text-center">
                                         <a href="{{ route('show_dokumen_admin', ['id_variabel_penilaian' => $detail->id_variabel_penilaian]) }}" class="btn btn-primary btn-sm position-relative mt-1 mb-1" style="width: 40px; height: 32px;">
                                                 <img src="../assets/img/small-logos/dokumen.png" alt="Logo" class="position-absolute start-50 top-50 translate-middle"
                                                     style="width: 17px; height: 17px;">

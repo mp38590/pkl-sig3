@@ -33,18 +33,13 @@
                     Dashboard
                 </a>
             </li>
-            <!-- <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center">
-                <a href="{{ route('verifikasi_dokumen') }}" class="nav-link text-white p-0 text-lg">
-                    Verifikasi Dokumen
-                </a>
-            </li> -->
             <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center">
                 <a href="{{ route('detail_dokumen_admin') }}" class="nav-link text-white p-0 text-lg">
                     Detail Dokumen
                 </a>
             </li>
             <li class="nav-item px-3 py-3 border-radius-sm d-flex align-items-center">
-                <a href="{{ route('data_pengguna') }}" class="nav-link text-white p-0 text-lg">
+                <a href="{{ route('detail_pengguna') }}" class="nav-link text-white p-0 text-lg">
                     Data Pengguna
                 </a>
             </li>

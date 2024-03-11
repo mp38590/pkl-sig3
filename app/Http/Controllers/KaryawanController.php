@@ -129,8 +129,7 @@ class KaryawanController extends Controller
         $presentaseVerifikasi = ($jumlah_verifikasi > 0) ? ($verifikasi / ($jumlah_verifikasi)) * 100 : 0;
         $presentaseVerifikasi = round($presentaseVerifikasi, 4);
 
-        return view('karyawan.dashboard_karyawan', compact('user', 'jumlah_dokumen', 'rata_skor', 'presentase', 'latestTimestamp', 'labels', 'values', 
-                                                            'label', 'average', 'x', 'y', 'z', 'banyak', 'l', 'm', 'verifikasi', 'jumlah_verifikasi', 'presentaseVerifikasi'));
+        return view('karyawan.dashboard_karyawan', compact('user', 'jumlah_dokumen', 'rata_skor', 'presentase', 'latestTimestamp', 'labels', 'values', 'label', 'average', 'x', 'y', 'z', 'banyak', 'l', 'm', 'verifikasi', 'jumlah_verifikasi', 'presentaseVerifikasi', 'tambah_dokumen'));
     }
 
     /**

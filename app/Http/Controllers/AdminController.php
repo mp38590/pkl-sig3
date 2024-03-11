@@ -21,7 +21,91 @@ class AdminController extends Controller
         $user = User::where('username', $username)->first();
         $level = $user->level;
 
-        return view('admin.dashboard_admin', compact('user'));
+        $jumlah_dokumen = Dokumen::where('nama_dokumen', '!=', null)->where('inserted_by', $username)
+                                    ->count();
+                                    
+        $existingDokumen = Dokumen::first();
+        $created_at = optional($existingDokumen)->created_at;
+        $latestTimestampDokumen = Dokumen::where('nama_dokumen', '!=', null)
+                ->where('inserted_by', $username)
+                ->max('created_at');
+        $tambah_dokumen = Dokumen::where('nama_dokumen', '!=', null)
+                                    ->where('inserted_by', $username)
+                                    ->where('created_at', $latestTimestampDokumen)
+                                    ->count();
+        $presentase = ($jumlah_dokumen > 0) ? ($tambah_dokumen / ($jumlah_dokumen)) * 100 : 0;
+        $presentase = round($presentase, 4);
+
+        $latestTimestampVerif = Dokumen::where('nama_dokumen', '!=', null)
+                                        ->max('created_at');
+
+        $verifikasi = Dokumen::where('nama_dokumen', '!=', null)
+                                ->where('status', '=', 'not approve')
+                                ->where('flag_delete', '=', 0)
+                                ->where('created_at', $latestTimestampVerif)
+                                ->count();
+        
+        $jumlah_verifikasi = Dokumen::where('nama_dokumen', '!=', null)
+                                    ->where('inserted_by', '!=', null)
+                                    ->where('status', '=', 'not approve')
+                                    ->count();
+
+        $presentaseVerifikasi = ($jumlah_verifikasi > 0) ? ($verifikasi / ($jumlah_verifikasi)) * 100 : 0;
+        $presentaseVerifikasi = round($presentaseVerifikasi, 4);
+
+        $jumlah_pengguna = User::count();
+        $jumlah_karyawan = User::where('level', '=', 'Karyawan')->count();
+        $jumlah_admin = User::where('level', '=', 'Admin')->count();
+
+        $latestDatePengguna = User::select(DB::raw("MAX(DATE(created_at)) as latest_date"))->value('latest_date');
+
+        $tambah_pengguna = User::whereDate('created_at', $latestDatePengguna)->count();
+
+        $presentasePengguna = ($jumlah_pengguna > 0) ? ($tambah_pengguna / ($jumlah_pengguna)) * 100 : 0;
+
+        $data = Dokumen::select(DB::raw("EXTRACT(MONTH FROM created_at) as month"), DB::raw('COUNT(*) as total'))
+                        ->where('nama_dokumen', '!=', null)
+                        ->where('inserted_by', $username)
+                        ->groupBy('month')
+                        ->orderBy('month')
+                        ->get();
+
+        $labels = $data->pluck('month');
+        $values = $data->pluck('total');
+
+        $approve = Dokumen::select(DB::raw("EXTRACT(MONTH FROM updated_at) as month"), DB::raw('COUNT(*) as jumlah'))
+                    ->whereNotNull('nama_dokumen')
+                    ->where('status', '=', 'approve')
+                    ->groupBy('month')
+                    ->orderBy('month')
+                    ->get();
+
+        $label = $approve->pluck('month');
+        $value = $approve->pluck('jumlah');
+
+        $latestTimestampRealisasi = Realisasi::where('nilai', '!=', null)
+                                                ->max('updated_at');
+
+        $nilai_dokumen = Realisasi::where('nilai', '!=', null)
+                                    ->get();
+
+        $nilai = Realisasi::select(DB::raw("kode_penilaian as kode_penilaian"), DB::raw("SUM(nilai) as total_nilai"))
+                            ->where('flag_delete', '=', 0)
+                            ->whereIn('updated_at', function($query) {
+                                $query->select(DB::raw('MAX(updated_at)'))
+                                    ->from('realisasi')
+                                    ->whereRaw('realisasi.kode_penilaian = kode_penilaian')
+                                    ->where('flag_delete', '=', 0)
+                                    ->groupBy('kode_penilaian');
+                            })
+                            ->groupBy('kode_penilaian')
+                            ->orderBy('kode_penilaian')
+                            ->get();
+        $l = $nilai->pluck('total_nilai');
+        $m = $nilai->pluck('kode_penilaian');
+
+        return view('admin.dashboard_admin', compact('user', 'jumlah_dokumen', 'presentase', 'verifikasi', 'jumlah_verifikasi', 'presentaseVerifikasi', 'jumlah_pengguna', 'jumlah_karyawan', 'jumlah_admin',
+                                                        'tambah_pengguna', 'presentasePengguna', 'labels', 'values', 'label', 'value', 'tambah_dokumen', 'l', 'm'));
     }
 
     /**
@@ -113,6 +197,8 @@ class AdminController extends Controller
                 if (!$existingDokumen->nama_dokumen) {
                     // If the Dokumen does not have a document, update the existing record
                     $existingDokumen->nama_dokumen = $pdfName;
+                    $existingDokumen->update(['inserted_by' => $loggedInUser->username]);
+                    $existingDokumen->update(['updated_by' => $loggedInUser->username]);
                     $existingDokumen->save();
                 } else {
                     // If the Dokumen already has a document, create a new record
@@ -122,8 +208,8 @@ class AdminController extends Controller
                     $newDokumen->item_penilaian = $existingDokumen->item_penilaian;
                     $newDokumen->deskripsi_item_penilaian = $existingDokumen->deskripsi_item_penilaian;
                     $newDokumen->status = 'not approve';
-                    $newDokumen->inserted_by = $existingDokumen->inserted_by;
-                    $newDokumen->updated_by = $existingDokumen->updated_by;
+                    $newDokumen->inserted_by = $loggedInUser->username;
+                    $newDokumen->updated_by = $loggedInUser->username;
                     $newDokumen->flag_delete = 0;
                     $newDokumen->nama_dokumen = $pdfName;
         
@@ -367,6 +453,62 @@ class AdminController extends Controller
         Dokumen::where('id_variabel_penilaian', $id_variabel_penilaian)->where('nama_dokumen', $selectedNamaDokumen)->update(['flag_delete' => 1]);
 
         return redirect()->route('show_dokumen_admin', ['id_variabel_penilaian' => $variabelPenilaian->id_variabel_penilaian])->with('success', 'Dokumen berhasil dihapus dari database.');
+    }
+
+    public function detailFileAdmin()
+    {
+        $dokumen = Dokumen::where('flag_delete', '=', 0)->where('nama_dokumen', '!=', 'null')->paginate(5);
+
+        if ($dokumen->isEmpty()) {
+            return view('admin.detail_file_dokumen', compact('dokumen'))->with('error', 'Tidak Ada Data yang ditampilkan');
+        }
+        return view('admin.detail_file_dokumen', compact('dokumen'));
+    }
+
+    public function detailApproveAdmin()
+    {
+        $dokumen = Dokumen::where('flag_delete', '=', 0)
+                            ->where('nama_dokumen', '!=', 'null')
+                            ->where('status', '=', 'approve')
+                            ->paginate(5);
+
+        if ($dokumen->isEmpty()) {
+            return view('admin.detail_file_approve', compact('dokumen'))->with('error', 'Tidak Ada Data yang ditampilkan');
+        }
+        return view('admin.detail_file_approve', compact('dokumen'));
+    }
+
+    public function detailNilaiAdmin(Request $request)
+{
+    $kode_penilaian = $request->get('kode');
+
+    // Base query without search and chart interaction
+    $nilai_dokumen = DB::table('realisasi')
+        ->leftJoin('variabel_penilaian', function($join) {
+            $join->on('realisasi.id', '=', 'variabel_penilaian.id')
+                ->where('variabel_penilaian.flag_delete', '=', 0);
+        })
+        ->where('realisasi.flag_delete', '=', 0)
+        ->where('realisasi.nilai', '!=', null)
+        ->select('realisasi.*', 'variabel_penilaian.versi', 'variabel_penilaian.nilai_maksimal');  
+
+    // Apply kode_penilaian filter if kode_penilaian parameter is provided
+    if ($kode_penilaian) {
+        $nilai_dokumen->where('variabel_penilaian.kode_penilaian', $kode_penilaian);
+    }
+
+    // Paginate the results
+    $nilai_dokumen = $nilai_dokumen->orderBy('realisasi.tahun')->distinct()->paginate(5);
+
+    // Return view with data
+    return view('admin.detail_nilai_dokumen', compact('nilai_dokumen'));
+}
+
+    public function detailPengguna(Request $request)
+    {
+        $user = User::all();
+
+        return view('admin.data_pengguna', compact('user'));
     }
 
 }

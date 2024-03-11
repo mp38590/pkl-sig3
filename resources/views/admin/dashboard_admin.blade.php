@@ -177,44 +177,77 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-xl-6 col-sm-6 mb-xl-0">
+                <div class="col-xl-4 col-sm-6 mb-xl-0">
                     <div class="card border shadow-xs mb-4">
                         <div class="card-body text-start p-3 w-100">
-                            <div
-                                class="icon icon-shape icon-sm bg-dark text-white text-center border-radius-sm d-flex align-items-center justify-content-center mb-3">
-                                <svg height="16" width="16" xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M4.5 3.75a3 3 0 00-3 3v.75h21v-.75a3 3 0 00-3-3h-15z" />
-                                    <path fill-rule="evenodd"
-                                        d="M22.5 9.75h-21v7.5a3 3 0 003 3h15a3 3 0 003-3v-7.5zm-18 3.75a.75.75 0 01.75-.75h6a.75.75 0 010 1.5h-6a.75.75 0 01-.75-.75zm.75 2.25a.75.75 0 000 1.5h3a.75.75 0 000-1.5h-3z"
-                                        clip-rule="evenodd" />
-                                </svg>
+                            <div class="icon icon-sm position-relative mt-1 mb-3 border-radius-sm" style="width: 30px; height: 30px; background: #000; border: #000;">
+                                <img src="../assets/img/small-logos/file.png" alt="Logo" class="position-absolute start-50 top-50 translate-middle" style="width: 20px; height: 20px;">
                             </div>
                             <div class="row">
-                                <!--  -->
+                                <div class="col-12">
+                                    <div class="w-100">
+                                        <p class="text-xl text-secondary mb-1">Jumlah Dokumen Terupload</p>
+                                        <h4 class="mb-2 font-weight-bold">{{ $tambah_dokumen }} Dokumen</h4>
+                                        <div class="d-flex align-items-center mb-2">
+                                            <span class="text-sm text-success font-weight-bolder">
+                                                <i class="fa fa-chevron-up text-xs me-1"></i>{{ $presentase }} %
+                                            </span>
+                                            <span class="text-xl ms-1">dari {{ $jumlah_dokumen }} Dokumen</span>
+                                        </div>
+                                    </div></br></br>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            <div class="col-xl-6 col-sm-6 mb-xl-0">
+                <div class="col-xl-4 col-sm-6 mb-xl-0">
                     <div class="card border shadow-xs mb-4">
                         <div class="card-body text-start p-3 w-100">
-                            <div
-                                class="icon icon-shape icon-sm bg-dark text-white text-center border-radius-sm d-flex align-items-center justify-content-center mb-3">
-                                <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 24 24" fill="currentColor">
-                                    <path fill-rule="evenodd"
-                                        d="M7.5 5.25a3 3 0 013-3h3a3 3 0 013 3v.205c.933.085 1.857.197 2.774.334 1.454.218 2.476 1.483 2.476 2.917v3.033c0 1.211-.734 2.352-1.936 2.752A24.726 24.726 0 0112 15.75c-2.73 0-5.357-.442-7.814-1.259-1.202-.4-1.936-1.541-1.936-2.752V8.706c0-1.434 1.022-2.7 2.476-2.917A48.814 48.814 0 017.5 5.455V5.25zm7.5 0v.09a49.488 49.488 0 00-6 0v-.09a1.5 1.5 0 011.5-1.5h3a1.5 1.5 0 011.5 1.5zm-3 8.25a.75.75 0 100-1.5.75.75 0 000 1.5z"
-                                        clip-rule="evenodd" />
-                                    <path
-                                        d="M3 18.4v-2.796a4.3 4.3 0 00.713.31A26.226 26.226 0 0012 17.25c2.892 0 5.68-.468 8.287-1.335.252-.084.49-.189.713-.311V18.4c0 1.452-1.047 2.728-2.523 2.923-2.12.282-4.282.427-6.477.427a49.19 49.19 0 01-6.477-.427C4.047 21.128 3 19.852 3 18.4z" />
-                                </svg>
+                            <div class="icon icon-sm position-relative mt-1 mb-3 border-radius-sm" style="width: 30px; height: 30px; background: #000; border: #000;">
+                                <img src="../assets/img/small-logos/notApprove.png" alt="Logo" class="position-absolute start-50 top-50 translate-middle" style="width: 20px; height: 20px;">
                             </div>
-                            
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="w-100">
+                                        <p class="text-xl text-secondary mb-1">Jumlah Dokumen Belum Terverifikasi</p>
+                                        <h4 class="mb-2 font-weight-bold">{{ $verifikasi }} Dokumen</h4>
+                                        <div class="d-flex align-items-center mb-2">
+                                            <span class="text-sm text-success font-weight-bolder">
+                                                <i class="fa fa-chevron-up text-xs me-1"></i>{{ $presentaseVerifikasi }} %
+                                            </span>
+                                            <span class="text-xl ms-1">dari {{ $jumlah_verifikasi }} Dokumen</span>
+                                        </div>
+                                    </div></br></br>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+                <div class="col-xl-4 col-sm-6 mb-xl-0">
+                    <div class="card border shadow-xs mb-4">
+                        <div class="card-body text-start p-3 w-100">
+                            <div class="icon icon-sm position-relative mt-1 mb-3 border-radius-sm" style="width: 30px; height: 30px; background: #000; border: #000;">
+                                <img src="../assets/img/small-logos/notApprove.png" alt="Logo" class="position-absolute start-50 top-50 translate-middle" style="width: 20px; height: 20px;">
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="w-100">
+                                        <p class="text-xl text-secondary mb-1">Jumlah Pengguna Terdaftar</p>
+                                        <h4 class="mb-2 font-weight-bold">{{ $tambah_pengguna }} Pengguna</h4>
+                                        <span class="text-xl ms-1">Jumlah karyawan sebanyak {{ $jumlah_karyawan }} karyawan</span></br>
+                                        <span class="text-xl ms-1">Jumlah admin sebanyak {{ $jumlah_admin }} admin</span>
+                                        <div class="d-flex align-items-center mt-2">
+                                            <span class="text-sm text-success font-weight-bolder">
+                                                <i class="fa fa-chevron-up text-xs me-1"></i>{{ $presentasePengguna }} %
+                                            </span>
+                                            <span class="text-xl ms-1">dari {{ $jumlah_pengguna }} Pengguna</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card shadow-xs border">
@@ -232,7 +265,7 @@
                             <div class="mb-3">
                                 <div style="position: relative; left: 20px">
                                     <div>
-                                        <h1 style="font-size: 25px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" class="font-weight-bolder">Karyawan</h1>
+                                        <h1 style="font-size: 25px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" class="font-weight-bolder">{{ $user->level }}</h1>
                                         <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Nama <span style="margin-left: 20px;">: {{ $user->name }}</p>
                                         <p class="text-muted">
                                         <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">NIK <span style="margin-left: 38px;">: {{ $user->nik }}</p>
@@ -263,7 +296,7 @@
                 <div class="col-6 mt-3 pe-2">
                     <div class="card shadow-xs border">
                         <div class="card-header font-weight-semibold d-flex justify-content-between align-items-center">Grafik Jumlah Dokumen Terupload
-                            <a href="{{ route('detail_file_dokumen') }}" type="button" class="btn btn-sm btn-dark btn-icon d-flex align-items-right justify-content-end mb-0 ms-5">
+                            <a href="{{ route('detail_file_dokumen_admin') }}" type="button" class="btn btn-sm btn-dark btn-icon d-flex align-items-right justify-content-end mb-0 ms-5">
                                 <span class="btn-inner--text">Detail File Dokumen</span>
                             </a>
                         </div>
@@ -276,38 +309,26 @@
                 </div>
                 <div class="col-6 mt-3 pe-0">
                     <div class="card shadow-xs border">
-                        <div class="card-header font-weight-semibold d-flex justify-content-between align-items-center">Grafik Rata-Rata Nilai Dokumen Terupload
-                            <a href="{{ route('detail_dokumen') }}" type="button" class="btn btn-sm btn-dark btn-icon d-flex align-items-right justify-content-end mb-0 ms-5">
+                        <div class="card-header font-weight-semibold d-flex justify-content-between align-items-center">Grafik Jumlah Dokumen Terapprove
+                            <a href="{{ route('detail_file_approve_admin') }}" type="button" class="btn btn-sm btn-dark btn-icon d-flex align-items-right justify-content-end mb-0 ms-5">
                                 <span class="btn-inner--text">Detail Dokumen</span>
                             </a>
                         </div>
                         <div class="card-body">
                             <div id="Grafik2">
-                                <canvas id="realisasiChart" width="400" height="200"></canvas>
+                                <canvas id="verifikasiChart" width="400" height="200"></canvas>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <!-- <div class="row pe-0">
-                <div class="col-6 mt-3 pe-2">
-                    <div class="card shadow-xs border">
-                        <div class="card-header font-weight-semibold">Grafik Banyak Dokumen Terupload Setiap ID</div>
-                        <div class="card-body">
-                            <div id="Grafik1">
-                                <canvas id="banyakChart" width="400" height="200"></canvas>
-                            </div>
-                        </div>
+            <div class="col-13 mt-3">
+                <div class="card shadow-xs border">
+                    <div class="card-header font-weight-semibold d-flex justify-content-between align-items-center">Grafik Jumlah Dokumen Terupload
                     </div>
-                </div>
-                <div class="col-6 mt-3 pe-0"> -->
-                    <div class="card shadow-xs border">
-                        <div class="card-header font-weight-semibold">Grafik Nilai Dokumen Terupload Setiap Bulan</div>
-                        <div class="card-body">
-                            <div id="Grafik2">
-                                <canvas id="nilaiChart" width="400" height="200"></canvas>
-                            </div>
+                    <div class="card-body">
+                        <div id="Grafik2">
+                            <canvas id="nilaiChart" width="400" height="200"></canvas>
                         </div>
                     </div>
                 </div>
@@ -316,3 +337,122 @@
     </main>
 
 </x-app-layout>
+
+<script>
+    var ctx = document.getElementById('dokumenChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: @json($labels),
+            datasets: [{
+                label: 'Jumlah Dokumen',
+                data: @json($values),
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+
+<script>
+        var ctx = document.getElementById('verifikasiChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: {!! json_encode($label) !!},
+                datasets: [{
+                    label: 'Jumlah Dokumen',
+                    data: {!! json_encode($value) !!},
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+
+<script>
+    var ctx = document.getElementById('nilaiChart').getContext('2d');
+var nilaiData = @json($l);
+var nilaiLabels = @json($m);
+
+// Fungsi untuk menentukan warna sesuai dengan nilai
+function getColor(value) {
+    switch (value) {
+        case 1:
+            return 'rgba(255, 0, 0, 0.2)'; // Merah
+        case 2:
+            return 'rgba(255, 165, 0, 0.2)'; // Oren
+        case 3:
+            return 'rgba(255, 255, 0, 0.2)'; // Kuning
+        case 4:
+            return 'rgba(00, 128, 0, 0.2)'; // Hijau
+        case 5:
+            return 'rgba(75, 192, 192, 0.2)'; // Biru
+    }
+}
+
+var datasets = [];
+for (var i = 1; i <= 5; i++) {
+    var filteredData = nilaiData.map((nilai) => nilai === i ? nilai : null);
+    datasets.push({
+        label: 'Nilai ' + i, // Nama label sesuai dengan nilai
+        data: filteredData,
+        backgroundColor: getColor(i), // Warna sesuai dengan nilai
+        borderColor: getColor(i).replace("0.2", "1"), // Warna border dengan opasitas penuh
+        borderWidth: 1
+    });
+}
+
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: nilaiLabels,
+        datasets: datasets
+    },
+    options: {
+        scales: {
+            x: {
+                beginAtZero: true
+            },
+            y: {
+                beginAtZero: true
+            }
+        },
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    title: function(tooltipItem) {
+                        return 'Kode Penilaian: ' + tooltipItem[0].label;
+                    }
+                }
+            }
+        },
+        onClick: function(evt, element) {
+            if (element.length > 0) {
+                var index = element[0].index;
+                var kode_penilaian = nilaiLabels[index]; // Mengambil kode penilaian dari data yang diklik
+                window.location.href = "/detail-nilai-dokumen-admin?kode=" + kode_penilaian;
+            }
+        }
+    }
+});
+
+</script>

@@ -187,7 +187,7 @@
                                 <div class="col-12">
                                     <div class="w-100">
                                         <p class="text-xl text-secondary mb-1">Jumlah Dokumen Terupload</p>
-                                        <h4 class="mb-2 font-weight-bold">{{ $jumlah_dokumen }} Dokumen</h4>
+                                        <h4 class="mb-2 font-weight-bold">{{ $tambah_dokumen }} Dokumen</h4>
                                         <div class="d-flex align-items-center">
                                             <span class="text-sm text-success font-weight-bolder">
                                                 <i class="fa fa-chevron-up text-xs me-1"></i>{{ $presentase }} %
@@ -261,7 +261,7 @@
                             <div class="mb-3">
                                 <div style="position: relative; left: 20px">
                                     <div>
-                                        <h1 style="font-size: 25px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" class="font-weight-bolder">Karyawan</h1>
+                                        <h1 style="font-size: 25px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" class="font-weight-bolder">{{ $user->level }}</h1>
                                         <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Nama <span style="margin-left: 20px;">: {{ $user->name }}</p>
                                         <p class="text-muted">
                                         <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">NIK <span style="margin-left: 38px;">: {{ $user->nik }}</p>
@@ -320,7 +320,7 @@
             </div>
             <div class="col-13 mt-3">
                 <div class="card shadow-xs border">
-                    <div class="card-header font-weight-semibold d-flex justify-content-between align-items-center">Grafik Jumlah Dokumen Terupload
+                    <div class="card-header font-weight-semibold d-flex justify-content-between align-items-center">Grafik Nilai Tiap Kode Penilaian
                     </div>
                     <div class="card-body">
                         <div id="Grafik2">
@@ -423,7 +423,7 @@ var myChart = new Chart(ctx, {
     options: {
         scales: {
             x: {
-                beginAtZero: true // Mulai dari 0
+                beginAtZero: true
             },
             y: {
                 beginAtZero: true
@@ -449,7 +449,6 @@ var myChart = new Chart(ctx, {
 });
 
 </script>
-
 
 <script>
 function syncData() {
