@@ -2,7 +2,8 @@
 <script src="https://unpkg.com/gijgo@1.9.14/js/gijgo.min.js" type="text/javascript"></script>
 <link href="https://unpkg.com/gijgo@1.9.14/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <main class="main-content max-height-vh-100 h-100">
         <div class="pt-5 pb-6 bg-cover" style="background-image: url('../assets/img/header-blue-purple.jpg')"></div>
@@ -41,6 +42,7 @@
                         </div>
                         <div class="card-footer">
                             <button href="{{ route('show_dokumen', ['id_variabel_penilaian' => $dokumen->id_variabel_penilaian]) }}" type="submit" class="btn btn-primary">Simpan</button>
+                            <a href="{{ route('show_dokumen', ['id_variabel_penilaian' => $dokumen->id_variabel_penilaian]) }}" class="btn btn-danger ms-2">Kembali</a>
                         </div>
                     </div>
                     </form>

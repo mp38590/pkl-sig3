@@ -117,6 +117,21 @@
                                         @endforelse
                                     </tbody>
                                 </table>
+                                <div class="mt-2 me-3 justify-content-end d-flex">
+                                    {{ $dokumen->links() }}
+                                </div>
+                                <div class="me-3 text-sm font-weight-normal justify-content-end d-flex">
+                                    Showing
+                                    {{ $dokumen->firstItem() }}
+                                    to
+                                    {{ $dokumen->lastItem() }}
+                                    of
+                                    {{ $dokumen->total() }}
+                                    entries
+                                </div>
+                                <div class="card-footer">
+                                    <a href=/detail-dokumen-admin class="btn btn-danger ms-2 mt-3 me-3">Kembali</a>
+                                </div>
                             </div>
                         </div>
                     </div>

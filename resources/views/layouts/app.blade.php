@@ -85,8 +85,6 @@
 
     @elseif(in_array(request()->route()->getName(),
             $topSidenavRTL))
-    @else
-        <x-app.sidebar />
     @endif
 
     {{ $slot }}

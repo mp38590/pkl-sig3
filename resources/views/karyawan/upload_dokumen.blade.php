@@ -35,15 +35,17 @@
                             </div>
                             <div class="form-group">
                                 <label for="file" class="form-control-label">Nama Dokumen</label>
-                                <div class="@error('file') border border-danger rounded-3 @enderror">
+                                <div class="@error('file.*') border border-danger rounded-3 @enderror">
                                     <div class="mb-3">
                                         <input class="form-control" type="file" name="file[]" id="file" multiple>
                                     </div>
                                 </div>
                                 @error('file') <div class="text-danger">{{ $message }}</div> @enderror
+                                @error('file.*') <div class="text-danger">{{ $message }}</div> @enderror
                             </div>
                         <div class="card-footer">
                             <button href=/detail-dokumen type="submit" class="btn btn-primary">Simpan</button>
+                            <a href=/detail-dokumen class="btn btn-danger ms-2">Kembali</a>
                         </div>
                     </div>
                     </form>

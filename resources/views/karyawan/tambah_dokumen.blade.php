@@ -81,6 +81,7 @@
                                 </div> -->
                                 <div class="card-footer">
                                     <button href=/detail-dokumen type="submit" class="btn btn-primary">Simpan</button>
+                                    <a href=/detail-dokumen class="btn btn-danger ms-2">Kembali</a>
                                 </div>
                             </div>
                             </form>

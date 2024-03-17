@@ -44,6 +44,7 @@
                                 </div>
                                 <div class="card-footer">
                                     <button href="{{ route('detail_dokumen_admin') }}" type="submit" class="btn btn-primary">Hapus</button>
+                                    <a href=/detail-dokumen-admin class="btn btn-danger ms-2">Kembali</a>
                                 </div>
                             </div>
                             </form>

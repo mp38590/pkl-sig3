@@ -52,6 +52,7 @@
                                 </div>
                                 <div class="card-footer">
                                     <button href=/detail-variabel type="submit" class="btn btn-primary">Simpan</button>
+                                    <a href=/detail-variabel class="btn btn-danger ms-2">Kembali</a>
                                 </div>
                             </div>
                             </form>

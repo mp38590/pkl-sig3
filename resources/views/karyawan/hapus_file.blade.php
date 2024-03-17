@@ -45,7 +45,6 @@
                                     <input name="nama_dokumen"class="form-control" type="text" id="nama_dokumen" value="{{ $dokumen->nama_dokumen }}" disabled>
                                 </div>
                             </div>
-                            
                             </div>
                             </form>
                         </div>

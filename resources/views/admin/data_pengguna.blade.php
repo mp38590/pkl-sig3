@@ -64,6 +64,18 @@
                                             </tr>
                                         </tbody>
                                     </table>
+                                    <div class="mt-2 me-3 justify-content-end d-flex">
+                                {{ $user->links() }}
+                            </div>
+                            <div class="me-3 justify-content-end d-flex">
+                                Showing
+                                {{ $user->firstItem() }}
+                                to
+                                {{ $user->lastItem() }}
+                                of
+                                {{ $user->total() }}
+                                entries
+                            </div>
                                 </div>
                             </div>
                         </div>
@@ -90,26 +102,38 @@
                                         @php
                                         $index = 0
                                         @endphp
-                                        @foreach($user as $us)
-                                        @if($us->level == 'Admin')
+                                        @foreach($userA as $usA)
+                                        @if($usA->level == 'Admin')
                                         <tr>
                                             <th class="font-weight-normal text-sm text-dark pe-4 text-center">{{ $index + 1}}</th>
-                                            <th class="font-weight-normal text-sm text-dark ps-2 text-center">{{ $us->name }}</th>
-                                            <th class="font-weight-normal text-sm text-dark ps-1 text-center">{{ $us->username }}</th>
-                                            <th class="font-weight-normal text-sm text-dark ps-1 text-center">{{ $us->alamat_rumah }}</th>
-                                            <th class="font-weight-normal text-sm text-dark pe-4 text-center">{{ $us->email }}</th>
-                                            <th class="font-weight-normal text-sm text-dark pe-4 text-center">{{ $us->no_rekening }}</th>
+                                            <th class="font-weight-normal text-sm text-dark ps-2 text-center">{{ $usA->name }}</th>
+                                            <th class="font-weight-normal text-sm text-dark ps-1 text-center">{{ $usA->username }}</th>
+                                            <th class="font-weight-normal text-sm text-dark ps-1 text-center">{{ $usA->alamat_rumah }}</th>
+                                            <th class="font-weight-normal text-sm text-dark pe-4 text-center">{{ $usA->email }}</th>
+                                            <th class="font-weight-normal text-sm text-dark pe-4 text-center">{{ $usA->no_rekening }}</th>
                                         </tr>
                                         @endif
                                         @endforeach
                                     </tr>
                                     <tr>
-                                        @if($user->isEmpty())
+                                        @if($userA->isEmpty())
                                             <td colspan="10" class="text-center">{{ 'Tidak Ada Data yang ditampilkan' }}</td>
                                         @endif
                                     </tr>
                                 </tbody>
                             </table>
+                            <div class="mt-2 me-3 justify-content-end d-flex">
+                                {{ $userA->links() }}
+                            </div>
+                            <div class="me-3 justify-content-end d-flex">
+                                Showing
+                                {{ $userA->firstItem() }}
+                                to
+                                {{ $userA->lastItem() }}
+                                of
+                                {{ $userA->total() }}
+                                entries
+                            </div>
                         </div>
                     </div>
                 </div>

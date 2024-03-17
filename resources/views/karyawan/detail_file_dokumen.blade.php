@@ -33,12 +33,12 @@
                                         @php
                                         $index = 0
                                         @endphp
-                                        @foreach($dokumen as $dok)
+                                        @foreach($dokumen as $key => $dok)
                                         <tr>
-                                            <th class="font-weight-normal text-xl text-dark ps-3">{{ $loop->iteration }}</th>
+                                            <th class="font-weight-normal text-xl text-dark ps-3 text-center">{{ $dokumen->firstItem() + $key }}</th>
                                             <th class="font-weight-normal text-xl text-dark ps-2 me-4">{{ $dok->nama_dokumen }}</th>
-                                            <th class="font-weight-normal text-xl text-dark ps-1">{{ $dok->inserted_by }}</th>
-                                            <th class="font-weight-normal text-xl text-dark ps-1">{{ $dok->updated_by }}</th>
+                                            <th class="font-weight-normal text-xl text-dark ps-1 text-center">{{ $dok->inserted_by }}</th>
+                                            <th class="font-weight-normal text-xl text-dark ps-1 text-center">{{ $dok->updated_by }}</th>
                                             <th class="text-secondary text-xs font-weight-semibold ps-2 text-center">
                                             <button type="button" class="btn btn-primary btn-sm position-relative mt-1 mb-1" style="width: 30px; height: 30px;">
                                                 <a href="{{ route('lihat_file', ['id_variabel_penilaian' => $dok->id_variabel_penilaian, 'nama_dokumen' => $dok->nama_dokumen]) }}" style="text-decoration: none; color: inherit;" target="_blank">
@@ -50,6 +50,21 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                <div class="mt-2 me-3 justify-content-end d-flex">
+                                {{ $dokumen->links() }}
+                            </div>
+                            <div class="me-3 justify-content-end d-flex">
+                                Showing
+                                {{ $dokumen->firstItem() }}
+                                to
+                                {{ $dokumen->lastItem() }}
+                                of
+                                {{ $dokumen->total() }}
+                                entries
+                            </div>
+                                <div class="card-footer">
+                                    <a href=/dashboard-karyawan class="btn btn-danger ms-2 mt-3 me-2">Kembali</a>
+                                </div>
                             </div>
                         </div>
                     </div>

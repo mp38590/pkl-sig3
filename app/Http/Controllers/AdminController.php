@@ -148,14 +148,17 @@ class AdminController extends Controller
         $detail_dokumen = $detail_dokumen->paginate(5, ['*'], 'page', request()->page);
 
         $existingDokumen = Dokumen::first();
-        $dokumen = $existingDokumen->id_variabel_penilaian;
+        $dokumen = optional($existingDokumen)->id_variabel_penilaian;
     
         // Check if data is empty
         if ($detail_dokumen->isEmpty()) {
             return view('admin.detail_dokumen', compact('detail_dokumen'))->with('error', 'Tidak Ada Data yang ditampilkan');
         }
+        if (!$dokumen) {
+            return view('admin.detail_dokumen', compact('dokumen'))->with('error', 'Tidak Ada Data yang ditampilkan');
+        }
     
-        return view('admin.detail_dokumen', compact('detail_dokumen'));
+        return view('admin.detail_dokumen', compact('detail_dokumen', 'dokumen'));
     }
 
     public function tambahFileAdmin($id_variabel_penilaian)
@@ -224,7 +227,7 @@ class AdminController extends Controller
 
     public function showDokumenAdmin($id_variabel_penilaian)
     {
-        $dokumen = Dokumen::where('id_variabel_penilaian', $id_variabel_penilaian)->where('flag_delete', '=', 0)->get();
+        $dokumen = Dokumen::where('id_variabel_penilaian', $id_variabel_penilaian)->where('flag_delete', '=', 0)->paginate(5);
         $variabelPenilaian = VariabelPenilaian::find($id_variabel_penilaian);
         $realisasi = Realisasi::find($id_variabel_penilaian);
 
@@ -457,7 +460,10 @@ class AdminController extends Controller
 
     public function detailFileAdmin()
     {
-        $dokumen = Dokumen::where('flag_delete', '=', 0)->where('nama_dokumen', '!=', 'null')->paginate(5);
+        $username = Auth::user()->username;
+
+        $dokumen = Dokumen::where('flag_delete', '=', 0)->where('nama_dokumen', '!=', 'null')->where('inserted_by', $username)
+                            ->paginate(5, ['*'], 'page', request()->page);
 
         if ($dokumen->isEmpty()) {
             return view('admin.detail_file_dokumen', compact('dokumen'))->with('error', 'Tidak Ada Data yang ditampilkan');
@@ -470,7 +476,7 @@ class AdminController extends Controller
         $dokumen = Dokumen::where('flag_delete', '=', 0)
                             ->where('nama_dokumen', '!=', 'null')
                             ->where('status', '=', 'approve')
-                            ->paginate(5);
+                            ->paginate(5, ['*'], 'page', request()->page);
 
         if ($dokumen->isEmpty()) {
             return view('admin.detail_file_approve', compact('dokumen'))->with('error', 'Tidak Ada Data yang ditampilkan');
@@ -498,7 +504,7 @@ class AdminController extends Controller
     }
 
     // Paginate the results
-    $nilai_dokumen = $nilai_dokumen->orderBy('realisasi.tahun')->distinct()->paginate(5);
+    $nilai_dokumen = $nilai_dokumen->orderBy('realisasi.tahun')->distinct()->paginate(5, ['*'], 'page', request()->page);
 
     // Return view with data
     return view('admin.detail_nilai_dokumen', compact('nilai_dokumen'));
@@ -506,9 +512,10 @@ class AdminController extends Controller
 
     public function detailPengguna(Request $request)
     {
-        $user = User::all();
+        $user = User::where('level', 'Karyawan')->paginate(5, ['*'], 'page', request()->page);
+        $userA = User::where('level', 'Admin')->paginate(5, ['*'], 'page', request()->page);
 
-        return view('admin.data_pengguna', compact('user'));
+        return view('admin.data_pengguna', compact('user', 'userA'));
     }
 
 }

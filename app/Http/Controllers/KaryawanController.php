@@ -204,7 +204,7 @@ class KaryawanController extends Controller
         $loggedInUser = Auth::user();
 
         // Ambil semua data dari VariabelPenilaian
-        $dataVariabel = VariabelPenilaian::all();
+        $dataVariabel = VariabelPenilaian::where('flag_delete', '=', 0)->get();
 
         // Cek apakah tahun sudah ada dalam tabel Realisasi
         $tahunExists = Realisasi::where('tahun', $request->tahun)->exists();
@@ -292,9 +292,10 @@ class KaryawanController extends Controller
         // $dokumen = Dokumen::where('item_penilaian', $item_penilaian)->first();
 
         $request->validate([
-            'file.*' => 'required|mimes:pdf',
+            'file' => 'required',
+            'file.*' => 'mimes:pdf',
         ], [
-            'file.*.required' => 'Nama Dokumen harus dimasukkan',
+            'file.required' => 'Nama Dokumen harus dimasukkan',
             'file.*.mimes' => 'Dokumen harus dalam format pdf',
         ]);
 
@@ -336,14 +337,23 @@ class KaryawanController extends Controller
 
     public function showDokumen($id_variabel_penilaian)
     {
-        $dokumen = Dokumen::where('id_variabel_penilaian', $id_variabel_penilaian)->where('flag_delete', '=', 0)->where('nama_dokumen', '!=', null)->get();
+        $dokumen = Dokumen::where('id_variabel_penilaian', $id_variabel_penilaian)
+                            ->where('flag_delete', '=', 0)
+                            ->where('nama_dokumen', '!=', null)
+                            ->where('status', '=', 'approve')
+                            ->paginate(5, ['*'], 'page', request()->page);
+        $dokumenN = Dokumen::where('id_variabel_penilaian', $id_variabel_penilaian)
+                            ->where('flag_delete', '=', 0)
+                            ->where('nama_dokumen', '!=', null)
+                            ->where('status', '=', 'not approve')
+                            ->paginate(5, ['*'], 'page', request()->page);
         $variabelPenilaian = VariabelPenilaian::find($id_variabel_penilaian);
         $realisasi = Realisasi::find($id_variabel_penilaian);
 
-        if ($dokumen->isEmpty()) {
-            return view('karyawan.view_dokumen', compact('dokumen'))->with('error', 'Tidak Ada Data yang ditampilkan');
+        if ($dokumen && $dokumenN->isEmpty()) {
+            return view('karyawan.view_dokumen', compact('dokumen', 'dokumenN'))->with('error', 'Tidak Ada Data yang ditampilkan');
         }
-        return view('karyawan.view_dokumen', compact('dokumen', 'variabelPenilaian', 'realisasi'));
+        return view('karyawan.view_dokumen', compact('dokumen', 'dokumenN', 'variabelPenilaian', 'realisasi'));
     }
 
     public function lihatFile($id_variabel_penilaian, $nama_dokumen)
@@ -528,7 +538,7 @@ class KaryawanController extends Controller
     public function detailVariabel(Request $request)
     {   
         $search = $request->get('search');
-        $detail_variabel = VariabelPenilaian::where('flag_delete', '=', 0);
+        $detail_variabel = VariabelPenilaian::where('flag_delete', '=', 0)->orderBy('kode_penilaian', 'asc');
 
         if ($search) {
             $detail_variabel = $detail_variabel->where('versi', 'like', '%'.$search.'%')
@@ -726,7 +736,8 @@ class KaryawanController extends Controller
 
     public function detailFile()
     {
-        $dokumen = Dokumen::where('flag_delete', '=', 0)->where('nama_dokumen', '!=', 'null')->paginate(5);
+        $dokumen = Dokumen::where('flag_delete', '=', 0)->where('nama_dokumen', '!=', 'null')
+                            ->paginate(5, ['*'], 'page', request()->page);
 
         if ($dokumen->isEmpty()) {
             return view('karyawan.detail_file_dokumen', compact('dokumen'))->with('error', 'Tidak Ada Data yang ditampilkan');
@@ -772,7 +783,7 @@ class KaryawanController extends Controller
     }
 
     // Paginate the results
-    $nilai_dokumen = $nilai_dokumen->orderBy('realisasi.tahun')->distinct()->paginate(5);
+    $nilai_dokumen = $nilai_dokumen->orderBy('realisasi.tahun')->distinct()->paginate(5, ['*'], 'page', request()->page);
 
     // Return view with data
     return view('karyawan.detail_nilai_dokumen', compact('nilai_dokumen'));

@@ -88,7 +88,8 @@
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <button href="{{ route('show_profile', ['id' => $user->id]) }}" type="submit" class="btn btn-primary">Simpan</button>
+                                <button href="{{ route('show_profile_admin', ['id' => $user->id]) }}" type="submit" class="btn btn-primary">Simpan</button>
+                                <a href="{{ route('show_profile_admin', ['id' => $user->id]) }}" class="btn btn-danger ms-2">Kembali</a>
                             </div>
                         </div>
                         </form>

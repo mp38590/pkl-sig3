@@ -65,10 +65,10 @@
                                                 @php
                                                 $index = 0
                                                 @endphp
-                                                @foreach($dokumen as $dok)
+                                                @foreach($dokumen as $key => $dok)
                                                 @if($dok->status == 'approve')
                                                 <tr>
-                                                    <th class="font-weight-normal text-sm text-dark pe-4 text-center">{{ $loop->iteration }}</th>
+                                                    <th class="font-weight-normal text-sm text-dark pe-4 text-center">{{ $dok->firstItem() + $key }}</th>
                                                     <th class="font-weight-normal text-sm text-dark ps-2 me-4">{{ $dok->nama_dokumen }}</th>
                                                     <th class="font-weight-normal text-sm text-dark ps-1 text-center">{{ $dok->inserted_by }}</th>
                                                     <th class="font-weight-normal text-sm text-dark ps-1 text-center">{{ $dok->updated_by }}</th>
@@ -115,6 +115,21 @@
                                             </tr>
                                         </tbody>
                                     </table>
+                                    <div class="mt-2 me-3 justify-content-end d-flex">
+                                        {{ $dokumen->links() }}
+                                    </div>
+                                    <div class="me-3 text-sm font-weight-normal justify-content-end d-flex">
+                                        Showing
+                                        {{ $dokumen->firstItem() }}
+                                        to
+                                        {{ $dokumen->lastItem() }}
+                                        of
+                                        {{ $dokumen->total() }}
+                                        entries
+                                    </div>
+                                    <div class="card-footer">
+                                        <a href=/detail-dokumen class="btn btn-danger ms-2 mt-3 me-3">Kembali</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -159,20 +174,17 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        @php
-                                        $index = 1
-                                        @endphp
-                                        @foreach($dokumen as $key => $dok)
-                                        @if($dok->status == 'not approve')
+                                        @foreach($dokumenN as $key => $dokN)
+                                        @if($dokN->status == 'not approve')
                                         <tr>
-                                            <th class="font-weight-normal text-sm text-dark pe-4 text-center">{{ $index++ }}</th>
-                                            <th class="font-weight-normal text-sm text-dark ps-2 me-4">{{ $dok->nama_dokumen }}</th>
-                                            <th class="font-weight-normal text-sm text-dark ps-1 text-center">{{ $dok->inserted_by }}</th>
-                                            <th class="font-weight-normal text-sm text-dark ps-1 text-center">{{ $dok->updated_by }}</th>
+                                            <th class="font-weight-normal text-sm text-dark pe-4 text-center">{{ $dokumenN->firstItem() + $key }}</th>
+                                            <th class="font-weight-normal text-sm text-dark ps-2 me-4">{{ $dokN->nama_dokumen }}</th>
+                                            <th class="font-weight-normal text-sm text-dark ps-1 text-center">{{ $dokN->inserted_by }}</th>
+                                            <th class="font-weight-normal text-sm text-dark ps-1 text-center">{{ $dokN->updated_by }}</th>
                                             <th class="text-secondary text-xs font-weight-semibold pe-4 text-center">
-                                            @if($dok->nama_dokumen !== null)
+                                            @if($dokN->nama_dokumen !== null)
                                                 <button type="button" class="btn btn-primary btn-sm position-relative mt-1 mb-1" style="width: 30px; height: 30px;">
-                                                    <a href="{{ route('lihat_file', ['id_variabel_penilaian' => $dok->id_variabel_penilaian, 'nama_dokumen' => $dok->nama_dokumen]) }}" style="text-decoration: none; color: inherit;" target="_blank">
+                                                    <a href="{{ route('lihat_file', ['id_variabel_penilaian' => $dokN->id_variabel_penilaian, 'nama_dokumen' => $dokN->nama_dokumen]) }}" style="text-decoration: none; color: inherit;" target="_blank">
                                                         <img src="../assets/img/small-logos/dokumen.png" alt="Logo" class="position-absolute start-50 top-50 translate-middle" style="width: 17px; height: 17px;">
                                                     </a>
                                                 </button>
@@ -185,17 +197,17 @@
                                             @endif
                                             </th>
                                             <th class="text-secondary text-xs font-weight-semibold pe-4 text-center">
-                                                @if ($dok->status == "approve")
-                                                    <button href="{{ route('edit_file', ['id_variabel_penilaian' => $dok->id_variabel_penilaian]) }}" class="btn btn-warning btn-sm position-relative mt-1 mb-1 text-center" style="width: 40px; height: 32px;" disabled>
+                                                @if ($dokN->status == "approve")
+                                                    <button href="{{ route('edit_file', ['id_variabel_penilaian' => $dokN->id_variabel_penilaian]) }}" class="btn btn-warning btn-sm position-relative mt-1 mb-1 text-center" style="width: 40px; height: 32px;" disabled>
                                                         <img src="../assets/img/small-logos/editDok.png" alt="Logo" class="position-absolute start-50 top-50 translate-middle" style="width: 20px; height: 20px;">
                                                     </button>
                                                 @else
-                                                    @if ($dok->nama_dokumen !== null)
-                                                        <a href="{{ route('edit_file', ['id_variabel_penilaian' => $dok->id_variabel_penilaian]) }}" class="btn btn-warning btn-sm position-relative mt-1 mb-1 text-center" style="width: 40px; height: 32px;">
+                                                    @if ($dokN->nama_dokumen !== null)
+                                                        <a href="{{ route('edit_file', ['id_variabel_penilaian' => $dokN->id_variabel_penilaian]) }}" class="btn btn-warning btn-sm position-relative mt-1 mb-1 text-center" style="width: 40px; height: 32px;">
                                                             <img src="../assets/img/small-logos/editDok.png" alt="Logo" class="position-absolute start-50 top-50 translate-middle" style="width: 20px; height: 20px;">
                                                         </a>
                                                     @else
-                                                        <button href="{{ route('edit_file', ['id_variabel_penilaian' => $dok->id_variabel_penilaian]) }}" class="btn btn-warning btn-sm position-relative mt-1 mb-1 text-center" style="width: 40px; height: 32px;" disabled>
+                                                        <button href="{{ route('edit_file', ['id_variabel_penilaian' => $dokN->id_variabel_penilaian]) }}" class="btn btn-warning btn-sm position-relative mt-1 mb-1 text-center" style="width: 40px; height: 32px;" disabled>
                                                             <img src="../assets/img/small-logos/editDok.png" alt="Logo" class="position-absolute start-50 top-50 translate-middle" style="width: 20px; height: 20px;">
                                                         </button>
                                                     @endif
@@ -206,17 +218,59 @@
                                         @endforeach
                                     </tr>
                                     <tr>
-                                        @if($dokumen->where('status', 'not approve')->isEmpty())
+                                        @if($dokumenN->where('status', 'not approve')->isEmpty())
                                             <td colspan="10" class="text-center">{{ 'Tidak Ada Data yang ditampilkan' }}</td>
                                         @endif
                                     </tr>
                                 </tbody>
                             </table>
+                            <div class="mt-2 me-3 justify-content-end d-flex">
+                                {{ $dokumenN->links() }}
+                            </div>
+                            <div class="me-3 text-sm font-weight-normal justify-content-end d-flex">
+                                Showing
+                                {{ $dokumenN->firstItem() }}
+                                to
+                                {{ $dokumenN->lastItem() }}
+                                of
+                                {{ $dokumenN->total() }}
+                                entries
+                            </div>
+                            <div class="card-footer">
+                                <a href=/detail-dokumen class="btn btn-danger ms-2 mt-3 me-3">Kembali</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </main>
+
+<script>
+    $(document).ready(function(){
+    // Tangkap klik pada tombol pagination dengan kelas .pagination a
+    $('.pagination a').on('click', function(e){
+        // Hentikan aksi default dari link
+        e.preventDefault();
+        // Ambil href dari link
+        var url = $(this).attr('href');
+        // Perbarui URL dengan menambahkan hash '#profile'
+        history.pushState({}, '', '#profile');
+        // Simpan informasi tentang tab yang sedang aktif
+        var activeTab = $('.nav-tabs .active').attr('href');
+        // Muat konten dari URL menggunakan AJAX
+        $.get(url, function(response){
+            // Ubah isi dari div dengan ID 'profile' dengan konten yang dimuat
+            $('#profile').html($(response).find('#profile').html());
+            // Aktifkan kembali tab yang sedang aktif sebelumnya
+            $('.nav-tabs a[href="'+activeTab+'"]').tab('show');
+        });
+    });
+});
+
+
+</script>
+
+<script src="{{ asset('js/custom.js') }}"></script>
 
 </x-app-layout>

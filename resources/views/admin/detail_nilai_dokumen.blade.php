@@ -53,6 +53,21 @@
                                     @endforelse
                                     </tbody>
                                 </table>
+                                <div class="mt-2 me-3 justify-content-end d-flex">
+                                {{ $nilai_dokumen->links() }}
+                            </div>
+                            <div class="me-3 justify-content-end d-flex">
+                                Showing
+                                {{ $nilai_dokumen->firstItem() }}
+                                to
+                                {{ $nilai_dokumen->lastItem() }}
+                                of
+                                {{ $nilai_dokumen->total() }}
+                                entries
+                            </div>
+                                <div class="card-footer">
+                                    <a href=/dashboard-admin class="btn btn-danger ms-2 mt-3 me-2">Kembali</a>
+                                </div>
                             </div>
                         </div>
                     </div>

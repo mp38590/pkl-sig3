@@ -297,7 +297,7 @@
                     <div class="card shadow-xs border">
                         <div class="card-header font-weight-semibold d-flex justify-content-between align-items-center">Grafik Jumlah Dokumen Terupload
                             <a href="{{ route('detail_file_dokumen_admin') }}" type="button" class="btn btn-sm btn-dark btn-icon d-flex align-items-right justify-content-end mb-0 ms-5">
-                                <span class="btn-inner--text">Detail File Dokumen</span>
+                                <span class="btn-inner--text">Detail Dokumen</span>
                             </a>
                         </div>
                         <div class="card-body">

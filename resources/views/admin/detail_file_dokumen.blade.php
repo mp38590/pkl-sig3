@@ -11,7 +11,7 @@
             <div class="row">
                 <div class="col-md-12 mb-6">
                     <div class="card shadow-s border mb-4">
-                        <div class="card-body pt-4 p-3">
+                        <div class="card-body pt-1 p-3">
                             <div class="table-responsive p-0">
                                 <table class="table align-items-center mb-0 mt-5">
                                     <thead>
@@ -33,7 +33,7 @@
                                         @php
                                         $index = 0
                                         @endphp
-                                        @foreach($dokumen as $dok)
+                                        @forelse($dokumen as $dok)
                                         <tr>
                                             <th class="font-weight-normal text-xl text-dark ps-3">{{ $loop->iteration }}</th>
                                             <th class="font-weight-normal text-xl text-dark ps-2 me-4">{{ $dok->nama_dokumen }}</th>
@@ -47,9 +47,28 @@
                                             </button>
                                             </th>
                                         </tr>
-                                        @endforeach
+                                        @empty
+                                        <tr>
+                                            <td colspan="10" class="text-center">{{ 'Tidak Ada Data yang ditampilkan' }}</td>
+                                        </tr>
+                                        @endforelse
                                     </tbody>
                                 </table>
+                                <div class="mt-2 me-3 justify-content-end d-flex">
+                                {{ $dokumen->links() }}
+                            </div>
+                            <div class="me-3 justify-content-end d-flex">
+                                Showing
+                                {{ $dokumen->firstItem() }}
+                                to
+                                {{ $dokumen->lastItem() }}
+                                of
+                                {{ $dokumen->total() }}
+                                entries
+                            </div>
+                                <div class="card-footer">
+                                    <a href=/dashboard-admin class="btn btn-danger ms-2 mt-3 me-2">Kembali</a>
+                                </div>
                             </div>
                         </div>
                     </div>
