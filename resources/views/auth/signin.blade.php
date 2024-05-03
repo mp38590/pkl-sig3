@@ -28,8 +28,8 @@
                                 <div class="card-header pb-0 text-left bg-transparent text-center">
                                 <img src="../assets/img/logos/Ellipse.png" alt="Logo" class="rounded-circle position-absolute start-20 translate-middle-x"
                                     style="width: 100px; height: 100px; border: 3px solid #000000;">
-                                    <h3 class="font-weight-black text-dark display-6 mt-8">Welcome back!!!</h3>
-                                    <p class="mb-0" style="color: #ffffff">Create a New Account OR Sign In</p>
+                                    <h3 class="font-weight-black text-dark display-6 mt-8">Selamat Datang!!!</h3>
+                                    <p class="mb-0" style="color: #ffffff">Buat Akun Baru atau Masuk</p>
                                 </div>
                                 <div class="text-center">
                                     @if (session('success'))
@@ -46,10 +46,10 @@
                                 <div class="card-body">
                                     <form role="form" class="text-start" method="POST" action="sign-in">
                                         @csrf
-                                        <label>Username atau Email</label>
+                                        <label>Username atau Alamat Email</label>
                                         <div class="mb-3">
                                             <input type="username_email" id="username_email" name="username_email" class="form-control"
-                                                placeholder="Masukkan alamat email Anda"
+                                                placeholder="Masukkan username atau alamat email Anda"
                                                 value="{{ old('username_email') }}"
                                                 aria-label="username_email" aria-describedby="username_email-addon">
                                                 @error('username_email')
@@ -71,29 +71,26 @@
                                                 <input class="form-check-input" type="checkbox" value=""
                                                     id="flexCheckDefault" style="border: 3px solid #27C9D3; background-color: transparent; opacity: 0.7;">
                                                 <label class="font-weight-normal text-primary mb-0" for="flexCheckDefault">
-                                                    Remember Me
+                                                    Ingatkan Saya
                                                 </label>
                                             </div>
-                                            <a href="{{ route('password.request') }}"
-                                                class="text-xs font-weight-bold ms-auto text-primary">Forgot
-                                                password</a>
                                         </div>
                                         <div class="text-center">
-                                            <button type="submit" class="btn btn-dark w-100 mt-4 mb-3">Sign in</button>
-                                            <button type="button" class="btn btn-white btn-icon w-100 mb-3">
+                                            <button type="submit" class="btn btn-dark w-100 mt-4 mb-3">Masuk</button>
+                                            <!-- <button type="button" class="btn btn-white btn-icon w-100 mb-3">
                                                 <span class="btn-inner--icon me-1">
                                                     <img class="w-5" src="../assets/img/logos/google-logo.svg"
                                                         alt="google-logo" />
                                                 </span>
                                                 <span class="btn-inner--text">Sign in with Google</span>
-                                            </button>
+                                            </button> -->
                                         </div>
                                     </form>
                                 </div>
-                                <div class="card-footer text-center pt-0 px-lg-2 px-1">
-                                    <p class="mb-4 text-xs mx-auto text-secondary">
-                                        Don't have an account?
-                                        <a href="{{ route('sign-up') }}" class="text-secondary font-weight-bold" style="text-decoration: underline; text-decoration-thickness: 1px;">Sign up</a>
+                                <div class="card-footer text-center pt-5 px-lg-2 px-1">
+                                    <p class="mb-1 text-xs mx-auto text-secondary">
+                                        Belum memiliki akun?
+                                        <a href="{{ route('sign-up') }}" class="text-secondary font-weight-bold" style="text-decoration: underline; text-decoration-thickness: 1px;">Daftar</a>
                                     </p>
                                 </div>
                             </div>

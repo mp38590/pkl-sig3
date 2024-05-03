@@ -8,6 +8,7 @@
     <main class="main-content max-height-vh-100 h-100">
         <div class="pt-5 pb-6 bg-cover" style="background-image: url('../assets/img/header-blue-purple.jpg')"></div>
         <div class="container my-3 py-3">
+        <h3 class="font-weight-bold mb-0">Tambah Data Pribadi</h3>
             <hr class="horizontal mb-3 dark">
             <div class="row">
                 <div class="col-md-10 mx-auto mb-3 card-center">

@@ -21,7 +21,7 @@ class KaryawanController extends Controller
         $user = User::where('username', $username)->first();
         $level = $user->level;
 
-        $data = Realisasi::where('flag_delete', '=', 0)->get();
+        $data = Realisasi::where('flag_deleted', '=', 0)->get();
 
         $total_nilai = 0;
         $jumlah_data = count($data);
@@ -95,12 +95,12 @@ class KaryawanController extends Controller
 
         $nilai = Realisasi::select(DB::raw("kode_penilaian as kode_penilaian"), DB::raw("SUM(nilai) as total_nilai"))
                             ->where('inserted_by', $username)
-                            ->where('flag_delete', '=', 0)
+                            ->where('flag_deleted', '=', 0)
                             ->whereIn('updated_at', function($query) {
                                 $query->select(DB::raw('MAX(updated_at)'))
                                     ->from('realisasi')
                                     ->whereRaw('realisasi.kode_penilaian = kode_penilaian')
-                                    ->where('flag_delete', '=', 0)
+                                    ->where('flag_deleted', '=', 0)
                                     ->groupBy('kode_penilaian');
                             })
                             ->groupBy('kode_penilaian')
@@ -144,9 +144,9 @@ class KaryawanController extends Controller
         $detail_dokumen = DB::table('realisasi')
             ->leftJoin('variabel_penilaian', function($join) {
                 $join->on('realisasi.id_variabel_penilaian', '=', 'variabel_penilaian.id_variabel_penilaian')
-                     ->where('variabel_penilaian.flag_delete', '=', 0);
+                     ->where('variabel_penilaian.flag_deleted', '=', 0);
             })
-            ->where('realisasi.flag_delete', '=', 0)
+            ->where('realisasi.flag_deleted', '=', 0)
             ->select('realisasi.*', 'variabel_penilaian.versi', 'variabel_penilaian.nilai_maksimal')
             ->orderBy('realisasi.id_variabel_penilaian')
             ->distinct();
@@ -204,7 +204,7 @@ class KaryawanController extends Controller
         $loggedInUser = Auth::user();
 
         // Ambil semua data dari VariabelPenilaian
-        $dataVariabel = VariabelPenilaian::where('flag_delete', '=', 0)->get();
+        $dataVariabel = VariabelPenilaian::where('flag_deleted', '=', 0)->get();
 
         // Cek apakah tahun sudah ada dalam tabel Realisasi
         $tahunExists = Realisasi::where('tahun', $request->tahun)->exists();
@@ -246,7 +246,7 @@ class KaryawanController extends Controller
                 $realisasi->kode_penilaian = $variabel->kode_penilaian;
                 $realisasi->deskripsi_item_penilaian = $variabel->deskripsi_item_penilaian;
                 $realisasi->status = 'not approve';
-                $realisasi->flag_delete = $variabel->flag_delete;
+                $realisasi->flag_deleted = $variabel->flag_deleted;
                 $realisasi->inserted_by = $loggedInUser->username;
                 $realisasi->updated_by = $loggedInUser->username;
                 $realisasi->save();
@@ -259,7 +259,7 @@ class KaryawanController extends Controller
                 $dokumen->kode_penilaian = $variabel->kode_penilaian;
                 $dokumen->deskripsi_item_penilaian = $variabel->deskripsi_item_penilaian;
                 $dokumen->status = 'not approve';
-                $dokumen->flag_delete = $variabel->flag_delete;
+                $dokumen->flag_deleted = $variabel->flag_deleted;
                 $dokumen->inserted_by = $loggedInUser->username;
                 $dokumen->updated_by = $loggedInUser->username;
                 $dokumen->save();
@@ -323,7 +323,7 @@ class KaryawanController extends Controller
                     $newDokumen->status = 'not approve';
                     $newDokumen->inserted_by = $loggedInUser->username;
                     $newDokumen->updated_by = $loggedInUser->username;
-                    $newDokumen->flag_delete = 0;
+                    $newDokumen->flag_deleted = 0;
                     $newDokumen->nama_dokumen = $pdfName;
         
                     $newDokumen->save();
@@ -338,12 +338,12 @@ class KaryawanController extends Controller
     public function showDokumen($id_variabel_penilaian)
     {
         $dokumen = Dokumen::where('id_variabel_penilaian', $id_variabel_penilaian)
-                            ->where('flag_delete', '=', 0)
+                            ->where('flag_deleted', '=', 0)
                             ->where('nama_dokumen', '!=', null)
                             ->where('status', '=', 'approve')
                             ->paginate(5, ['*'], 'page', request()->page);
         $dokumenN = Dokumen::where('id_variabel_penilaian', $id_variabel_penilaian)
-                            ->where('flag_delete', '=', 0)
+                            ->where('flag_deleted', '=', 0)
                             ->where('nama_dokumen', '!=', null)
                             ->where('status', '=', 'not approve')
                             ->paginate(5, ['*'], 'page', request()->page);
@@ -412,7 +412,7 @@ class KaryawanController extends Controller
     {
         $variabelPenilaian = VariabelPenilaian::find($id_variabel_penilaian);
         $realisasi = Realisasi::find($id_variabel_penilaian);
-        $dokumen = Dokumen::where('id_variabel_penilaian', $id_variabel_penilaian)->where('flag_delete', '=', 0)->get();
+        $dokumen = Dokumen::where('id_variabel_penilaian', $id_variabel_penilaian)->where('flag_deleted', '=', 0)->get();
         
         if ($variabelPenilaian || $realisasi || $dokumen->isEmpty()) {
             return view('karyawan.hapus_dokumen', compact('variabelPenilaian', 'realisasi', 'dokumen'))->with('error', 'Tidak Ada Data yang ditampilkan');
@@ -429,7 +429,7 @@ class KaryawanController extends Controller
         $dokumen = Dokumen::where('id_variabel_penilaian', $id_variabel_penilaian)->first();
         $selectedNamaDokumen = $request->nama_dokumen;
 
-        Dokumen::where('id_variabel_penilaian', $id_variabel_penilaian)->where('nama_dokumen', $selectedNamaDokumen)->update(['flag_delete' => 1]);
+        Dokumen::where('id_variabel_penilaian', $id_variabel_penilaian)->where('nama_dokumen', $selectedNamaDokumen)->update(['flag_deleted' => 1]);
 
         return redirect()->route('detail_dokumen')->with('success', 'Data deleted successfully.');
     }
@@ -538,7 +538,7 @@ class KaryawanController extends Controller
     public function detailVariabel(Request $request)
     {   
         $search = $request->get('search');
-        $detail_variabel = VariabelPenilaian::where('flag_delete', '=', 0)->orderBy('kode_penilaian', 'asc');
+        $detail_variabel = VariabelPenilaian::where('flag_deleted', '=', 0)->orderBy('kode_penilaian', 'asc');
 
         if ($search) {
             $detail_variabel = $detail_variabel->where('versi', 'like', '%'.$search.'%')
@@ -573,9 +573,9 @@ class KaryawanController extends Controller
     {
         $request->validate([
             'versi' => 'required|min:1|max:5',
-            'kode_penilaian' => 'required|min:1|max:255',
-            'item_penilaian' => 'required|min:1|max:255',
-            'deskripsi_item_penilaian' => 'required|min:1|max:255',
+            'kode_penilaian' => 'required|min:1|max:10',
+            'item_penilaian' => 'required|min:1|max:500',
+            'deskripsi_item_penilaian' => 'required|min:1|max:500',
             'nilai_maksimal' => 'required|min:1|max:5',
         ], [
             'versi.required' => 'Versi dokumen harus dimasukkan',
@@ -594,7 +594,7 @@ class KaryawanController extends Controller
         $variabelPenilaian->deskripsi_item_penilaian = $request->deskripsi_item_penilaian;
         $variabelPenilaian->nilai_maksimal = $request->nilai_maksimal;
         $variabelPenilaian->status = 'not approve';
-        $variabelPenilaian->flag_delete = 0;
+        $variabelPenilaian->flag_deleted = 0;
         $variabelPenilaian->inserted_by = $loggedInUser->username;
         $variabelPenilaian->updated_by = $loggedInUser->username;
         $variabelPenilaian->save();
@@ -621,9 +621,9 @@ class KaryawanController extends Controller
         // Validasi request
         $request->validate([
             'versi' => 'required|min:1|max:5',
-            'kode_penilaian' => 'required|min:1|max:255',
-            'item_penilaian' => 'required|min:1|max:255',
-            'deskripsi_item_penilaian' => 'required|min:1|max:255',
+            'kode_penilaian' => 'required|min:1|max:10',
+            'item_penilaian' => 'required|min:1|max:500',
+            'deskripsi_item_penilaian' => 'required|min:1|max:500',
             'nilai_maksimal' => 'required|min:1|max:5',
         ], [
             'versi.required' => 'Versi dokumen harus dimasukkan',
@@ -639,7 +639,7 @@ class KaryawanController extends Controller
         $variabelPenilaian = VariabelPenilaian::where('id_variabel_penilaian', $id_variabel_penilaian)->first();
         if ($variabelPenilaian) {
             $variabelPenilaian->update([
-                'flag_delete' => 2,
+                'flag_deleted' => 2,
             ]);
 
             $newVariabelPenilaian = new VariabelPenilaian;
@@ -652,7 +652,7 @@ class KaryawanController extends Controller
             $newVariabelPenilaian->status = 'not approve';
             $newVariabelPenilaian->inserted_by = $loggedInUser->username;
             $newVariabelPenilaian->updated_by = $loggedInUser->username;
-            $newVariabelPenilaian->flag_delete = 0;
+            $newVariabelPenilaian->flag_deleted = 0;
             $newVariabelPenilaian->save();
         } 
 
@@ -662,7 +662,7 @@ class KaryawanController extends Controller
         // Jika realisasi ditemukan, maka update juga realisasi
         if ($realisasi) {
             $realisasi->update([
-                'flag_delete' => 2,
+                'flag_deleted' => 2,
             ]);
 
             $newRealisasi = new Realisasi;
@@ -673,7 +673,7 @@ class KaryawanController extends Controller
             $newRealisasi->status = 'not approve';
             $newRealisasi->inserted_by = $loggedInUser->username;
             $newRealisasi->updated_by = $loggedInUser->username;
-            $newRealisasi->flag_delete = 0;
+            $newRealisasi->flag_deleted = 0;
 
             $newRealisasi->tahun = $realisasi->tahun;
             $newRealisasi->save();
@@ -684,7 +684,7 @@ class KaryawanController extends Controller
         // Jika realisasi ditemukan, maka update juga realisasi
         if ($dokumen) {
             $dokumen->update([
-                'flag_delete' => 2,
+                'flag_deleted' => 2,
             ]);
 
             $newDokumen = new Dokumen;
@@ -695,7 +695,7 @@ class KaryawanController extends Controller
             $newDokumen->status = 'not approve';
             $newDokumen->inserted_by = $loggedInUser->username;
             $newDokumen->updated_by = $loggedInUser->username;
-            $newDokumen->flag_delete = 0;
+            $newDokumen->flag_deleted = 0;
             $newDokumen->save();
         }
 
@@ -705,7 +705,7 @@ class KaryawanController extends Controller
 
     public function deleteVariabel($id_variabel_penilaian)
     {
-        $variabelPenilaian = VariabelPenilaian::where('id_variabel_penilaian', $id_variabel_penilaian)->where('flag_delete', '=', 0)->first();
+        $variabelPenilaian = VariabelPenilaian::where('id_variabel_penilaian', $id_variabel_penilaian)->where('flag_deleted', '=', 0)->first();
 
         if (!$variabelPenilaian) {
             return view('karyawan.hapus_variabel')->with('error', 'Tidak Ada Data yang ditampilkan');
@@ -717,17 +717,17 @@ class KaryawanController extends Controller
     {
         $loggedInUser = Auth::user();
 
-        $variabelPenilaian = VariabelPenilaian::where('id_variabel_penilaian', $id_variabel_penilaian)->where('flag_delete', '=', 0)->first();
-        $realisasi = Realisasi::where('id_variabel_penilaian', $id_variabel_penilaian)->where('flag_delete', '=', 0)->first();  // Use get() to retrieve the result
+        $variabelPenilaian = VariabelPenilaian::where('id_variabel_penilaian', $id_variabel_penilaian)->where('flag_deleted', '=', 0)->first();
+        $realisasi = Realisasi::where('id_variabel_penilaian', $id_variabel_penilaian)->where('flag_deleted', '=', 0)->first();  // Use get() to retrieve the result
 
-        $variabelPenilaian->flag_delete = 1;
+        $variabelPenilaian->flag_deleted = 1;
         $variabelPenilaian->save();
 
         if(!$realisasi){
             
         }
         else{
-            $realisasi->flag_delete = 1;
+            $realisasi->flag_deleted = 1;
             $realisasi->save();
         }
 
@@ -736,7 +736,7 @@ class KaryawanController extends Controller
 
     public function detailFile()
     {
-        $dokumen = Dokumen::where('flag_delete', '=', 0)->where('nama_dokumen', '!=', 'null')
+        $dokumen = Dokumen::where('flag_deleted', '=', 0)->where('nama_dokumen', '!=', 'null')
                             ->paginate(5, ['*'], 'page', request()->page);
 
         if ($dokumen->isEmpty()) {
@@ -754,9 +754,9 @@ class KaryawanController extends Controller
     $nilai_dokumen = DB::table('realisasi')
         ->leftJoin('variabel_penilaian', function($join) {
             $join->on('realisasi.id', '=', 'variabel_penilaian.id')
-                ->where('variabel_penilaian.flag_delete', '=', 0);
+                ->where('variabel_penilaian.flag_deleted', '=', 0);
         })
-        ->where('realisasi.flag_delete', '=', 0)
+        ->where('realisasi.flag_deleted', '=', 0)
         ->where('realisasi.nilai', '!=', null)
         ->select('realisasi.*', 'variabel_penilaian.versi', 'variabel_penilaian.nilai_maksimal');
 
@@ -821,7 +821,7 @@ class KaryawanController extends Controller
     // Ambil dokumen lama yang belum diapprove
     $existingDokumen = Dokumen::where('id_variabel_penilaian', $id_variabel_penilaian)
                               ->where('status', 'not approve')
-                              ->where('flag_delete', '=', 0)
+                              ->where('flag_deleted', '=', 0)
                               ->first();
 
     // Jika ada file baru yang diunggah
@@ -833,9 +833,9 @@ class KaryawanController extends Controller
 
     // Jika ada dokumen yang lama dan belum diapprove
     if ($existingDokumen) {
-        // Update flag_delete untuk dokumen lama
+        // Update flag_deleted untuk dokumen lama
         $existingDokumen->update([
-            'flag_delete' => 2,
+            'flag_deleted' => 2,
         ]);
     }
 
@@ -849,7 +849,7 @@ class KaryawanController extends Controller
     $newDokumen->status = 'not approve';
     $newDokumen->inserted_by = $loggedInUser->username;
     $newDokumen->updated_by = $loggedInUser->username;
-    $newDokumen->flag_delete = 0; // Default flag_delete for new document
+    $newDokumen->flag_deleted = 0; // Default flag_deleted for new document
 
     $newDokumen->save();
 

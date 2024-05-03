@@ -7,6 +7,7 @@
     <main class="main-content max-height-vh-100 h-100">
         <div class="pt-5 pb-6 bg-cover" style="background-image: url('../assets/img/header-blue-purple.jpg')"></div>
         <div class="container my-3 py-3">
+        <h3 class="font-weight-bold mb-0">Detail Dokumen</h3>
             <hr class="horizontal mb-3 dark">
             <div class="row">
                 <div class="col-md-12 mb-6">
@@ -55,7 +56,7 @@
                                         <th class="font-weight-normal text-xl text-dark ps-1">
                                             {!! nl2br(wordwrap($detail->item_penilaian, 20, "\n", true)) !!}
                                         </th>
-                                        <th class="font-weight-normal text-xl text-dark ps-1">{{ $detail->nilai_maksimal }}</th>
+                                        <th class="font-weight-normal text-xl text-dark ps-1 text-center">{{ $detail->nilai_maksimal }}</th>
                                         <th class="font-weight-normal text-xl text-dark ps-1">{{ $detail->nilai }}</th>
                                         <th class="font-weight-normal text-xl text-dark ps-2 pe-2" style="text-align: justify;">
                                             {!! nl2br(wordwrap($detail->deskripsi_item_penilaian, 30, "\n", true)) !!}

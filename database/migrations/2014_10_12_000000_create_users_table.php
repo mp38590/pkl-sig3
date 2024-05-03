@@ -28,7 +28,7 @@ return new class extends Migration
             $table->string('foto', 50)->nullable();
             $table->string('inserted_by', 25)->nullable();
             $table->string('updated_by', 25)->nullable();
-            $table->integer('flag_delete');
+            $table->integer('flag_deleted');
             $table->rememberToken();
             $table->timestamps();
         });

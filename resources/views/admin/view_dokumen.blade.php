@@ -7,6 +7,7 @@
     <main class="main-content max-height-vh-100 h-100">
         <div class="pt-5 pb-6 bg-cover" style="background-image: url('../assets/img/header-blue-purple.jpg')"></div>
         <div class="container my-3 py-3">
+        <h3 class="font-weight-bold mb-0">Daftar Dokumen Assessment</h3>
             <hr class="horizontal mb-3 dark">
             <div class="row">
                 <div class="col-md-12 mb-6">
@@ -85,7 +86,7 @@
                                             </th>
                                             <th class="text-secondary text-xs font-weight-semibold ps-2 text-center">
                                                 @if ($dok->status == "approve")
-                                                    <button href="{{ route('edit_skor_admin', ['id_variabel_penilaian' => $dok->id_variabel_penilaian]) }}" class="btn btn-warning btn-sm position-relative mt-1 mb-1 text-center" style="width: 40px; height: 32px;" disabled>
+                                                    <button href="{{ route('edit_file_admin', ['id_variabel_penilaian' => $dok->id_variabel_penilaian]) }}" class="btn btn-warning btn-sm position-relative mt-1 mb-1 text-center" style="width: 40px; height: 32px;" disabled>
                                                         <img src="../assets/img/small-logos/editDok.png" alt="Logo" class="position-absolute start-50 top-50 translate-middle" style="width: 20px; height: 20px;">
                                                     </button>
                                                     <!-- <button href="{{ route('hapus_dokumen_admin', ['id_variabel_penilaian' => $dok->id_variabel_penilaian]) }}" class="btn btn-danger btn-sm position-relative mt-1 mb-1 text-center" style="width: 40px; height: 32px;" disabled>
@@ -93,14 +94,14 @@
                                                     </button> -->
                                                 @else
                                                     @if ($dok->nama_dokumen !== null)
-                                                        <a href="{{ route('edit_skor_admin', ['id_variabel_penilaian' => $dok->id_variabel_penilaian]) }}" class="btn btn-warning btn-sm position-relative mt-1 mb-1 text-center" style="width: 40px; height: 32px;">
+                                                        <a href="{{ route('edit_file_admin', ['id_variabel_penilaian' => $dok->id_variabel_penilaian]) }}" class="btn btn-warning btn-sm position-relative mt-1 mb-1 text-center" style="width: 40px; height: 32px;">
                                                             <img src="../assets/img/small-logos/editDok.png" alt="Logo" class="position-absolute start-50 top-50 translate-middle" style="width: 20px; height: 20px;">
                                                         </a>
                                                         <!-- <a href="{{ route('hapus_dokumen_admin', ['id_variabel_penilaian' => $dok->id_variabel_penilaian]) }}" class="btn btn-danger btn-sm position-relative mt-1 mb-1 text-center" style="width: 40px; height: 32px;">
                                                             <img src="../assets/img/small-logos/eraser.png" alt="Logo" class="position-absolute start-50 top-50 translate-middle" style="width: 15px; height: 15px;">
                                                         </a> -->
                                                     @else
-                                                        <button href="{{ route('edit_skor_admin', ['id_variabel_penilaian' => $dok->id_variabel_penilaian]) }}" class="btn btn-warning btn-sm position-relative mt-1 mb-1 text-center" style="width: 40px; height: 32px;" disabled>
+                                                        <button href="{{ route('edit_file_admin', ['id_variabel_penilaian' => $dok->id_variabel_penilaian]) }}" class="btn btn-warning btn-sm position-relative mt-1 mb-1 text-center" style="width: 40px; height: 32px;" disabled>
                                                             <img src="../assets/img/small-logos/editDok.png" alt="Logo" class="position-absolute start-50 top-50 translate-middle" style="width: 20px; height: 20px;">
                                                         </button>
                                                         <!-- <button href="{{ route('hapus_dokumen_admin', ['id_variabel_penilaian' => $dok->id_variabel_penilaian]) }}" class="btn btn-danger btn-sm position-relative mt-1 mb-1 text-center" style="width: 40px; height: 32px;" disabled>

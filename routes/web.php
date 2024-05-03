@@ -95,10 +95,10 @@ Route::group(['middleware' => ['auth', 'level:Karyawan']], function(){
     Route::post('/hapus-variabel/konfirm-hapus-variabel/{id_variabel_penilaian}', [KaryawanController::class, 'konfirmDeleteVariabel'])
         ->name('konfirm_hapus_variabel');
 
-    Route::get('/hapus-file/{id_variabel_penilaian}/{nama_dokumen}', [KaryawanController::class, 'deleteFile'])
+    Route::get('/hapus-file/{id_variabel_penilaian}/{nama_dokumen}', [KaryawanController::class, 'delete'])
         ->name('hapus_file');
 
-    Route::post('/konfirm-hapus-file/{id_variabel_penilaian}/{nama_dokumen}', [KaryawanController::class, 'konfirmDeleteFile'])
+    Route::post('/konfirm-hapus-file/{id_variabel_penilaian}/{nama_dokumen}', [KaryawanController::class, 'konfirmDelete'])
         ->name('konfirm_hapus_file');
 
     Route::get('/detail-file-dokumen', [KaryawanController::class, 'detailFile'])
@@ -205,6 +205,12 @@ Route::group(['middleware' => ['auth', 'level:Admin']], function(){
     Route::get('/pills_profile', function () {
         return view('admin.data_pengguna');
     })->name('pills_profile');
+
+    Route::get('/edit-file-admin/{id_variabel_penilaian}', [AdminController::class, 'editDokumenAdmin'])
+        ->name('edit_file_admin');
+
+    Route::post('/edit-file-admin/update-file-admin/{id_variabel_penilaian}', [AdminController::class, 'updateDokumenAdmin'])
+        ->name('update_file_admin');
 });
 
 Route::get('/detail-perusahaan', function () {

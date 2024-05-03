@@ -8,6 +8,8 @@
     <main class="main-content max-height-vh-100 h-100">
         <div class="pt-5 pb-6 bg-cover" style="background-image: url('../assets/img/header-blue-purple.jpg')"></div>
             <div class="container my-3 py-3">
+            <h3 class="font-weight-bold mb-0">Daftar Dokumen Assessment</h3>
+                <hr class="horizontal mb-3 dark">
                 <!-- Nav pills -->
                 <nav class="nav nav-pills">
                     <li class="nav-item">
@@ -68,7 +70,7 @@
                                                 @foreach($dokumen as $key => $dok)
                                                 @if($dok->status == 'approve')
                                                 <tr>
-                                                    <th class="font-weight-normal text-sm text-dark pe-4 text-center">{{ $dok->firstItem() + $key }}</th>
+                                                    <th class="font-weight-normal text-sm text-dark pe-4 text-center">{{ $loop->iteration }}</th>
                                                     <th class="font-weight-normal text-sm text-dark ps-2 me-4">{{ $dok->nama_dokumen }}</th>
                                                     <th class="font-weight-normal text-sm text-dark ps-1 text-center">{{ $dok->inserted_by }}</th>
                                                     <th class="font-weight-normal text-sm text-dark ps-1 text-center">{{ $dok->updated_by }}</th>
@@ -89,16 +91,16 @@
                                                     </th>
                                                     <th class="text-secondary text-xs font-weight-semibold pe-4 text-center">
                                                     @if ($dok->status == "approve")
-                                                        <button href="{{ route('edit_skor_admin', ['id_variabel_penilaian' => $dok->id_variabel_penilaian]) }}" class="btn btn-warning btn-sm position-relative mt-1 mb-1 text-center" style="width: 40px; height: 32px;" disabled>
+                                                        <button href="{{ route('edit_file', ['id_variabel_penilaian' => $dokN->id_variabel_penilaian]) }}" class="btn btn-warning btn-sm position-relative mt-1 mb-1 text-center" style="width: 40px; height: 32px;" disabled>
                                                             <img src="../assets/img/small-logos/editDok.png" alt="Logo" class="position-absolute start-50 top-50 translate-middle" style="width: 20px; height: 20px;">
                                                         </button>
                                                     @else
                                                         @if ($dok->nama_dokumen !== null)
-                                                            <a href="{{ route('edit_skor_admin', ['id_variabel_penilaian' => $dok->id_variabel_penilaian]) }}" class="btn btn-warning btn-sm position-relative mt-1 mb-1 text-center" style="width: 40px; height: 32px;">
+                                                            <button href="{{ route('edit_file', ['id_variabel_penilaian' => $dokN->id_variabel_penilaian]) }}" class="btn btn-warning btn-sm position-relative mt-1 mb-1 text-center" style="width: 40px; height: 32px;" disabled>
                                                                 <img src="../assets/img/small-logos/editDok.png" alt="Logo" class="position-absolute start-50 top-50 translate-middle" style="width: 20px; height: 20px;">
-                                                            </a>
+                                                            </button>
                                                         @else
-                                                            <button href="{{ route('edit_skor_admin', ['id_variabel_penilaian' => $dok->id_variabel_penilaian]) }}" class="btn btn-warning btn-sm position-relative mt-1 mb-1 text-center" style="width: 40px; height: 32px;" disabled>
+                                                            <button href="{{ route('edit_file', ['id_variabel_penilaian' => $dokN->id_variabel_penilaian]) }}" class="btn btn-warning btn-sm position-relative mt-1 mb-1 text-center" style="width: 40px; height: 32px;" disabled>
                                                                 <img src="../assets/img/small-logos/editDok.png" alt="Logo" class="position-absolute start-50 top-50 translate-middle" style="width: 20px; height: 20px;">
                                                             </button>
                                                         @endif
@@ -177,7 +179,7 @@
                                         @foreach($dokumenN as $key => $dokN)
                                         @if($dokN->status == 'not approve')
                                         <tr>
-                                            <th class="font-weight-normal text-sm text-dark pe-4 text-center">{{ $dokumenN->firstItem() + $key }}</th>
+                                            <th class="font-weight-normal text-sm text-dark pe-4 text-center">{{ $loop->iteration }}</th>
                                             <th class="font-weight-normal text-sm text-dark ps-2 me-4">{{ $dokN->nama_dokumen }}</th>
                                             <th class="font-weight-normal text-sm text-dark ps-1 text-center">{{ $dokN->inserted_by }}</th>
                                             <th class="font-weight-normal text-sm text-dark ps-1 text-center">{{ $dokN->updated_by }}</th>

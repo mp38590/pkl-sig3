@@ -15,15 +15,13 @@ return new class extends Migration
             $table->id();
             $table->integer('id_variabel_penilaian')->nullable();
             $table->string('kode_penilaian', 10);
-            $table->string('objective', 500)->nullable();
             $table->string('item_penilaian', 500);
             $table->string('deskripsi_item_penilaian', 500);
             $table->string('nama_dokumen', 150)->nullable();
-            $table->string('format_file', 150)->nullable();
             $table->string('status', 50)->nullable();
             $table->string('inserted_by', 25);
             $table->string('updated_by', 25);
-            $table->integer('flag_delete');
+            $table->integer('flag_deleted');
             $table->timestamps();
         });
     }

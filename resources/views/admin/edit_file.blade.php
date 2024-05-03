@@ -13,7 +13,7 @@
             <div class="row">
                 <div class="col-md-8 mx-auto mb-3 card-center">
                     <div class="card shadow-s border mb-4">
-                    <form role="form" method="POST" action="{{ route('update_file', ['id_variabel_penilaian' => $dokumen->id_variabel_penilaian]) }}" enctype="multipart/form-data">
+                    <form role="form" method="POST" action="{{ route('update_file_admin', ['id_variabel_penilaian' => $dokumen->id_variabel_penilaian]) }}" enctype="multipart/form-data">
                     @csrf
                     <div class="card card-body pt-4 p-3">
                         <div class="form-group">
@@ -42,8 +42,8 @@
                             @error('file') <div class="text-danger">{{ $message }}</div> @enderror
                         </div>
                         <div class="card-footer">
-                            <button href="{{ route('show_dokumen', ['id_variabel_penilaian' => $dokumen->id_variabel_penilaian]) }}" type="submit" class="btn btn-primary">Simpan</button>
-                            <a href="{{ route('show_dokumen', ['id_variabel_penilaian' => $dokumen->id_variabel_penilaian]) }}" class="btn btn-danger ms-2">Kembali</a>
+                            <button href="{{ route('show_dokumen_admin', ['id_variabel_penilaian' => $dokumen->id_variabel_penilaian]) }}" type="submit" class="btn btn-primary">Simpan</button>
+                            <a href="{{ route('show_dokumen_admin', ['id_variabel_penilaian' => $dokumen->id_variabel_penilaian]) }}" class="btn btn-danger ms-2">Kembali</a>
                         </div>
                     </div>
                     </form>

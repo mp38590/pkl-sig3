@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('alec123_'),
             'konfirm_password' => Hash::make('alec123_'),
             'level' => 'Karyawan',
-            'flag_delete' => 0,
+            'flag_deleted' => 0,
         ]);
         User::factory()->create([
             'name' => 'Subakti Wirawan Putra',
@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('admin123_'),
             'konfirm_password' => Hash::make('admin123_'),
             'level' => 'Admin',
-            'flag_delete' => 0,
+            'flag_deleted' => 0,
         ]);
 
         // VariabelPenilaian::create([

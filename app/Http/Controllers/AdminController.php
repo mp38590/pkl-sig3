@@ -41,7 +41,7 @@ class AdminController extends Controller
 
         $verifikasi = Dokumen::where('nama_dokumen', '!=', null)
                                 ->where('status', '=', 'not approve')
-                                ->where('flag_delete', '=', 0)
+                                ->where('flag_deleted', '=', 0)
                                 ->where('created_at', $latestTimestampVerif)
                                 ->count();
         
@@ -90,12 +90,12 @@ class AdminController extends Controller
                                     ->get();
 
         $nilai = Realisasi::select(DB::raw("kode_penilaian as kode_penilaian"), DB::raw("SUM(nilai) as total_nilai"))
-                            ->where('flag_delete', '=', 0)
+                            ->where('flag_deleted', '=', 0)
                             ->whereIn('updated_at', function($query) {
                                 $query->select(DB::raw('MAX(updated_at)'))
                                     ->from('realisasi')
                                     ->whereRaw('realisasi.kode_penilaian = kode_penilaian')
-                                    ->where('flag_delete', '=', 0)
+                                    ->where('flag_deleted', '=', 0)
                                     ->groupBy('kode_penilaian');
                             })
                             ->groupBy('kode_penilaian')
@@ -120,9 +120,9 @@ class AdminController extends Controller
         $detail_dokumen = DB::table('realisasi')
             ->leftJoin('variabel_penilaian', function($join) {
                 $join->on('realisasi.id_variabel_penilaian', '=', 'variabel_penilaian.id_variabel_penilaian')
-                     ->where('variabel_penilaian.flag_delete', '=', 0);
+                     ->where('variabel_penilaian.flag_deleted', '=', 0);
             })
-            ->where('realisasi.flag_delete', '=', 0)
+            ->where('realisasi.flag_deleted', '=', 0)
             ->select('realisasi.*', 'variabel_penilaian.versi', 'variabel_penilaian.nilai_maksimal')
             ->orderBy('realisasi.id_variabel_penilaian')
             ->distinct();
@@ -213,7 +213,7 @@ class AdminController extends Controller
                     $newDokumen->status = 'not approve';
                     $newDokumen->inserted_by = $loggedInUser->username;
                     $newDokumen->updated_by = $loggedInUser->username;
-                    $newDokumen->flag_delete = 0;
+                    $newDokumen->flag_deleted = 0;
                     $newDokumen->nama_dokumen = $pdfName;
         
                     $newDokumen->save();
@@ -227,7 +227,8 @@ class AdminController extends Controller
 
     public function showDokumenAdmin($id_variabel_penilaian)
     {
-        $dokumen = Dokumen::where('id_variabel_penilaian', $id_variabel_penilaian)->where('flag_delete', '=', 0)->paginate(5);
+        $dokumen = Dokumen::where('id_variabel_penilaian', $id_variabel_penilaian)->where('flag_deleted', '=', 0)
+                            ->orderBy('status', 'asc')->paginate(5);
         $variabelPenilaian = VariabelPenilaian::find($id_variabel_penilaian);
         $realisasi = Realisasi::find($id_variabel_penilaian);
 
@@ -436,7 +437,7 @@ class AdminController extends Controller
     {
         $variabelPenilaian = VariabelPenilaian::find($id_variabel_penilaian);
         $realisasi = Realisasi::find($id_variabel_penilaian);
-        $dokumen = Dokumen::where('id_variabel_penilaian', $id_variabel_penilaian)->where('flag_delete', '=', 0)->get();
+        $dokumen = Dokumen::where('id_variabel_penilaian', $id_variabel_penilaian)->where('flag_deleted', '=', 0)->get();
         
         if ($variabelPenilaian || $realisasi || $dokumen->isEmpty()) {
             return view('admin.hapus_dokumen', compact('variabelPenilaian', 'realisasi', 'dokumen'))->with('error', 'Tidak Ada Data yang ditampilkan');
@@ -453,7 +454,7 @@ class AdminController extends Controller
         $dokumen = Dokumen::where('id_variabel_penilaian', $id_variabel_penilaian)->first();
         $selectedNamaDokumen = $request->nama_dokumen;
 
-        Dokumen::where('id_variabel_penilaian', $id_variabel_penilaian)->where('nama_dokumen', $selectedNamaDokumen)->update(['flag_delete' => 1]);
+        Dokumen::where('id_variabel_penilaian', $id_variabel_penilaian)->where('nama_dokumen', $selectedNamaDokumen)->update(['flag_deleted' => 1]);
 
         return redirect()->route('show_dokumen_admin', ['id_variabel_penilaian' => $variabelPenilaian->id_variabel_penilaian])->with('success', 'Dokumen berhasil dihapus dari database.');
     }
@@ -462,7 +463,7 @@ class AdminController extends Controller
     {
         $username = Auth::user()->username;
 
-        $dokumen = Dokumen::where('flag_delete', '=', 0)->where('nama_dokumen', '!=', 'null')->where('inserted_by', $username)
+        $dokumen = Dokumen::where('flag_deleted', '=', 0)->where('nama_dokumen', '!=', 'null')->where('inserted_by', $username)
                             ->paginate(5, ['*'], 'page', request()->page);
 
         if ($dokumen->isEmpty()) {
@@ -473,7 +474,7 @@ class AdminController extends Controller
 
     public function detailApproveAdmin()
     {
-        $dokumen = Dokumen::where('flag_delete', '=', 0)
+        $dokumen = Dokumen::where('flag_deleted', '=', 0)
                             ->where('nama_dokumen', '!=', 'null')
                             ->where('status', '=', 'approve')
                             ->paginate(5, ['*'], 'page', request()->page);
@@ -492,9 +493,9 @@ class AdminController extends Controller
     $nilai_dokumen = DB::table('realisasi')
         ->leftJoin('variabel_penilaian', function($join) {
             $join->on('realisasi.id', '=', 'variabel_penilaian.id')
-                ->where('variabel_penilaian.flag_delete', '=', 0);
+                ->where('variabel_penilaian.flag_deleted', '=', 0);
         })
-        ->where('realisasi.flag_delete', '=', 0)
+        ->where('realisasi.flag_deleted', '=', 0)
         ->where('realisasi.nilai', '!=', null)
         ->select('realisasi.*', 'variabel_penilaian.versi', 'variabel_penilaian.nilai_maksimal');  
 
@@ -516,6 +517,74 @@ class AdminController extends Controller
         $userA = User::where('level', 'Admin')->paginate(5, ['*'], 'page', request()->page);
 
         return view('admin.data_pengguna', compact('user', 'userA'));
+    }
+
+    public function editDokumenAdmin($id_variabel_penilaian)
+    {
+        $dokumen = Dokumen::find($id_variabel_penilaian);
+        $variabelPenilaian = VariabelPenilaian::find($id_variabel_penilaian);
+        $realisasi = Realisasi::find($id_variabel_penilaian);
+
+        if ($dokumen || $variabelPenilaian || $realisasi->isEmpty()) {
+            return view('admin.edit_file', compact('dokumen', 'variabelPenilaian', 'realisasi'))->with('error', 'Tidak Ada Data yang ditampilkan');
+        }
+
+        return view('admin.edit_file', compact('dokumen', 'variabelPenilaian', 'realisasi'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param int $id
+     */
+    public function updateDokumenAdmin(Request $request, $id_variabel_penilaian)
+    {
+        $loggedInUser = Auth::user();
+
+        $request->validate([
+            'file' => 'required|mimes:pdf',
+        ], [
+            'file.required' => 'Nama Dokumen harus dimasukkan',
+            'file.mimes' => 'Dokumen harus dalam format pdf',
+        ]);
+
+        // Ambil dokumen lama yang belum diapprove
+        $existingDokumen = Dokumen::where('id_variabel_penilaian', $id_variabel_penilaian)
+                                ->where('status', 'not approve')
+                                ->where('flag_deleted', '=', 0)
+                                ->first();
+
+        // Jika ada file baru yang diunggah
+        if ($request->hasFile('file')) {
+            $pdf = $request->file('file');
+            $pdfName = $pdf->getClientOriginalName();
+            $pdf->move(public_path('uploads/file'), $pdfName);
+        }
+
+        // Jika ada dokumen yang lama dan belum diapprove
+        if ($existingDokumen) {
+            // Update flag_deleted untuk dokumen lama
+            $existingDokumen->update([
+                'flag_deleted' => 2,
+            ]);
+        }
+
+        // Buat dokumen baru
+        $newDokumen = new Dokumen;
+        $newDokumen->id_variabel_penilaian = $id_variabel_penilaian; // Gunakan parameter yang diterima dari fungsi
+        $newDokumen->kode_penilaian = $existingDokumen->kode_penilaian; // Gunakan kode_penilaian dari dokumen lama
+        $newDokumen->item_penilaian = $existingDokumen->item_penilaian; // Gunakan item_penilaian dari dokumen lama
+        $newDokumen->deskripsi_item_penilaian = $existingDokumen->deskripsi_item_penilaian; // Gunakan deskripsi_item_penilaian dari dokumen lama
+        $newDokumen->nama_dokumen = $pdfName;
+        $newDokumen->status = 'not approve';
+        $newDokumen->inserted_by = $loggedInUser->username;
+        $newDokumen->updated_by = $loggedInUser->username;
+        $newDokumen->flag_deleted = 0; // Default flag_deleted for new document
+
+        $newDokumen->save();
+
+        // Berikan respons sukses atau redirect sesuai kebutuhan Anda
+        return redirect()->route('show_dokumen_admin', ['id_variabel_penilaian' => $id_variabel_penilaian])->with('success', 'File dokumen baru berhasil dimasukkan dan ditambahkan dalam database');
     }
 
 }
